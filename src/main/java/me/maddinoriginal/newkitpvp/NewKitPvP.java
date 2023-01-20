@@ -1,11 +1,14 @@
 package me.maddinoriginal.newkitpvp;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class NewKitPvP extends JavaPlugin {
 
+    private PluginManager pm = Bukkit.getPluginManager();
     private final String PREFIX = "[KitPvP] ";
 
     @Override
