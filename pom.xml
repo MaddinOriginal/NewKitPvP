@@ -11,7 +11,7 @@
 
     <name>NewKitPvP</name>
 
-    <description>A Minecraft plugin for a PvP minigame with kits and special abilities</description>
+    <description>A Minecraft Spigot Server Plugin for a PvP minigame with kits and special abilities</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -40,6 +40,7 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <outputFile>E:\Programmieren\Server 1.19.3\plugins\KitPvP.jar</outputFile>
                         </configuration>
                     </execution>
                 </executions>

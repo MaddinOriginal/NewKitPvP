@@ -3,4 +3,4 @@ version: '${project.version}'
 main: me.maddinoriginal.newkitpvp.NewKitPvP
 api-version: 1.19
 authors: [ MaddinOriginal ]
-description: A Minecraft plugin for a PvP minigame with kits and special abilities
+description: A Minecraft Spigot Server Plugin for a PvP minigame with kits and special abilities
