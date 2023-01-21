@@ -48,7 +48,7 @@ public final class NewKitPvP extends JavaPlugin {
     private void setGameRules() {
         for (World world : getServer().getWorlds()) {
             world.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
-            world.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
+            //world.setGameRule(GameRule.BLOCK_EXPLOSION_DROP_DECAY, true);
             world.setGameRule(GameRule.COMMAND_BLOCK_OUTPUT, true);
             //world.setGameRule(GameRule.DISABLE_ELYTRA_MOVEMENT_CHECK, false);
             world.setGameRule(GameRule.DISABLE_RAIDS, true);
@@ -63,21 +63,33 @@ public final class NewKitPvP extends JavaPlugin {
             world.setGameRule(GameRule.DO_PATROL_SPAWNING, false);
             world.setGameRule(GameRule.DO_TILE_DROPS, false);
             world.setGameRule(GameRule.DO_TRADER_SPAWNING, false);
+            world.setGameRule(GameRule.DO_WARDEN_SPAWNING, false);
             world.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
             //world.setGameRule(GameRule.DROWNING_DAMAGE, false);
             world.setGameRule(GameRule.FALL_DAMAGE, false);
             //world.setGameRule(GameRule.FIRE_DAMAGE, true);
             //world.setGameRule(GameRule.FORGIVE_DEAD_PLAYERS, true);
             //world.setGameRule(GameRule.FREEZE_DAMAGE, false);
+            //world.setGameRule(GameRule.GLOBAL_SOUND_EVENTS, true);
             world.setGameRule(GameRule.KEEP_INVENTORY, true);
+            //world.setGameRule(GameRule.LAVA_SOURCE_CONVERSION, false);
             //world.setGameRule(GameRule.LOG_ADMIN_COMMANDS, true);
+            //world.setGameRule(GameRule.MAX_COMMAND_CHAIN_LENGTH, 65536);
+            //world.setGameRule(GameRule.MAX_ENTITY_CRAMMING, 24);
+            //world.setGameRule(GameRule.MOB_EXPLOSION_DROP_DECAY, true);
             world.setGameRule(GameRule.MOB_GRIEFING, false);
             world.setGameRule(GameRule.NATURAL_REGENERATION, true);
+            //world.setGameRule(GameRule.PLAYERS_SLEEPING_PERCENTAGE, 100);
             world.setGameRule(GameRule.RANDOM_TICK_SPEED, 0);
             world.setGameRule(GameRule.REDUCED_DEBUG_INFO, true);
             //world.setGameRule(GameRule.SEND_COMMAND_FEEDBACK, true);
             //world.setGameRule(GameRule.SHOW_DEATH_MESSAGES, true);
+            //world.setGameRule(GameRule.SNOW_ACCUMULATION_HEIGHT, 1);
+            //world.setGameRule(GameRule.SPAWN_RADIUS, 10);
             world.setGameRule(GameRule.SPECTATORS_GENERATE_CHUNKS, false);
+            //world.setGameRule(GameRule.TNT_EXPLOSION_DROP_DECAY, true);
+            //world.setGameRule(GameRule.UNIVERSAL_ANGER, false);
+            //world.setGameRule(GameRule.WATER_SOURCE_CONVERSION, true);
         }
     }
 
