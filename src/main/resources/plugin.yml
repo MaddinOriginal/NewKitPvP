@@ -4,3 +4,8 @@ main: me.maddinoriginal.newkitpvp.NewKitPvP
 api-version: 1.19
 authors: [ MaddinOriginal ]
 description: A Minecraft Spigot Server Plugin for a PvP minigame with kits and special abilities
+
+commands:
+  kitpvp:
+    aliases: []
+    description: The main command for KitPvP.

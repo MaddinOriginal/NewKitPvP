@@ -1,5 +1,6 @@
 package me.maddinoriginal.newkitpvp;
 
+import me.maddinoriginal.newkitpvp.commands.KitPvPCommand;
 import me.maddinoriginal.newkitpvp.listeners.ConnectionListener;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
@@ -34,7 +35,7 @@ public final class NewKitPvP extends JavaPlugin {
     }
 
     private void registerCommands() {
-        //TODO
+        getCommand("kitpvp").setExecutor(new KitPvPCommand());
     }
 
     private void registerListeners() {
