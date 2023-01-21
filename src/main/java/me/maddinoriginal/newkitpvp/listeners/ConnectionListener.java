@@ -23,14 +23,14 @@ public class ConnectionListener implements Listener {
         setPlayerValues(p);
         setTabList(p);
 
-        e.setJoinMessage(NewKitPvP.PREFIX + ChatColor.DARK_GREEN + p.getDisplayName() + ChatColor.YELLOW + " joined KitPvP."); //set join message
+        e.setJoinMessage(NewKitPvP.getInstance().getPREFIX() + ChatColor.DARK_GREEN + p.getDisplayName() + ChatColor.YELLOW + " joined KitPvP."); //set join message
     }
 
     @EventHandler
     public void onPlayerLeaveServer(PlayerQuitEvent e) {
         Player p = e.getPlayer();
 
-        e.setQuitMessage(NewKitPvP.PREFIX + ChatColor.DARK_GREEN + p.getDisplayName() + ChatColor.YELLOW + " has disconnected."); //set quit message
+        e.setQuitMessage(NewKitPvP.getInstance().getPREFIX() + ChatColor.DARK_GREEN + p.getDisplayName() + ChatColor.YELLOW + " has disconnected."); //set quit message
     }
 
     private void setPlayerValues(Player p) {

@@ -3,6 +3,7 @@ package me.maddinoriginal.newkitpvp;
 import me.maddinoriginal.newkitpvp.commands.KitPvPCommand;
 import me.maddinoriginal.newkitpvp.listeners.ConnectionListener;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.plugin.PluginManager;
@@ -13,15 +14,18 @@ public final class NewKitPvP extends JavaPlugin {
     private static NewKitPvP instance; //instance of this class
 
     private final PluginManager pm = Bukkit.getPluginManager();
-    public static final String PREFIX = "[KitPvP] ";
+    private static String prefix;
 
     @Override
     public void onEnable() {
-        System.out.println(PREFIX + "starting the plugin...");
+        System.out.println("[KitPvP] starting the plugin...");
 
         instance = this;
 
-        saveDefaultConfig(); //creates both the data folder and config.yml file if either not yet created
+        //create both the data folder and config.yml file if either not yet created and copy/paste the default values
+        saveDefaultConfig();
+        getConfig().options().copyDefaults(true);
+        saveConfig();
 
         registerCommands();
         registerListeners();
@@ -30,18 +34,24 @@ public final class NewKitPvP extends JavaPlugin {
         setGameRules();
         prepareWorld();
 
-        System.out.println(PREFIX + "plugin started.");
+        prefix = ChatColor.translateAlternateColorCodes('&', getConfig().getString("Prefix"));
+
+        System.out.println("[KitPvP] plugin started.");
     }
 
     @Override
     public void onDisable() {
-        System.out.println(PREFIX + "disabling the plugin...");
+        System.out.println("[KitPvP] disabling the plugin...");
 
-        System.out.println(PREFIX + "plugin disabled.");
+        System.out.println("[KitPvP] plugin disabled.");
     }
 
     public static NewKitPvP getInstance() {
         return instance;
+    }
+
+    public static String getPREFIX() {
+        return prefix;
     }
 
     private void registerCommands() {
