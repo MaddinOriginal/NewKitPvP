@@ -9,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class NewKitPvP extends JavaPlugin {
 
-    private PluginManager pm = Bukkit.getPluginManager();
+    private final PluginManager pm = Bukkit.getPluginManager();
     public static final String PREFIX = "[KitPvP] ";
 
     @Override
