@@ -10,12 +10,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class NewKitPvP extends JavaPlugin {
 
+    private static NewKitPvP instance; //instance of this class
+
     private final PluginManager pm = Bukkit.getPluginManager();
     public static final String PREFIX = "[KitPvP] ";
 
     @Override
     public void onEnable() {
         System.out.println(PREFIX + "starting the plugin...");
+
+        instance = this;
+
+        saveDefaultConfig(); //creates both the data folder and config.yml file if either not yet created
 
         registerCommands();
         registerListeners();
@@ -32,6 +38,10 @@ public final class NewKitPvP extends JavaPlugin {
         System.out.println(PREFIX + "disabling the plugin...");
 
         System.out.println(PREFIX + "plugin disabled.");
+    }
+
+    public static NewKitPvP getInstance() {
+        return instance;
     }
 
     private void registerCommands() {
