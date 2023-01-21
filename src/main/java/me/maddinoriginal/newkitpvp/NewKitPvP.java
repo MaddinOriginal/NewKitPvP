@@ -1,5 +1,6 @@
 package me.maddinoriginal.newkitpvp;
 
+import me.maddinoriginal.newkitpvp.listeners.ConnectionListener;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
@@ -9,7 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class NewKitPvP extends JavaPlugin {
 
     private PluginManager pm = Bukkit.getPluginManager();
-    private final String PREFIX = "[KitPvP] ";
+    public static final String PREFIX = "[KitPvP] ";
 
     @Override
     public void onEnable() {
@@ -37,7 +38,7 @@ public final class NewKitPvP extends JavaPlugin {
     }
 
     private void registerListeners() {
-        //TODO
+        pm.registerEvents(new ConnectionListener(), this);
     }
 
     private void registerCustomListeners() {
