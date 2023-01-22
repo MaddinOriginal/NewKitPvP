@@ -1,6 +1,7 @@
 package me.maddinoriginal.newkitpvp;
 
 import me.maddinoriginal.newkitpvp.commands.KitPvPCommand;
+import me.maddinoriginal.newkitpvp.configuration.PlayerdataConfig;
 import me.maddinoriginal.newkitpvp.listeners.ConnectionListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -26,6 +27,10 @@ public final class NewKitPvP extends JavaPlugin {
         saveDefaultConfig();
         getConfig().options().copyDefaults(true);
         saveConfig();
+
+        PlayerdataConfig.setup();
+        PlayerdataConfig.get().options().copyDefaults(true);
+        PlayerdataConfig.save();
 
         registerCommands();
         registerListeners();
