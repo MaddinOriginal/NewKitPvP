@@ -1,6 +1,7 @@
 package me.maddinoriginal.newkitpvp.listeners;
 
 import me.maddinoriginal.newkitpvp.NewKitPvP;
+import me.maddinoriginal.newkitpvp.utils.KitPlayerManager;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.attribute.Attribute;
@@ -16,7 +17,9 @@ public class ConnectionListener implements Listener {
     public void onPlayerJoinServer(PlayerJoinEvent e) {
         Player p = e.getPlayer();
 
-        //TODO register player and player data
+        //register player as KitPlayer
+        KitPlayerManager.getInstance().addKitPlayer(p.getUniqueId(), p.getName());
+
         //TODO teleport player to lobby
         //TODO set playerstate to lobby state
 
@@ -29,6 +32,9 @@ public class ConnectionListener implements Listener {
     @EventHandler
     public void onPlayerLeaveServer(PlayerQuitEvent e) {
         Player p = e.getPlayer();
+
+        //unregister player as KitPlayer
+        KitPlayerManager.getInstance().removeKitPlayer(p.getUniqueId());
 
         e.setQuitMessage(NewKitPvP.getInstance().getPREFIX() + ChatColor.DARK_GREEN + p.getDisplayName() + ChatColor.YELLOW + " has disconnected."); //set quit message
     }
