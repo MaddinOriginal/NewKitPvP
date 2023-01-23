@@ -55,7 +55,7 @@ public final class NewKitPvP extends JavaPlugin {
         return instance;
     }
 
-    public static String getPREFIX() {
+    public static String getPrefix() {
         return prefix;
     }
 
