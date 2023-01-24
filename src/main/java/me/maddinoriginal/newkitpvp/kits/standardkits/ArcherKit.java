@@ -1,0 +1,117 @@
+package me.maddinoriginal.newkitpvp.kits.standardkits;
+
+import me.maddinoriginal.newkitpvp.kits.Kit;
+import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+
+/**
+ * Ranged Kit with a strong bow and a weak wooden sword
+ * mostly blue-ish leather armor, except for chainmail leggings
+ * Ability: Minigun to spam arrows with bow
+ * Passive: Gets arrows after X seconds
+ */
+
+public class ArcherKit extends Kit {
+
+    @Override
+    public String getName() {
+        return "Archer";
+    }
+
+    @Override
+    public String getTag() {
+        return "[ARCH]";
+    }
+
+    @Override
+    public Material getIconMaterial() {
+        return null;
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
+    public ItemStack[] getArmorContents() {
+        ItemStack[] armor = new ItemStack[4];
+
+        //Create boots and add them to the returning (armor contents) ItemStack
+        armor[0] = new ItemBuilder(Material.LEATHER_BOOTS)
+                .setDisplayName(ChatColor.YELLOW + "Archer Boots")
+                .setLeatherArmorColor(178, 124, 0)
+                .setUnbreakable(true)
+                .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+
+        //Create leggings and add them to the returning (armor contents) ItemStack
+        armor[1] = new ItemBuilder(Material.CHAINMAIL_LEGGINGS)
+                .setDisplayName(ChatColor.YELLOW + "Archer Leggings")
+                .setUnbreakable(true)
+                .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+
+        //Create chest plate and add them to the returning (armor contents) ItemStack
+        armor[2] = new ItemBuilder(Material.LEATHER_CHESTPLATE)
+                .setDisplayName(ChatColor.YELLOW + "Archer Cloak")
+                .setLeatherArmorColor(69, 75, 223)
+                .setUnbreakable(true)
+                .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+
+        //Create helmet and add them to the returning (armor contents) ItemStack
+        armor[3] = new ItemBuilder(Material.LEATHER_HELMET)
+                .setDisplayName(ChatColor.YELLOW + "Archer Hood")
+                .setLeatherArmorColor(44, 76, 145)
+                .setUnbreakable(true)
+                .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+
+        return armor;
+    }
+
+    @Override
+    public ItemStack[] getKitItems() {
+        ItemStack[] items = new ItemStack[9];
+
+        items[0] = new ItemBuilder(Material.WOODEN_SWORD)
+                .setDisplayName(ChatColor.RESET + "" + ChatColor.YELLOW + "Archer Sword")
+                .addEnchantment(Enchantment.DAMAGE_ALL, 1, true)
+                .setUnbreakable(true)
+                .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+
+        items[1] = new ItemBuilder(Material.BOW)
+                .setDisplayName(ChatColor.RESET + "" + ChatColor.YELLOW + "Archer Bow")
+                .addEnchantment(Enchantment.DAMAGE_ALL, 1, true)
+                .setUnbreakable(true)
+                .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+
+        items[2] = new ItemBuilder(Material.GLOWSTONE_DUST)
+                .setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Minigun Ability")
+                .setLore(ChatColor.GOLD + "" + ChatColor.ITALIC + "Click to use")
+                .addEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 10, false)
+                .addItemFlag(ItemFlag.HIDE_ENCHANTS)
+                .build();
+
+        items[3] = null;
+        items[4] = null;
+        items[5] = null;
+        items[6] = null;
+
+        items[7] = new ItemBuilder(Material.ARROW)
+                .setAmount(25)
+                .setDisplayName(ChatColor.YELLOW + "Archer Arrow")
+                .build();
+
+        items[8] = null;
+
+        return items;
+    }
+}
