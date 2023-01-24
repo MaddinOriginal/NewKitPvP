@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
  * Passive: Gets arrows after X seconds
  */
 
-public class ArcherKit extends Kit {
+public class Archer extends Kit {
 
     @Override
     public String getName() {
