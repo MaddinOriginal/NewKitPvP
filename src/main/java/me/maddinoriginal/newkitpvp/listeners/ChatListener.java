@@ -15,9 +15,9 @@ public class ChatListener implements Listener {
         String msg = e.getMessage();
 
         String format = "<kit> <rank><player>: <message>";
-        format = format.replace("<kit>", ChatColor.BLUE + "[KIT]");
-        format = format.replace("<rank>", ChatColor.GREEN + "[VIP]");
-        format = format.replace("<player>", p.getDisplayName());
+        format = format.replace("<kit>", ChatColor.BLUE + "[KIT]" + ChatColor.RESET);
+        format = format.replace("<rank>", ChatColor.GREEN + "[VIP]" + ChatColor.RESET);
+        format = format.replace("<player>", ChatColor.GREEN + p.getDisplayName() + ChatColor.RESET);
         format = format.replace("<message>", msg);
 
         e.setFormat(format);
