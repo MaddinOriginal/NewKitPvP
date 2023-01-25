@@ -14,18 +14,14 @@ public class KitPlayer {
 
     private NewKitPvP plugin = NewKitPvP.getInstance();
 
-    private PlayerData data;
     private UUID uuid;
     private String playerName;
+    private PlayerData data;
 
     public KitPlayer(UUID uuid, String playerName) {
         this.uuid = uuid;
         this.playerName = playerName;
         this.data = new PlayerData(uuid, playerName);
-    }
-
-    public PlayerData getData() {
-        return data;
     }
 
     public UUID getUuid() {
@@ -34,5 +30,9 @@ public class KitPlayer {
 
     public String getPlayerName() {
         return playerName;
+    }
+
+    public PlayerData getData() {
+        return data;
     }
 }
