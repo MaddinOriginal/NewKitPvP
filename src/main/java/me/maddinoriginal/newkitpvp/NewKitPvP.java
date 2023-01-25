@@ -1,21 +1,28 @@
 package me.maddinoriginal.newkitpvp;
 
+import me.maddinoriginal.newkitpvp.abilities.items.*;
 import me.maddinoriginal.newkitpvp.commands.KitPvPCommand;
 import me.maddinoriginal.newkitpvp.configuration.PlayerdataConfig;
+import me.maddinoriginal.newkitpvp.listeners.ChatListener;
 import me.maddinoriginal.newkitpvp.listeners.ConnectionListener;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameRule;
-import org.bukkit.World;
+import me.maddinoriginal.newkitpvp.listeners.InteractListener;
+import me.maddinoriginal.newkitpvp.listeners.custom.KitSelectListener;
+import org.bukkit.*;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class NewKitPvP extends JavaPlugin {
 
     private static NewKitPvP instance; //instance of this class
-
     private final PluginManager pm = Bukkit.getPluginManager();
     private static String prefix;
+
+    public static NamespacedKey abilityItemKey;
+    public static Map<String, AbilityItem> abilityItems = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -41,6 +48,10 @@ public final class NewKitPvP extends JavaPlugin {
 
         prefix = ChatColor.translateAlternateColorCodes('&', getConfig().getString("Prefix"));
 
+        abilityItemKey = new NamespacedKey(this, "ability-item-key");
+
+        registerItems(new DashAbilityItem(), new PlantBushAbilityItem(), new TeleportForwardAbilityItem(), new MagmaLauncherAbilityItem());
+
         System.out.println("[KitPvP] plugin started.");
     }
 
@@ -59,16 +70,26 @@ public final class NewKitPvP extends JavaPlugin {
         return prefix;
     }
 
+    public static NamespacedKey getAbilityItemKey() {
+        return abilityItemKey;
+    }
+
+    private void registerItems(AbilityItem... items) {
+        Arrays.asList(items).forEach(ai-> abilityItems.put(ai.getId(), ai));
+    }
+
     private void registerCommands() {
         getCommand("kitpvp").setExecutor(new KitPvPCommand());
     }
 
     private void registerListeners() {
+        pm.registerEvents(new ChatListener(), this);
         pm.registerEvents(new ConnectionListener(), this);
+        pm.registerEvents(new InteractListener(), this);
     }
 
     private void registerCustomListeners() {
-        //TODO
+        pm.registerEvents(new KitSelectListener(), this);
     }
 
     private void setGameRules() {
