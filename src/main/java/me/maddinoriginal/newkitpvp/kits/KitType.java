@@ -1,11 +1,17 @@
 package me.maddinoriginal.newkitpvp.kits;
 
+import me.maddinoriginal.newkitpvp.kits.standardkits.Archer;
+import me.maddinoriginal.newkitpvp.kits.standardkits.Swordsman;
+import me.maddinoriginal.newkitpvp.kits.standardkits.Tank;
+
 public enum KitType {
 
+    NONE (null),
+
     //Standard Kits
-    //SWORDSMAN (new SwordsmanKit()),
-    //ARCHER (new ArcherKit()),
-    //TANK (new TankKit()),
+    SWORDSMAN (new Swordsman()),
+    ARCHER (new Archer()),
+    TANK (new Tank()),
     //HUNTER (new HunterKit()),
     //BARBARIAN (new BarbarianKit()),
 
