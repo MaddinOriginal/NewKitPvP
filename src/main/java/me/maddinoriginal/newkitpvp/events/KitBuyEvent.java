@@ -7,7 +7,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-public class KitSelectEvent extends Event implements Cancellable {
+public class KitBuyEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLERS_LIST = new HandlerList();
     private boolean isCancelled;
@@ -15,7 +15,7 @@ public class KitSelectEvent extends Event implements Cancellable {
     private Player player;
     private KitType kitType;
 
-    public KitSelectEvent(Player player, KitType kitType) {
+    public KitBuyEvent(Player player, KitType kitType) {
         this.player = player;
         this.kitType = kitType;
         this.isCancelled = false;

@@ -1,6 +1,5 @@
 package me.maddinoriginal.newkitpvp.kits;
 
-import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -9,21 +8,15 @@ public abstract class Kit {
 
     public abstract String getName();
     public abstract String getTag();
-    public abstract Material getIconMaterial();
-    //public abstract KitCategory getCategory();
+
+    public abstract Material getMaterial();
+    public abstract KitCategory getCategory();
     public abstract String getDescription();
 
     public abstract ItemStack[] getArmorContents();
     public abstract ItemStack[] getKitItems();
     //public abstract AbilityType getAbility();
     //public abstract PassiveType getPassive();
-
-    public ItemStack getIcon() {
-        return new ItemBuilder(getIconMaterial())
-                .setDisplayName(getName())
-                .setLore(getDescription())
-                .build();
-    }
 
     public void setPlayerKit(Player p) {
         p.getInventory().clear();
@@ -32,4 +25,17 @@ public abstract class Kit {
         p.setPlayerListName(getTag() + p.getDisplayName());
     }
 
+    public int getPrice() {
+        if (getCategory() == null) {
+            return 0;
+        }
+        switch (getCategory()) {
+            case ADVANCED:
+                return 300;
+            case LEGENDARY:
+                return 2000;
+            default:
+                return 0;
+        }
+    }
 }

@@ -1,6 +1,8 @@
 package me.maddinoriginal.newkitpvp.kits.standardkits;
 
+import me.maddinoriginal.newkitpvp.abilities.items.MinigunAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
+import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -28,13 +30,18 @@ public class Archer extends Kit {
     }
 
     @Override
-    public Material getIconMaterial() {
-        return null;
+    public Material getMaterial() {
+        return Material.BOW;
+    }
+
+    @Override
+    public KitCategory getCategory() {
+        return KitCategory.STANDARD;
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return "The classic ranged combat kit with a bow and arrows. Activating its ability turns the bow into a mini gun that shoots arrows rapidly.";
     }
 
     @Override
@@ -81,7 +88,7 @@ public class Archer extends Kit {
 
         items[0] = new ItemBuilder(Material.WOODEN_SWORD)
                 .setDisplayName(ChatColor.RESET + "" + ChatColor.YELLOW + "Archer Sword")
-                .addEnchantment(Enchantment.DAMAGE_ALL, 1, true)
+                //.addEnchantment(Enchantment.DAMAGE_ALL, 1, true)
                 .setUnbreakable(true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
@@ -93,12 +100,7 @@ public class Archer extends Kit {
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
-        items[2] = new ItemBuilder(Material.GLOWSTONE_DUST)
-                .setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Minigun Ability")
-                .setLore(ChatColor.GOLD + "" + ChatColor.ITALIC + "Click to use")
-                .addEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 10, false)
-                .addItemFlag(ItemFlag.HIDE_ENCHANTS)
-                .build();
+        items[2] = new MinigunAbilityItem().getItem();
 
         items[3] = null;
         items[4] = null;

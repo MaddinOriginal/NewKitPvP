@@ -1,8 +1,11 @@
 package me.maddinoriginal.newkitpvp.utils;
 
 import me.maddinoriginal.newkitpvp.configuration.PlayerdataConfig;
+import me.maddinoriginal.newkitpvp.kits.KitCategory;
+import me.maddinoriginal.newkitpvp.kits.KitType;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class PlayerData {
@@ -17,6 +20,7 @@ public class PlayerData {
     private final String NAME;
     private FileConfiguration config;
     private String path;
+    private String subpath;
 
     private Stat kills = new Stat();
     private Stat deaths = new Stat();
@@ -24,11 +28,14 @@ public class PlayerData {
     private Stat coins = new Stat();
     private Stat tokens = new Stat();
 
+    private ArrayList<KitType> unlockedKits = new ArrayList<>();
+
     public PlayerData(UUID uuid, String playerName) {
         this.UUID = uuid;
         this.NAME = playerName;
         this.config = PlayerdataConfig.get();
         this.path = uuid.toString() + ".";
+        this.subpath = path + "unlocked-kits.";
         check();
         load();
     }
@@ -53,6 +60,15 @@ public class PlayerData {
         if (!config.contains(path + "tokens")) {
             config.set(path + "tokens", 0);
         }
+        for (KitType kit : KitType.values()) {
+            if (!config.contains(subpath + kit.name().toLowerCase())) {
+                if (kit.getKit() != null && kit.getKit().getCategory() != null) {
+                    if (kit.getKit().getCategory() != KitCategory.STANDARD) {
+                        config.set(subpath + kit.name().toLowerCase(), false);
+                    }
+                }
+            }
+        }
         PlayerdataConfig.save();
     }
 
@@ -62,6 +78,15 @@ public class PlayerData {
         assists.setAmount(config.getInt(path + "assists"));
         coins.setAmount(config.getInt(path + "coins"));
         tokens.setAmount(config.getInt(path + "tokens"));
+        for (KitType kit : KitType.values()) {
+            if (kit.getKit() != null && kit.getKit().getCategory() != null) {
+                if (kit.getKit().getCategory() != KitCategory.STANDARD) {
+                    if (config.getBoolean(subpath + kit.name().toLowerCase())) {
+                        unlockedKits.add(kit);
+                    }
+                }
+            }
+        }
     }
 
     public void save() {
@@ -70,6 +95,9 @@ public class PlayerData {
         config.set(path + "assists", assists.getAmount());
         config.set(path + "coins", coins.getAmount());
         config.set(path + "tokens", tokens.getAmount());
+        for (KitType kit : unlockedKits) {
+            config.set(subpath + kit.name().toLowerCase(), true);
+        }
         PlayerdataConfig.save();
     }
 
@@ -99,5 +127,16 @@ public class PlayerData {
 
     public Stat getTokens() {
         return tokens;
+    }
+
+    public boolean hasKitUnlocked(KitType kitType) {
+        if (unlockedKits.contains(kitType)) {
+            return true;
+        }
+        return false;
+    }
+
+    public void unlockKit(KitType kitType) {
+        unlockedKits.add(kitType);
     }
 }

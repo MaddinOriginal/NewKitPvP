@@ -10,8 +10,8 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ItemBuilder {
 
@@ -25,6 +25,15 @@ public class ItemBuilder {
     public ItemBuilder(Material mat) {
         item = new ItemStack(mat, 1);
         meta = item.getItemMeta();
+    }
+
+    /**
+     * Sets the Material of the item
+     * @param mat The material that the item is going to be set to
+     */
+    public ItemBuilder setMaterial(Material mat) {
+        item.setType(mat);
+        return this;
     }
 
     /**
@@ -67,7 +76,7 @@ public class ItemBuilder {
         meta.setLore(Arrays.asList(lore));
         return this;
     }
-    public ItemBuilder setLore(ArrayList<String> lore) {
+    public ItemBuilder setLore(List<String> lore) {
         meta.setLore(lore);
         return this;
     }
@@ -125,6 +134,14 @@ public class ItemBuilder {
         for (ItemFlag flag : flags) {
             meta.addItemFlags(flag);
         }
+        return this;
+    }
+
+    /**
+     * Adds the ItemFlag that hides all attributes
+     */
+    public ItemBuilder hideAttributes() {
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         return this;
     }
 

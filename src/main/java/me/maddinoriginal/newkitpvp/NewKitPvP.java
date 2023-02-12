@@ -1,13 +1,17 @@
 package me.maddinoriginal.newkitpvp;
 
+import me.kodysimpson.simpapi.menu.MenuManager;
 import me.maddinoriginal.newkitpvp.abilities.items.*;
 import me.maddinoriginal.newkitpvp.commands.KitPvPCommand;
 import me.maddinoriginal.newkitpvp.configuration.PlayerdataConfig;
 import me.maddinoriginal.newkitpvp.listeners.ChatListener;
 import me.maddinoriginal.newkitpvp.listeners.ConnectionListener;
 import me.maddinoriginal.newkitpvp.listeners.InteractListener;
+import me.maddinoriginal.newkitpvp.listeners.custom.KitBuyListener;
 import me.maddinoriginal.newkitpvp.listeners.custom.KitSelectListener;
+import me.maddinoriginal.newkitpvp.utils.KitPlayerManager;
 import org.bukkit.*;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -43,6 +47,8 @@ public final class NewKitPvP extends JavaPlugin {
         registerListeners();
         registerCustomListeners();
 
+        MenuManager.setup(this.getServer(), this);
+
         setGameRules();
         prepareWorld();
 
@@ -58,6 +64,11 @@ public final class NewKitPvP extends JavaPlugin {
     @Override
     public void onDisable() {
         System.out.println("[KitPvP] disabling the plugin...");
+
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            KitPlayerManager.getInstance().getKitPlayer(p).getData().save();
+            p.kickPlayer("Server is reloading. You can rejoin in just a second!");
+        }
 
         System.out.println("[KitPvP] plugin disabled.");
     }
@@ -89,6 +100,7 @@ public final class NewKitPvP extends JavaPlugin {
     }
 
     private void registerCustomListeners() {
+        pm.registerEvents(new KitBuyListener(), this);
         pm.registerEvents(new KitSelectListener(), this);
     }
 

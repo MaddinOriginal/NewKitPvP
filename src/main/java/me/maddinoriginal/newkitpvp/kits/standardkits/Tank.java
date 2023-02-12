@@ -1,6 +1,8 @@
 package me.maddinoriginal.newkitpvp.kits.standardkits;
 
+import me.maddinoriginal.newkitpvp.abilities.items.DashAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
+import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -28,13 +30,18 @@ public class Tank extends Kit {
     }
 
     @Override
-    public Material getIconMaterial() {
-        return null;
+    public Material getMaterial() {
+        return Material.DIAMOND_CHESTPLATE;
+    }
+
+    @Override
+    public KitCategory getCategory() {
+        return KitCategory.STANDARD;
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return "Can take a lot of hits thanks to a strong set of armor. Paired with abilities to regain health this kit is a master of surviving.";
     }
 
     @Override
@@ -86,12 +93,7 @@ public class Tank extends Kit {
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS)
                 .build();
 
-        items[1] = new ItemBuilder(Material.GLOWSTONE_DUST)
-                .setDisplayName(ChatColor.DARK_RED + "" + ChatColor.BOLD + "Draining Aura")
-                .setLore(ChatColor.RESET + "" + ChatColor.WHITE + "Right-Click to use ability")
-                .addEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 10, true)
-                .addItemFlag(ItemFlag.HIDE_ENCHANTS)
-                .build();
+        items[1] = new DashAbilityItem().getItem();//TODO
 
         return items;
     }

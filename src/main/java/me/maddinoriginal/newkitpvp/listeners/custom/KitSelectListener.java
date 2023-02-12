@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 public class KitSelectListener implements Listener {
 
     @EventHandler
-    public void onKitSelect (KitSelectEvent e) {
+    public void onKitSelect(KitSelectEvent e) {
         Player p = e.getPlayer();
         KitType kit = e.getKitType();
 

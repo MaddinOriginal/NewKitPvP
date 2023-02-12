@@ -1,6 +1,9 @@
 package me.maddinoriginal.newkitpvp.kits.standardkits;
 
+import com.google.common.base.Strings;
+import me.maddinoriginal.newkitpvp.abilities.items.DashAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
+import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -28,13 +31,20 @@ public class Swordsman extends Kit {
     }
 
     @Override
-    public Material getIconMaterial() {
-        return null;
+    public Material getMaterial() {
+        return Material.IRON_SWORD;
+    }
+
+    @Override
+    public KitCategory getCategory() {
+        return KitCategory.STANDARD;
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return "A melee based Kit with an iron sword and good armor. " +
+                "Has the ability to quickly dash forward. " +
+                "It is also resistent to most projectiles including arrows.";
     }
 
     @Override
@@ -79,20 +89,14 @@ public class Swordsman extends Kit {
 
         items[0] = new ItemBuilder(Material.IRON_SWORD)
                 .setDisplayName(ChatColor.YELLOW + "Swordsman Sword")
-                .setLore(ChatColor.RESET + "" + ChatColor.DARK_GRAY /*+ Strings.repeat('\u2594', 16)*/, //TODO
+                .setLore(ChatColor.RESET + "" + ChatColor.DARK_GRAY + Strings.repeat('\u2594' + "", 16),
                         ChatColor.WHITE + "Hergestellt aus dem besten Stahl",
                         ChatColor.WHITE + "des ganzen Landes")
                 .setUnbreakable(true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
-        items[1] = /*new AbilityItem(Material.GLOWSTONE_DUST, AbilityType.PLANT_BUSH);*/
-                new ItemBuilder(Material.GLOWSTONE_DUST)
-                .setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Dash Ability")
-                .setLore(ChatColor.YELLOW + "" + ChatColor.ITALIC + "Click to use")
-                .addEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 10, false)
-                .addItemFlag(ItemFlag.HIDE_ENCHANTS)
-                .build();
+        items[1] = new DashAbilityItem().getItem();
 
         return items;
     }
