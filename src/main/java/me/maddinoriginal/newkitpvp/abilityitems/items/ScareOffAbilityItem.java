@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ScareOffAbilityItem extends AbilityItem {
@@ -23,7 +24,7 @@ public class ScareOffAbilityItem extends AbilityItem {
 
     @Override
     public List<String> getLore() {
-        return null;
+        return Arrays.asList("Right click to scare off enemies!");
     }
 
     @Override
