@@ -1,8 +1,10 @@
 package me.maddinoriginal.newkitpvp.kits;
 
-import me.maddinoriginal.newkitpvp.kits.standardkits.Archer;
-import me.maddinoriginal.newkitpvp.kits.standardkits.Swordsman;
-import me.maddinoriginal.newkitpvp.kits.standardkits.Tank;
+import me.maddinoriginal.newkitpvp.kits.advancedkits.*;
+import me.maddinoriginal.newkitpvp.kits.legendarykits.BlackDragon;
+import me.maddinoriginal.newkitpvp.kits.legendarykits.DarkKnight;
+import me.maddinoriginal.newkitpvp.kits.legendarykits.GrimReaper;
+import me.maddinoriginal.newkitpvp.kits.standardkits.*;
 
 public enum KitType {
 
@@ -12,20 +14,20 @@ public enum KitType {
     SWORDSMAN (new Swordsman()),
     ARCHER (new Archer()),
     TANK (new Tank()),
-    //HUNTER (new HunterKit()),
-    //BARBARIAN (new BarbarianKit()),
+    HUNTER (new Hunter()),
+    BARBARIAN (new Barbarian()),
 
     //Advanced Kits
-    //PYRO (new PyroKit()),
-    //TELEPORTER (),
-    //NINJA (),
-    //ASSASSIN (),
-    //ELEMENTALIST (),
-    //ARBALIST (),
-    //GHOST (),
-    //BLASTER (),
-    //YETI (),
-    //BOMBERMAN (),
+    PYRO (new Pyro()),
+    TELEPORTER (new Teleporter()),
+    //NINJA (new Ninja()),
+    ASSASSIN (new Assassin()),
+    ELEMENTALIST (new Elementalist()),
+    ARBALIST (new Arbalist()),
+    GHOST (new Ghost()),
+    BLASTER (new Blaster()),
+    YETI (new Yeti()),
+    BOMBERMAN (new Bomber()),
     //FARMER (),
     //FISHERMAN (),
     //POSEIDON (),
@@ -33,10 +35,9 @@ public enum KitType {
     //MAD_SCIENTIST (),
 
     //Legendary Kits
-    //DARK_KNIGHT (),
-    //GRIM_REAPER (),
-    //BLACK_DRAGON (),
-    ;
+    DARK_KNIGHT (new DarkKnight()),
+    GRIM_REAPER (new GrimReaper()),
+    BLACK_DRAGON (new BlackDragon());
 
     private Kit kit;
 

@@ -9,7 +9,7 @@ import me.maddinoriginal.newkitpvp.events.KitBuyEvent;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.kits.KitType;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
-import me.maddinoriginal.newkitpvp.utils.KitPlayerManager;
+import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -75,7 +75,7 @@ public class BuyKitGUI extends Menu {
 
     private ItemStack getInfo() {
         ItemBuilder ib = new ItemBuilder(Material.PAPER);
-        int currentCoins = KitPlayerManager.getInstance().getKitPlayer(p).getData().getCoins().getAmount();
+        int currentCoins = KitPlayerManager.getInstance().getKitPlayer(p).getPlayerData().getCoins().getAmount();
 
         ib.setDisplayName(ChatColor.BOLD + "" + ChatColor.YELLOW + "Are you sure?");
         ib.setLore(ChatColor.GRAY + "Buying this kit will unlock",

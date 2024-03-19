@@ -1,6 +1,6 @@
 package me.maddinoriginal.newkitpvp.kits.standardkits;
 
-import me.maddinoriginal.newkitpvp.abilities.items.DashAbilityItem;
+import me.maddinoriginal.newkitpvp.abilityitems.items.DashAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
@@ -11,10 +11,16 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * Melee Kit with a stone sword
- * mostly iron armor, except for diamond chestplate
- * Ability: TODO
- * Passive: TODO
+ * Type= Melee Kit with a stone sword
+ * Armor= Mostly iron armor, except for diamond chestplate
+ *
+ * Strong against= Swordsman, Barbarian
+ * Weak against= Archer, Hunter
+ *
+ * Active Ability= TODO
+ * Supportive Passive= TODO
+ * Survivability Passive=
+ * Finisher Passive=
  */
 
 public class Tank extends Kit {

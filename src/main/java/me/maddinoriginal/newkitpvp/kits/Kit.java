@@ -31,7 +31,7 @@ public abstract class Kit {
         }
         switch (getCategory()) {
             case ADVANCED:
-                return 300;
+                return 350;
             case LEGENDARY:
                 return 2000;
             default:

@@ -1,7 +1,7 @@
 package me.maddinoriginal.newkitpvp.kits.standardkits;
 
 import com.google.common.base.Strings;
-import me.maddinoriginal.newkitpvp.abilities.items.DashAbilityItem;
+import me.maddinoriginal.newkitpvp.abilityitems.items.DashAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
@@ -12,10 +12,16 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * Melee Kit with an iron sword
- * mostly iron armor, except for gold helmet (and chainmail leggings)
- * Ability: Dash straight in front
- * Passive: No Knockback from projectiles
+ * Type= Melee Kit with an iron sword
+ * Armor= Mostly iron armor, except for gold helmet (and chainmail leggings)
+ *
+ * Strong against= Archer, Hunter
+ * Weak against= Tank, Barbarian
+ *
+ * Active Ability= Dash straight in front
+ * Supportive Passive= No Knockback from projectiles
+ * Survivability Passive= Getting hit by arrows has a X% chance to grant regeneration for 2 seconds
+ * Finisher Passive= Killing enemies resets the active ability cooldown instantly
  */
 
 public class Swordsman extends Kit {
@@ -92,6 +98,7 @@ public class Swordsman extends Kit {
                 .setLore(ChatColor.RESET + "" + ChatColor.DARK_GRAY + Strings.repeat('\u2594' + "", 16),
                         ChatColor.WHITE + "Hergestellt aus dem besten Stahl",
                         ChatColor.WHITE + "des ganzen Landes")
+                .addEnchantment(Enchantment.SWEEPING_EDGE, 3, false)
                 .setUnbreakable(true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();

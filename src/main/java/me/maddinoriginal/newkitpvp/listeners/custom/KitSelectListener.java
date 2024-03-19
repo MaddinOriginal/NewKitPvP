@@ -2,6 +2,8 @@ package me.maddinoriginal.newkitpvp.listeners.custom;
 
 import me.maddinoriginal.newkitpvp.events.KitSelectEvent;
 import me.maddinoriginal.newkitpvp.kits.KitType;
+import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
+import me.maddinoriginal.newkitpvp.data.PlayerState;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,6 +22,12 @@ public class KitSelectListener implements Listener {
         }
 
         kit.getKit().setPlayerKit(p);
-        p.teleport(new Location(p.getWorld(), 0, 100, 0)); //TODO change teleport coordinates
+        KitPlayerManager.getInstance().getKitPlayer(p).setCurrentKit(kit);
+        joinArena(p);
+    }
+
+    private void joinArena(Player p) {
+        p.teleport(new Location(p.getWorld(), 0.5, -14, 0.5)); //TODO change teleport coordinates according to map
+        KitPlayerManager.getInstance().getKitPlayer(p).setPlayerState(PlayerState.INGAME);
     }
 }

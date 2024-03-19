@@ -1,7 +1,7 @@
 package me.maddinoriginal.newkitpvp.kits.advancedkits;
 
 import com.google.common.base.Strings;
-import me.maddinoriginal.newkitpvp.abilities.items.MagmaLauncherAbilityItem;
+import me.maddinoriginal.newkitpvp.abilityitems.items.MagmaLauncherAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
@@ -10,6 +10,19 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+
+/**
+ * Type=
+ * Armor=
+ *
+ * Strong against=
+ * Weak against=
+ *
+ * Active Ability=
+ * Supportive Passive=
+ * Survivability Passive=
+ * Finisher Passive=
+ */
 
 public class Pyro extends Kit {
 
@@ -44,32 +57,32 @@ public class Pyro extends Kit {
 
         //Create boots and add them to the returning (armor contents) ItemStack
         armor[0] = new ItemBuilder(Material.LEATHER_BOOTS)
-                .setDisplayName(ChatColor.YELLOW + " ")
+                .setDisplayName(ChatColor.YELLOW + getName() + " Boots")
                 .setLeatherArmorColor(178, 124, 0)
-                .setUnbreakable()
+                .setUnbreakable(true)
                 .addItemFlag(ItemFlag.HIDE_UNBREAKABLE)
                 .build();
 
         //Create leggings and add them to the returning (armor contents) ItemStack
         armor[1] = new ItemBuilder(Material.CHAINMAIL_LEGGINGS)
-                .setDisplayName(ChatColor.YELLOW + " ")
-                .setUnbreakable()
+                .setDisplayName(ChatColor.YELLOW + getName() + " Leggings")
+                .setUnbreakable(true)
                 .addItemFlag(ItemFlag.HIDE_UNBREAKABLE)
                 .build();
 
         //Create chest plate and add them to the returning (armor contents) ItemStack
         armor[2] = new ItemBuilder(Material.LEATHER_CHESTPLATE)
-                .setDisplayName(ChatColor.YELLOW + " ")
+                .setDisplayName(ChatColor.YELLOW + getName() + " Chestplate")
                 .setLeatherArmorColor(69, 75, 223)
-                .setUnbreakable()
+                .setUnbreakable(true)
                 .addItemFlag(ItemFlag.HIDE_UNBREAKABLE)
                 .build();
 
         //Create helmet and add them to the returning (armor contents) ItemStack
         armor[3] = new ItemBuilder(Material.LEATHER_HELMET)
-                .setDisplayName(ChatColor.YELLOW + " ")
+                .setDisplayName(ChatColor.YELLOW + getName() + " Helmet")
                 .setLeatherArmorColor(44, 76, 145)
-                .setUnbreakable()
+                .setUnbreakable(true)
                 .addItemFlag(ItemFlag.HIDE_UNBREAKABLE)
                 .build();
 
@@ -85,7 +98,7 @@ public class Pyro extends Kit {
                 .setLore(ChatColor.DARK_GRAY + Strings.repeat('\u2594' + "", 16),
                         ChatColor.YELLOW + "Made from wood that cannot be burned")
                 .addEnchantment(Enchantment.DAMAGE_ALL, 1, true)
-                .setUnbreakable()
+                .setUnbreakable(true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
                 .build();
 
@@ -93,7 +106,7 @@ public class Pyro extends Kit {
                 .setDisplayName(ChatColor.YELLOW + getName() + " Bow")
                 .setLore(ChatColor.DARK_GRAY + Strings.repeat('\u2594' + "", 16),
                         ChatColor.YELLOW + "Made from wood that cannot be burned")
-                .setUnbreakable()
+                .setUnbreakable(true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
                 .build();
 

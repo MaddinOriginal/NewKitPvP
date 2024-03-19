@@ -10,7 +10,7 @@ import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.kits.KitType;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
-import me.maddinoriginal.newkitpvp.utils.KitPlayerManager;
+import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
 import org.apache.commons.text.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -66,11 +66,11 @@ public class KitSelectorGUI extends Menu {
                     MenuManager.openMenu(KitSettingsGUI.class, playerMenuUtility.getOwner());
                 } else {
                     //give player kit items / armor / inventory
-                    if (kitType.getKit().getCategory() == KitCategory.STANDARD || KitPlayerManager.getInstance().getKitPlayer(p).getData().hasKitUnlocked(kitType)) {
+                    if (kitType.getKit().getCategory() == KitCategory.STANDARD || KitPlayerManager.getInstance().getKitPlayer(p).getPlayerData().hasKitUnlocked(kitType)) {
                         p.closeInventory();
                         Bukkit.getServer().getPluginManager().callEvent(new KitSelectEvent(p, kitType));
                     } else {
-                        int currentCoins = KitPlayerManager.getInstance().getKitPlayer(p).getData().getCoins().getAmount();
+                        int currentCoins = KitPlayerManager.getInstance().getKitPlayer(p).getPlayerData().getCoins().getAmount();
                         if (currentCoins >= getKitPrice(kitType.getKit())) {
                             playerMenuUtility.setData("kitToBuy", kitType);
                             MenuManager.openMenu(BuyKitGUI.class, p);
@@ -152,7 +152,7 @@ public class KitSelectorGUI extends Menu {
         }
         else {
             String priceLore = ChatColor.GRAY + "Price: " + ChatColor.GOLD + getKitPrice(kit) + " coins";
-            if (KitPlayerManager.getInstance().getKitPlayer(p).getData().hasKitUnlocked(kitType)) {
+            if (KitPlayerManager.getInstance().getKitPlayer(p).getPlayerData().hasKitUnlocked(kitType)) {
                 for (ChatColor color : ChatColor.values()) {
                     priceLore = priceLore.replace(color.toString(), color + "" + ChatColor.STRIKETHROUGH);
                 }

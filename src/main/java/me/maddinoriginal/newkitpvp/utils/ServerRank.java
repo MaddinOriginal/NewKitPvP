@@ -9,7 +9,7 @@ public enum ServerRank {
     MODERATOR (ChatColor.DARK_GREEN + "[MOD]"),
     MVP (ChatColor.AQUA + "[MVP]"),
     VIP (ChatColor.GREEN + "[VIP]"),
-    DEFAULT (null);
+    DEFAULT ("");
 
     private String tag;
 

@@ -1,6 +1,6 @@
 package me.maddinoriginal.newkitpvp.kits.standardkits;
 
-import me.maddinoriginal.newkitpvp.abilities.items.MinigunAbilityItem;
+import me.maddinoriginal.newkitpvp.abilityitems.items.MinigunAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
@@ -11,10 +11,16 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * Ranged Kit with a strong bow and a weak wooden sword
- * mostly blue-ish leather armor, except for chainmail leggings
- * Ability: Minigun to spam arrows with bow
- * Passive: Gets arrows after X seconds
+ * Type= Ranged Kit with a strong bow and a weak wooden sword
+ * Armor= Mostly blue-ish leather armor, except for chainmail leggings
+ *
+ * Strong against= Tank, Barbarian
+ * Weak against= Swordsman, Hunter
+ *
+ * Active Ability= Minigun to spam arrows with bow
+ * Supportive Passive= Gets arrows after X seconds
+ * Survivability Passive= Grants speed I Resistance I when out of arrows
+ * Finisher Passive= Headshots on enemies without a helmet deal extra damage
  */
 
 public class Archer extends Kit {

@@ -7,5 +7,8 @@ description: A Minecraft Spigot Server Plugin for a PvP minigame with kits and s
 
 commands:
   kitpvp:
-    aliases: []
+    aliases: [kpvp, kp]
     description: The main command for KitPvP.
+  lobby:
+    aliases: [l, spawn, leave, quit, hub, respawn]
+    description: Teleports a player to the lobby

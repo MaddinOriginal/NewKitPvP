@@ -3,12 +3,18 @@ package me.maddinoriginal.newkitpvp.utils;
 import me.maddinoriginal.newkitpvp.NewKitPvP;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ArmorMeta;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.trim.ArmorTrim;
+import org.bukkit.inventory.meta.trim.TrimMaterial;
+import org.bukkit.inventory.meta.trim.TrimPattern;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -111,18 +117,62 @@ public class ItemBuilder {
         }
         return this;
     }
+    public ItemBuilder setLeatherArmorColor(int red, int green, int blue, boolean hideAttribute) {
+        setLeatherArmorColor(red, green, blue);
+        if (hideAttribute)
+            meta.addItemFlags(ItemFlag.HIDE_DYE);
+        return this;
+    }
+
+    /**
+     * Sets the armor trim of an armor (Only if item is an armor item)
+     * @param trim the armor trim
+     */
+    public ItemBuilder setArmorTrim(ArmorTrim trim, boolean hideAttribute) {
+        if (meta instanceof ArmorMeta) {
+            ((ArmorMeta) meta).setTrim(trim);
+        } else {
+            System.out.println(NewKitPvP.getInstance().getPrefix() + " item in ItemBuilder is not armor meta!");
+        }
+        if (hideAttribute)
+            meta.addItemFlags(ItemFlag.HIDE_ARMOR_TRIM);
+        return this;
+    }
+    public ItemBuilder setArmorTrim(ArmorTrim trim) {
+        setArmorTrim(trim, false);
+        return this;
+    }
+    /**
+     * Sets the armor trim of an armor (Only if item is an armor item)
+     * @param mat the material for the armor trim
+     * @param pat the pattern for the armor trim
+     */
+    public ItemBuilder setArmorTrim(TrimMaterial mat, TrimPattern pat) {
+        if (meta instanceof ArmorMeta) {
+            ((ArmorMeta) meta).setTrim(new ArmorTrim(mat, pat));
+        } else {
+            System.out.println(NewKitPvP.getInstance().getPrefix() + " item in ItemBuilder is not armor meta!");
+        }
+        return this;
+    }
 
     /**
      * Makes the itemstack unbreakable
-     * If true, the item does not lose durability ever
+     * @param unbreakable if true, the item does not lose durability ever
      */
-    public ItemBuilder setUnbreakable() {
-        meta.setUnbreakable(true);
+    public ItemBuilder setUnbreakable(boolean unbreakable) {
+        meta.setUnbreakable(unbreakable);
         return this;
     }
-    public ItemBuilder setUnbreakable(boolean hide) {
-        meta.setUnbreakable(true);
-        if (hide) { meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE); }
+    /**
+     * Makes the itemstack unbreakable
+     * @param unbreakable if true, the item does not lose durability ever
+     * @param hide if the unbreakable tag should display in the item lore
+     */
+    public ItemBuilder setUnbreakable(boolean unbreakable, boolean hide) {
+        meta.setUnbreakable(unbreakable);
+        if (hide)
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         return this;
     }
 
@@ -142,6 +192,21 @@ public class ItemBuilder {
      */
     public ItemBuilder hideAttributes() {
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        return this;
+    }
+
+    public ItemBuilder hideArmorTrim() {
+        meta.addItemFlags(ItemFlag.HIDE_ARMOR_TRIM);
+        return this;
+    }
+
+    /**
+     * Sets a value for specified NamespacedKey in the PersistentDataContainer of the item
+     * @param key the NamespacedKey that specifies the namespace
+     * @param value the String value for the specified namespace
+     */
+    public ItemBuilder setPersistentData(NamespacedKey key, String value) {
+        meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, value);
         return this;
     }
 
