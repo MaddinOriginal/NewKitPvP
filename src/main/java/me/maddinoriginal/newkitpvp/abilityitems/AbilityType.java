@@ -14,16 +14,16 @@ public enum AbilityType {
     //SHIELD,
 
     //Advanced Kit Abilities
-    MAGMA_LAUNCHER (new MagmaLauncherAbility()),         //Pyro Kit
+    MAGMA_LAUNCHER (new MagmaLauncherAbility()),        //Pyro Kit
     TELEPORT_FORWARD (new TeleportForwardAbility()),    //Teleporter Kit
-    TELEPORT_BEHIND (new TeleportBehindAbility()),      //Ninja Kit
+    TELEPORT_BEHIND (new TeleportBehindAbility()),      //Assassin Kit
     //ENDERARROW,
     SCARE_OFF (new ScareOffAbility()),                  //Ghost Kit
     AIRSTREAM (new AirStreamAbility()),                 //Feather Kit
-    //RAGE,
-    DETONATE (new DetonationAbility()),
-    THROW_POTION (new ThrowNegativePotionAbility()),
-    WOLF_HUNT (new WolfHuntAbility()),
+    SNOWSTORM (new SnowstormAbility()),                 //Yeti Kit
+    DETONATE (new DetonationAbility()),                 //Bomber Kit
+    THROW_POTION (new ThrowNegativePotionAbility()),    //Elementalist Kit
+    WOLF_HUNT (new WolfHuntAbility()),                  //Arbalist Kit (?)
 
     //Other (Shop Items and Powerups)
     //SMASHER,
