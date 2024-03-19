@@ -2,10 +2,7 @@ package me.maddinoriginal.newkitpvp.abilityitems.abilities;
 
 import me.maddinoriginal.newkitpvp.NewKitPvP;
 import me.maddinoriginal.newkitpvp.abilityitems.Ability;
-import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -80,7 +77,9 @@ public class ThrowNegativePotionAbility extends Ability {
     }
 
     private void launchPotion(Player p) {
-        Vector dir = p.getLocation().getDirection().normalize().setY(0.2).normalize();
+        Location loc = p.getEyeLocation();
+        loc.setPitch(-10);
+        Vector dir = loc.getDirection().normalize();
         Vector v = dir.clone();
 
         double x = 0.03 + random.nextDouble(0.05);
@@ -90,7 +89,7 @@ public class ThrowNegativePotionAbility extends Ability {
         v.setX(v.getX() + (random.nextBoolean() ? x : -x));
         v.setY(v.getY() + (random.nextBoolean() ? y : -y));
         v.setZ(v.getZ() + (random.nextBoolean() ? z : -z));
-        v.multiply(0.75 + random.nextDouble(0.76));
+        v.multiply(0.8 + random.nextDouble(0.71));
 
         ItemStack item = createRandomPotion();
         ThrownPotion thrownPotion = p.launchProjectile(ThrownPotion.class);
