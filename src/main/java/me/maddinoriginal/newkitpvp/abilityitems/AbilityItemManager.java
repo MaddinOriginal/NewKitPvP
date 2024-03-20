@@ -36,8 +36,8 @@ public class AbilityItemManager {
     private void setup() {
         registerItems(new AirStreamAbilityItem(), new DashAbilityItem(), new DetonationAbilityItem(),
                 new MagmaLauncherAbilityItem(), new MinigunAbilityItem(), new PlantBushAbilityItem(),
-                new ScareOffAbilityItem(), new TeleportBehindAbilityItem(), new TeleportForwardAbilityItem(),
-                new ThrowNegativePotionAbilityItem(), new WolfHuntAbilityItem());
+                new ScareOffAbilityItem(), new SnowstormAbilityItem(), new TeleportBehindAbilityItem(),
+                new TeleportForwardAbilityItem(), new ThrowNegativePotionAbilityItem(), new WolfHuntAbilityItem());
     }
 
     public NamespacedKey getAbilityItemKey() {

@@ -11,6 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class SnowstormAbility extends Ability {
 
+    private int timer;
     private double multWidth = 2.5;
     private double multHeight = 2.5;
 
@@ -33,11 +34,19 @@ public class SnowstormAbility extends Ability {
     public boolean useAbility(Player player) {
         double radius = 1.2D;
 
+        timer = 8;
+
         new BukkitRunnable() {
 
             @Override
             public void run() {
+                if (timer <= 0) {
+                    cancel();
+                }
+                timer--;
+
                 player.getNearbyEntities(radius, radius, radius);
+                drawSphere(player.getLocation());
             }
         }.runTaskTimer(NewKitPvP.getInstance(), 0, 4);
         return false;

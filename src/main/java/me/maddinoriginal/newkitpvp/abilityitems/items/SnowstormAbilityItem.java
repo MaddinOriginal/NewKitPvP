@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SnowstormAbilityItem extends AbilityItem {
+
     @Override
     public String getName() {
         return "Snowstorm Ability";
