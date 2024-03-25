@@ -1,9 +1,15 @@
 package me.maddinoriginal.newkitpvp.listeners;
 
+import me.maddinoriginal.newkitpvp.NewKitPvP;
+import me.maddinoriginal.newkitpvp.data.KitPlayer;
+import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
+import me.maddinoriginal.newkitpvp.kits.KitType;
 import me.maddinoriginal.newkitpvp.utils.Helper;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.AbstractArrow;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,8 +20,10 @@ import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +42,33 @@ public class MiscellaneousListener implements Listener {
     public void onVoidDamage(EntityDamageEvent e) {
         if (e.getCause().equals(EntityDamageEvent.DamageCause.VOID)) {
             e.setDamage(Integer.MAX_VALUE);
+        }
+    }
+
+    @EventHandler
+    public void onArrowHit(ProjectileHitEvent e) {
+        if (!(e.getEntity().getShooter() instanceof Player) || !(e.getEntity() instanceof Arrow)) {
+            return;
+        }
+
+        Player p = (Player) e.getEntity().getShooter();
+        KitPlayer kp = KitPlayerManager.getInstance().getKitPlayer(p);
+        Arrow arrow = (Arrow) e.getEntity();
+
+        if (kp.getCurrentKit().equals(KitType.BOMBERMAN)) {
+            arrow.getWorld().createExplosion(arrow.getLocation(), 2.5f, false, false, p);
+            arrow.setPickupStatus(AbstractArrow.PickupStatus.DISALLOWED);
+            if (e.getHitEntity() == null) {
+                new BukkitRunnable() {
+
+                    @Override
+                    public void run() {
+                        arrow.remove();
+                    }
+                }.runTaskLater(NewKitPvP.getInstance(), 3);
+            } else {
+                e.setCancelled(true);
+            }
         }
     }
 

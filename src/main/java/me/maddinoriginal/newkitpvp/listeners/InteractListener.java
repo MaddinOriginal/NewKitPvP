@@ -3,6 +3,7 @@ package me.maddinoriginal.newkitpvp.listeners;
 import me.maddinoriginal.newkitpvp.NewKitPvP;
 import me.maddinoriginal.newkitpvp.abilityitems.AbilityItem;
 import me.maddinoriginal.newkitpvp.abilityitems.AbilityItemManager;
+import me.maddinoriginal.newkitpvp.kits.KitType;
 import me.maddinoriginal.newkitpvp.powerup.PowerUpManager;
 import me.maddinoriginal.newkitpvp.powerup.PowerUpType;
 import me.maddinoriginal.newkitpvp.data.KitPlayer;
@@ -11,12 +12,14 @@ import me.maddinoriginal.newkitpvp.utils.LobbyManager;
 import me.maddinoriginal.newkitpvp.data.PlayerState;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -62,6 +65,21 @@ public class InteractListener implements Listener {
             if (container.has(key, PersistentDataType.STRING)) {
                 LobbyManager.getInstance().performAction(p, container.get(key, PersistentDataType.STRING));
             }
+        }
+    }
+
+    @EventHandler
+    public void onArrowShoot(EntityShootBowEvent e) {
+        if (!(e.getEntity() instanceof Player) || !(e.getProjectile() instanceof Arrow)) {
+            return;
+        }
+
+        Player p = (Player) e.getEntity();
+        KitPlayer kp = KitPlayerManager.getInstance().getKitPlayer(p);
+
+        if (kp.getCurrentKit().equals(KitType.BOMBERMAN)) {
+            Arrow arrow = (Arrow) e.getProjectile();
+            arrow.setColor(Color.MAROON);
         }
     }
 

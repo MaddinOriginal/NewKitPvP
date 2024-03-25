@@ -1,6 +1,10 @@
 package me.maddinoriginal.newkitpvp.listeners;
 
 import me.maddinoriginal.newkitpvp.NewKitPvP;
+import me.maddinoriginal.newkitpvp.data.KitPlayer;
+import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
+import me.maddinoriginal.newkitpvp.kits.KitType;
+import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Item;
@@ -9,9 +13,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Random;
@@ -49,7 +55,27 @@ public class DeathRespawnListener implements Listener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
-        createDeathEffect(e.getEntity());
+        Player p = e.getEntity();
+        KitPlayer kp = KitPlayerManager.getInstance().getKitPlayer(p);
+
+        createDeathEffect(p);
+
+        if (e.getEntity().getKiller() != null) {
+            Player killer = e.getEntity().getKiller();
+            KitPlayer killer_kp = KitPlayerManager.getInstance().getKitPlayer(killer);
+
+            if (killer_kp.getCurrentKit().equals(KitType.BOMBERMAN)) {
+                ItemStack item = killer.getInventory().getItem(killer.getInventory().first(Material.ARROW));
+                if (item != null) {
+                    item.setAmount(item.getAmount() + 5);
+                } else {
+                    killer.getInventory().addItem(new ItemBuilder(Material.ARROW)
+                            .setAmount(5)
+                            .setDisplayName(ChatColor.YELLOW + KitType.BOMBERMAN.getKit().getName() + " Arrow")
+                            .build());
+                }
+            }
+        }
     }
 
     private void createDeathEffect(Player killed) {
@@ -72,11 +98,11 @@ public class DeathRespawnListener implements Listener {
         for (int i = 0; i < 8 + random.nextInt(4); i++) {
             double chance = random.nextDouble();
             ItemStack item = new ItemStack(Material.DIAMOND);
-            if (0 <= chance && chance < 0.66) {
+            if (chance < 0.66) {
                 item.setType(Material.REDSTONE);
-            } else if (0.66 <= chance && chance < 0.85) {
+            } else if (chance < 0.85) {
                 item.setType(Material.BONE);
-            } else if (0.85 <= chance && chance < 1) {
+            } else {
                 item.setType(Material.BEEF);
             }
 

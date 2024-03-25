@@ -7,14 +7,12 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ArmorMeta;
-import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.*;
 import org.bukkit.inventory.meta.trim.ArmorTrim;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -160,6 +158,16 @@ public class ItemBuilder {
             ((ArmorMeta) meta).setTrim(new ArmorTrim(mat, pat));
         } else {
             System.out.println(NewKitPvP.getInstance().getPrefix() + " item in ItemBuilder is not armor meta!");
+        }
+        return this;
+    }
+
+    public ItemBuilder setTippedArrowColor(PotionType potionType, boolean removeAllEffects) {
+        if (meta instanceof PotionMeta) {
+            ((PotionMeta) meta).setBasePotionType(potionType);
+            if (removeAllEffects) {
+                ((PotionMeta) meta).clearCustomEffects();
+            }
         }
         return this;
     }

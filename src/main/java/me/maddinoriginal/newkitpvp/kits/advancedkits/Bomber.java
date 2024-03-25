@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
+import org.bukkit.potion.PotionType;
 
 /**
  * Type=
@@ -21,10 +22,10 @@ import org.bukkit.inventory.meta.trim.TrimPattern;
  * Strong against=
  * Weak against=
  *
- * Active Ability=
- * Supportive Passive=
- * Survivability Passive=
- * Finisher Passive=
+ * Active Ability= Detonate after X seconds
+ * Supportive Passive= Arrows shot will explode on hit
+ * Survivability Passive= No damage from explosions
+ * Finisher Passive=killing enemies gives back X arrows
  */
 
 public class Bomber extends Kit {
@@ -107,7 +108,7 @@ public class Bomber extends Kit {
 
     @Override
     public ItemStack[] getKitItems() {
-        ItemStack[] items = new ItemStack[2];
+        ItemStack[] items = new ItemStack[9];
 
         items[0] = new ItemBuilder(Material.WOODEN_AXE)
                 .setDisplayName(ChatColor.YELLOW + getName() + " Axe")
@@ -118,7 +119,26 @@ public class Bomber extends Kit {
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
-        items[1] = new DetonationAbilityItem().getItem();
+        items[1] = new ItemBuilder(Material.CROSSBOW)
+                .setDisplayName(ChatColor.YELLOW + "Bomb-Arrow Launcher")
+                .setLore(ChatColor.RESET + "" + ChatColor.DARK_GRAY + Strings.repeat('\u2594' + "", 16),
+                        ChatColor.GRAY + "Shoots arrows that explode")
+
+                .setUnbreakable(true, true)
+                .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+
+        items[2] = new DetonationAbilityItem().getItem();
+
+        items[3] = null;
+        items[4] = null;
+        items[5] = null;
+        items[6] = null;
+        items[7] = null;
+        items[8] = new ItemBuilder(Material.ARROW)
+                .setAmount(11)
+                .setDisplayName(ChatColor.YELLOW + getName() + " Arrow")
+                .build();
 
         return items;
     }
