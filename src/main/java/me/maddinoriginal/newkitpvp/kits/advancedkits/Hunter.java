@@ -1,9 +1,6 @@
 package me.maddinoriginal.newkitpvp.kits.advancedkits;
 
-import com.google.common.base.Strings;
-import me.maddinoriginal.newkitpvp.abilityitems.items.AirStreamAbilityItem;
-import me.maddinoriginal.newkitpvp.abilityitems.items.EvokerFangsAbilityItem;
-import me.maddinoriginal.newkitpvp.abilityitems.items.PlantBushAbilityItem;
+import me.maddinoriginal.newkitpvp.abilityitems.items.WolfHuntAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
@@ -16,43 +13,43 @@ import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
 
 /**
- * Type=
- * Armor=
+ * Type= Ranged Kit with a crossbow
+ * Armor= Mostly green-ish leather armor with some brown tones
  *
- * Strong against=
- * Weak against=
+ * Strong against= Archer, Tank
+ * Weak against= Swordsman, Barbarian
  *
- * Active Ability=
- * Supportive Passive=
- * Survivability Passive=
- * Finisher Passive=
+ * Active Ability= Plants a bush that slows down enemies and hurts half a heart when they try to move
+ * Supportive Passive= Shooting enemies in bushes regains arrows
+ * Survivability Passive= Shooting enemies regains health
+ * Finisher Passive= Shooting enemies while they run away slows them for X seconds
  */
 
-public class Arbalist extends Kit {
+public class Hunter extends Kit {
 
     @Override
     public String getName() {
-        return "Arbalist";
+        return "Hunter";
     }
 
     @Override
     public String getTag() {
-        return "[ARB]";
+        return "[HUNT]";
     }
 
     @Override
     public Material getMaterial() {
-        return Material.CROSSBOW;
+        return Material.BONE;
     }
 
     @Override
     public KitCategory getCategory() {
-        return KitCategory.STANDARD;
+        return KitCategory.ADVANCED;
     }
 
     @Override
     public String getDescription() {
-        return "An arbalist is one who shoots a crossbow. Google it, if you never heard it. Can plant bushes to slow down enemies.";
+        return "On a hunt with its crossbow. Can summon wolfs to hunt their prey with him.";
     }
 
     @Override
@@ -63,7 +60,7 @@ public class Arbalist extends Kit {
         armor[0] = new ItemBuilder(Material.LEATHER_BOOTS)
                 .setDisplayName(ChatColor.YELLOW + getName() + " Boots")
 
-                .setLeatherArmorColor(60, 60, 190, true)
+                .setLeatherArmorColor(150, 150, 60, true)
 
                 .setArmorTrim(TrimMaterial.EMERALD, TrimPattern.RIB)
                 .hideArmorTrim()
@@ -76,10 +73,12 @@ public class Arbalist extends Kit {
         armor[1] = new ItemBuilder(Material.LEATHER_LEGGINGS)
                 .setDisplayName(ChatColor.YELLOW + getName() + " Leggings")
 
-                .setLeatherArmorColor(60, 0, 233, true)
+                .setLeatherArmorColor(0, 120, 20, true)
 
                 .setArmorTrim(TrimMaterial.EMERALD, TrimPattern.TIDE)
                 .hideArmorTrim()
+
+                .addEnchantment(Enchantment.PROTECTION_PROJECTILE, 3, false)
 
                 .setUnbreakable(true, true)
                 .hideAttributes()
@@ -89,7 +88,7 @@ public class Arbalist extends Kit {
         armor[2] = new ItemBuilder(Material.LEATHER_CHESTPLATE)
                 .setDisplayName(ChatColor.YELLOW + getName() + " Chestplate")
 
-                .setLeatherArmorColor(0, 60, 215, true)
+                .setLeatherArmorColor(25, 180, 20, true)
 
                 .setArmorTrim(TrimMaterial.EMERALD, TrimPattern.SNOUT)
                 .hideArmorTrim()
@@ -102,10 +101,12 @@ public class Arbalist extends Kit {
         armor[3] = new ItemBuilder(Material.LEATHER_HELMET)
                 .setDisplayName(ChatColor.YELLOW + getName() + " Helmet")
 
-                .setLeatherArmorColor(35, 35, 166, true)
+                .setLeatherArmorColor(90, 120, 60, true)
 
                 .setArmorTrim(TrimMaterial.EMERALD, TrimPattern.RIB)
                 .hideArmorTrim()
+
+                .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1, false)
 
                 .setUnbreakable(true,true )
                 .hideAttributes()
@@ -116,25 +117,34 @@ public class Arbalist extends Kit {
 
     @Override
     public ItemStack[] getKitItems() {
-        ItemStack[] items = new ItemStack[8];
+        ItemStack[] items = new ItemStack[9];
 
         items[0] = new ItemBuilder(Material.CROSSBOW)
                 .setDisplayName(ChatColor.YELLOW + getName() + " Crossbow")
-                .setLore(ChatColor.RESET + "" + ChatColor.DARK_GRAY + Strings.repeat('\u2594' + "", 16),
-                        ChatColor.GRAY + "Shoots arrows lol")
-
-                .addEnchantment(Enchantment.QUICK_CHARGE, 2, false)
 
                 .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
-        items[1] = new PlantBushAbilityItem().getItem();
+        items[1] = new WolfHuntAbilityItem().getItem();
+
+        items[2] = null;
+        items[3] = null;
+
+        items[4] = new ItemBuilder(Material.RABBIT_FOOT)
+                .setDisplayName(ChatColor.YELLOW + "Lucky Charm")
+                .addEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 3, true)
+                .build();
+
+        items[5] = null;
+        items[6] = null;
 
         items[7] = new ItemBuilder(Material.ARROW)
+                .setAmount(25)
                 .setDisplayName(ChatColor.YELLOW + getName() + " Arrow")
-                .setAmount(12)
                 .build();
+
+        items[8] = null;
 
         return items;
     }
