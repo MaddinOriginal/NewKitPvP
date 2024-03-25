@@ -16,16 +16,16 @@ import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
 
 /**
- * Type=
+ * Type= Ranged Kit with a crossbow
  * Armor=
  *
- * Strong against=
- * Weak against=
+ * Strong against= Archer, Tank
+ * Weak against= Swordsman, Barbarian
  *
- * Active Ability=
- * Supportive Passive=
- * Survivability Passive=
- * Finisher Passive=
+ * Active Ability= Plants a bush that slows down enemies and hurts half a heart when they try to move
+ * Supportive Passive= Shooting enemies in bushes regains arrows TODO
+ * Survivability Passive= Shooting enemies regains health //TODO
+ * Finisher Passive= Shooting enemies has a 33% chance to spawn a bush under them (if possible)
  */
 
 public class Arbalist extends Kit {

@@ -19,10 +19,10 @@ import org.bukkit.inventory.meta.trim.TrimPattern;
  * Strong against= Archer, Tank
  * Weak against= Swordsman, Barbarian
  *
- * Active Ability= Plants a bush that slows down enemies and hurts half a heart when they try to move
- * Supportive Passive= Shooting enemies in bushes regains arrows
- * Survivability Passive= Shooting enemies regains health
- * Finisher Passive= Shooting enemies while they run away slows them for X seconds
+ * Active Ability= summon 5 wolves with Speed effect that hunt nearby enemies
+ * Supportive Passive= Sneaking twice in quick succession lets you shoot a homing arrow
+ * Survivability Passive=
+ * Finisher Passive=
  */
 
 public class Hunter extends Kit {
