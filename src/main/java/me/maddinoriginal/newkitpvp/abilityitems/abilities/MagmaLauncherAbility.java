@@ -3,6 +3,7 @@ package me.maddinoriginal.newkitpvp.abilityitems.abilities;
 import me.maddinoriginal.newkitpvp.NewKitPvP;
 import me.maddinoriginal.newkitpvp.abilityitems.Ability;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.MagmaCube;
 import org.bukkit.entity.Player;
@@ -14,10 +15,10 @@ import java.util.ArrayList;
 public class MagmaLauncherAbility extends Ability {
 
     private Vector[] velocities = {
-            new Vector(0.25, 0.75, 0.25),
-            new Vector(-0.25, 0.75, 0.25),
-            new Vector(0.25, 0.75, -0.25),
-            new Vector(-0.25, 0.75, -0.25)
+            new Vector(0.25, 0.4, 0.25),
+            new Vector(-0.25, 0.4, 0.25),
+            new Vector(0.25, 0.4, -0.25),
+            new Vector(-0.25, 0.4, -0.25)
     };
 
     @Override
@@ -31,9 +32,9 @@ public class MagmaLauncherAbility extends Ability {
         slime.setSize(5);
         slime.setInvulnerable(true);
         slime.setVelocity(new Vector(
-                p.getLocation().getDirection().getX() * 2.5,
-                1.2f,
-                p.getLocation().getDirection().getZ() * 2.5)
+                p.getLocation().getDirection().getX() * 1.8,
+                0.4f,
+                p.getLocation().getDirection().getZ() * 1.8)
         );
 
         new BukkitRunnable() {
@@ -41,7 +42,8 @@ public class MagmaLauncherAbility extends Ability {
             public void run() {
                 Location loc = slime.getLocation();
                 slime.remove();
-                loc.getWorld().createExplosion(loc, 4.2f, false, false);
+                loc.getWorld().createExplosion(loc, 2.8f, true, true);
+                loc.getWorld().spawnParticle(Particle.FLAME, loc, 64, 0.75, 0.66, 0.75, 0.09);
 
                 for (int i = 0; i < 4; i++) {
                     MagmaCube miniSlime = (MagmaCube) loc.getWorld().spawnEntity(loc, EntityType.MAGMA_CUBE);
@@ -57,12 +59,13 @@ public class MagmaLauncherAbility extends Ability {
                         for (MagmaCube slime : miniSlimes) {
                             Location loc = slime.getLocation();
                             slime.remove();
-                            loc.getWorld().createExplosion(loc, 3.5f, false, false);
+                            loc.getWorld().createExplosion(loc, 2.2f, true, true);
+                            loc.getWorld().spawnParticle(Particle.FLAME, loc, 16, 0.33, 0.33, 0.33, 0.07);
                         }
                     }
-                }.runTaskLater(NewKitPvP.getInstance(), 20);
+                }.runTaskLater(NewKitPvP.getInstance(), 15);
             }
-        }.runTaskLater(NewKitPvP.getInstance(), 30);
+        }.runTaskLater(NewKitPvP.getInstance(), 20);
         return true;
     }
 
@@ -78,6 +81,6 @@ public class MagmaLauncherAbility extends Ability {
 
     @Override
     public int getCooldown() {
-        return 90;
+        return 125;
     }
 }

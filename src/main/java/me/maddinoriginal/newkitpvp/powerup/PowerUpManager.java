@@ -154,7 +154,7 @@ public class PowerUpManager {
 
     private void spawnPowerUp(ArmorStand armorStand, PowerUpType type) {
         ItemStack item = new ItemStack(type.getMaterial());
-        item.getItemMeta().getPersistentDataContainer().set(key, PersistentDataType.STRING, type.toString());
+        //item.getItemMeta().getPersistentDataContainer().set(key, PersistentDataType.STRING, type.toString());
         Entity powerup = world.dropItemNaturally(armorStand.getLocation(), item);
         powerup.getPersistentDataContainer().set(key, PersistentDataType.STRING, type.toString());
         armorStand.addPassenger(powerup);

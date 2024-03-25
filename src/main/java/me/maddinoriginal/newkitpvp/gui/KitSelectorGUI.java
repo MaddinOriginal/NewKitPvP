@@ -57,7 +57,7 @@ public class KitSelectorGUI extends Menu {
                 continue;
             }
 
-            if (kitType.getKit().getMaterial().equals(e.getCurrentItem().getType())) { //TODO
+            if (kitType.getKit().getMaterial().equals(e.getCurrentItem().getType())) { //TODO kits with same icon
                 Player p = (Player) e.getWhoClicked();
                 InventoryAction action = e.getAction();
 
@@ -123,7 +123,7 @@ public class KitSelectorGUI extends Menu {
 
         char lineSymbol = '\u2594';
         String line = lineSymbol + "";
-        lore.add(ChatColor.DARK_GRAY + "" + line.repeat(16));
+        lore.add(ChatColor.DARK_GRAY + "" + line.repeat(30));
 
         try {
             lore.add(ChatColor.GRAY + "Category: " + kit.getCategory().getName() + " Kit");
@@ -153,9 +153,7 @@ public class KitSelectorGUI extends Menu {
         else {
             String priceLore = ChatColor.GRAY + "Price: " + ChatColor.GOLD + getKitPrice(kit) + " coins";
             if (KitPlayerManager.getInstance().getKitPlayer(p).getPlayerData().hasKitUnlocked(kitType)) {
-                for (ChatColor color : ChatColor.values()) {
-                    priceLore = priceLore.replace(color.toString(), color + "" + ChatColor.STRIKETHROUGH);
-                }
+                priceLore = priceLore.replace(ChatColor.GOLD.toString(), ChatColor.GOLD + "" + ChatColor.STRIKETHROUGH);
                 lore.add(priceLore);
                 lore.add(ChatColor.DARK_GRAY + "" + ChatColor.ITALIC + "Kit already unlocked!");
             } else {

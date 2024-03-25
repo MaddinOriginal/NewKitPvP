@@ -18,7 +18,8 @@ public class AirStreamAbility extends Ability {
     public boolean useAbility(Player p) {
         new BukkitRunnable() {
             private static final int DURATION_IN_TICKS = 60;
-            private static final double RADIUS = 1.2D;
+            private static final double RADIUS_STREAM = 1.2D;
+            private static final double RADIUS_PLAYER = 1.66D;
             private static final double ROTATION_DEGREES_PER_TICK = 30;
             private static final double TRAVEL_DISTANCE_PER_TICK = 0.5D;
 
@@ -40,13 +41,13 @@ public class AirStreamAbility extends Ability {
                     currentLoc.getWorld().playSound(currentLoc, Sound.BLOCK_LAVA_EXTINGUISH, 0.5f, 0.5f);
                 }
 
-                Vector offset = getPerpendicular(dir).multiply(RADIUS).rotateAroundAxis(dir, Math.toRadians(ROTATION_DEGREES_PER_TICK * ticks));
+                Vector offset = getPerpendicular(dir).multiply(RADIUS_STREAM).rotateAroundAxis(dir, Math.toRadians(ROTATION_DEGREES_PER_TICK * ticks));
                 for (int i = 0 ; i < 3; i++)
                     currentLoc.getWorld().spawnParticle(Particle.REDSTONE, currentLoc.clone().add(offset), 1,
                             new Particle.DustOptions(Color.fromBGR(250, 245, 250), 5));
 
                 //Entities wegschleudern
-                Collection<Entity> nearbyEntites = currentLoc.getWorld().getNearbyEntities(currentLoc, RADIUS, RADIUS, RADIUS);
+                Collection<Entity> nearbyEntites = currentLoc.getWorld().getNearbyEntities(currentLoc, RADIUS_PLAYER, RADIUS_PLAYER, RADIUS_PLAYER);
                 for (Entity ent : nearbyEntites) {
                     if (ent instanceof LivingEntity && !(ent instanceof ArmorStand) && !ent.equals(p)) {
                         //TODO Funktion finden die if Abfragen ersetzt

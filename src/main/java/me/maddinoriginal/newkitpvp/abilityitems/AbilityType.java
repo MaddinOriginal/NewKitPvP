@@ -24,6 +24,7 @@ public enum AbilityType {
     DETONATE (new DetonationAbility()),                 //Bomber Kit
     THROW_POTION (new ThrowNegativePotionAbility()),    //Elementalist Kit
     WOLF_HUNT (new WolfHuntAbility()),                  //Arbalist Kit (?)
+    EVOKER_FANGS (new EvokerFangAbility()),             //Arbaslist (?)
 
     //Other (Shop Items and Powerups)
     //SMASHER,

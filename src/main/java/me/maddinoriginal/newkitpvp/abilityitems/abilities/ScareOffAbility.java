@@ -25,13 +25,14 @@ public class ScareOffAbility extends Ability {
                 Vector dir = loc.getDirection();
 
                 float yaw = loc.getYaw();
-                if (yaw <= 0) { yaw += 180; } else { yaw -= 180; }
+                yaw = yaw <= 0 ? yaw + 180 : yaw - 180;
+                //if (yaw <= 0) { yaw += 180; } else { yaw -= 180; }
                 loc.setYaw(yaw);
                 loc.setPitch(0);
 
                 //enemies.damage(1, p);
                 enemies.teleport(loc);
-                enemies.setVelocity(dir);
+                enemies.setVelocity(p.getLocation().getDirection().normalize().multiply(0.7));
             }
         }
         return true;

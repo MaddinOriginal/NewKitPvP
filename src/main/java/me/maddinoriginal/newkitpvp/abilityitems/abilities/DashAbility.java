@@ -19,24 +19,24 @@ public class DashAbility extends Ability {
     public boolean useAbility(Player player) {
         Player p = player;
 
-        timer = 6;
+        timer = 5;
         multiplier = 2f;
 
         loc = p.getLocation();
-        loc.setPitch(-7);
+        loc.setPitch(-8);
         vel = loc.getDirection().multiply(multiplier);
-        p.setVelocity(vel.multiply(1.5));
+        p.setVelocity(vel); //.multiply(1.5)
 
         new BukkitRunnable() {
 
             @Override
             public void run() {
                 if (timer > 0) {
-                    loc.setPitch(loc.getPitch() + 2);
+                    loc.setPitch(loc.getPitch() + 2.25f);
                     multiplier -= 0.1;
                     vel = loc.getDirection().multiply(multiplier);
 
-                    p.setVelocity(vel.multiply(1.3));
+                    p.setVelocity(vel);
                     timer--;
                 } else {
                     Bukkit.getScheduler().cancelTask(this.getTaskId());

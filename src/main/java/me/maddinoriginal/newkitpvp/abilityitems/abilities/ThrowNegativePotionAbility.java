@@ -19,39 +19,28 @@ import java.util.Random;
 
 public class ThrowNegativePotionAbility extends Ability {
 
-    private Random random = new Random();
-    private List<PotionEffectType> negativeEffects;
-
-    public ThrowNegativePotionAbility() {
-        negativeEffects = Arrays.asList(
-                PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, PotionEffectType.POISON,
-                PotionEffectType.SLOW, PotionEffectType.WEAKNESS, PotionEffectType.WITHER
-        );
-    }
+    private final Random random = new Random();
+    private final List<PotionEffectType> negativeEffects = Arrays.asList(
+            PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, PotionEffectType.POISON,
+            PotionEffectType.SLOW, PotionEffectType.WEAKNESS, PotionEffectType.WITHER);
 
     @Override
     public String getName() {
-        return "Throw negative Potion";
+        return "Throw negative Potions";
     }
 
     @Override
     public String getDescription() {
-        return "Throws a potion with a negative effect";
+        return "Throws splash potions with negative effect";
     }
 
     @Override
     public int getCooldown() {
-        return 75;
+        return 150;
     }
 
     @Override
-    public boolean useAbility(Player player) {
-        Player p = player;
-
-        /**int n = 5 + random.nextInt(5);
-        for (int i = 0; i < n; i++) {
-            launchPotion(p);
-        }*/
+    public boolean useAbility(Player p) {
 
         p.getWorld().playSound(p.getEyeLocation(), Sound.ENTITY_WITCH_CELEBRATE, 0.5f, 0.5f);
 

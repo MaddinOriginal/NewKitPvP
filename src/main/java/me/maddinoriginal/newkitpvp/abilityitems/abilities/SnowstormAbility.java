@@ -61,7 +61,7 @@ public class SnowstormAbility extends Ability {
                 double z = Math.sin(a) * radius;
                 location.add(x, y, z);
                 location.getWorld().spawnParticle(Particle.CLOUD, location, 1, 0.0, 0.0, 0.0, 0.01);
-                location.getWorld().spawnParticle(Particle.BLOCK_MARKER, location, 1, 0.0, 0.0, 0.0, 0.01, Bukkit.createBlockData(Material.SNOWBALL));
+                location.getWorld().spawnParticle(Particle.BLOCK_MARKER, location, 1, 0.0, 0.0, 0.0, 0.01, Bukkit.createBlockData(Material.SNOW_BLOCK));
                 location.subtract(x, y, z);
             }
         }

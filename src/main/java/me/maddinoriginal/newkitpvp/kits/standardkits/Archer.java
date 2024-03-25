@@ -56,32 +56,39 @@ public class Archer extends Kit {
 
         //Create boots and add them to the returning (armor contents) ItemStack
         armor[0] = new ItemBuilder(Material.LEATHER_BOOTS)
-                .setDisplayName(ChatColor.YELLOW + "Archer Boots")
+                .setDisplayName(ChatColor.YELLOW + getName() + " Boots")
+
                 .setLeatherArmorColor(178, 124, 0)
-                .setUnbreakable(true)
+
+                .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
         //Create leggings and add them to the returning (armor contents) ItemStack
         armor[1] = new ItemBuilder(Material.CHAINMAIL_LEGGINGS)
-                .setDisplayName(ChatColor.YELLOW + "Archer Leggings")
-                .setUnbreakable(true)
+                .setDisplayName(ChatColor.YELLOW + getName() + " Leggings")
+
+                .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
         //Create chest plate and add them to the returning (armor contents) ItemStack
         armor[2] = new ItemBuilder(Material.LEATHER_CHESTPLATE)
-                .setDisplayName(ChatColor.YELLOW + "Archer Cloak")
+                .setDisplayName(ChatColor.YELLOW + getName() + " Cloak")
+
                 .setLeatherArmorColor(69, 75, 223)
-                .setUnbreakable(true)
+
+                .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
         //Create helmet and add them to the returning (armor contents) ItemStack
         armor[3] = new ItemBuilder(Material.LEATHER_HELMET)
-                .setDisplayName(ChatColor.YELLOW + "Archer Hood")
+                .setDisplayName(ChatColor.YELLOW + getName() + " Hood")
+
                 .setLeatherArmorColor(44, 76, 145)
-                .setUnbreakable(true)
+
+                .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
@@ -94,15 +101,19 @@ public class Archer extends Kit {
 
         items[0] = new ItemBuilder(Material.WOODEN_SWORD)
                 .setDisplayName(ChatColor.RESET + "" + ChatColor.YELLOW + "Archer Sword")
+
                 //.addEnchantment(Enchantment.DAMAGE_ALL, 1, true)
-                .setUnbreakable(true)
+
+                .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
         items[1] = new ItemBuilder(Material.BOW)
                 .setDisplayName(ChatColor.RESET + "" + ChatColor.YELLOW + "Archer Bow")
+
                 .addEnchantment(Enchantment.DAMAGE_ALL, 1, true)
-                .setUnbreakable(true)
+
+                .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
@@ -115,7 +126,7 @@ public class Archer extends Kit {
 
         items[7] = new ItemBuilder(Material.ARROW)
                 .setAmount(25)
-                .setDisplayName(ChatColor.YELLOW + "Archer Arrow")
+                .setDisplayName(ChatColor.YELLOW + getName() + " Arrow")
                 .build();
 
         items[8] = null;

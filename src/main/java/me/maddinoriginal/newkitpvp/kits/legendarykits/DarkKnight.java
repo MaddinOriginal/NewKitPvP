@@ -32,12 +32,46 @@ public class DarkKnight extends Kit {
 
     @Override
     public String getDescription() {
-        return "Uses black magic paired with expert swordsmanship to ban his enemies from this plane of existence.";
+        return "Uses black magic paired with expert swordsmanship to ban their enemies from this plane of existence.";
     }
 
     @Override
     public ItemStack[] getArmorContents() {
-        return new ItemStack[0];
+        ItemStack[] armor = new ItemStack[4];
+
+        //Create boots and add them to the returning (armor contents) ItemStack
+        armor[0] = new ItemBuilder(Material.NETHERITE_BOOTS)
+                .setDisplayName(ChatColor.YELLOW + getName() + " Boots")
+
+                .setUnbreakable(true, true)
+                .addItemFlag(ItemFlag.HIDE_UNBREAKABLE)
+                .build();
+
+        //Create leggings and add them to the returning (armor contents) ItemStack
+        armor[1] = new ItemBuilder(Material.NETHERITE_LEGGINGS)
+                .setDisplayName(ChatColor.YELLOW + getName() + " Leggings")
+
+                .setUnbreakable(true, true)
+                .addItemFlag(ItemFlag.HIDE_UNBREAKABLE)
+                .build();
+
+        //Create chest plate and add them to the returning (armor contents) ItemStack
+        armor[2] = new ItemBuilder(Material.NETHERITE_CHESTPLATE)
+                .setDisplayName(ChatColor.YELLOW + getName() + " Chestplate")
+
+                .setUnbreakable(true, true)
+                .addItemFlag(ItemFlag.HIDE_UNBREAKABLE)
+                .build();
+
+        //Create helmet and add them to the returning (armor contents) ItemStack
+        armor[3] = new ItemBuilder(Material.NETHERITE_HELMET)
+                .setDisplayName(ChatColor.YELLOW + getName() + " Helmet")
+
+                .setUnbreakable(true, true)
+                .addItemFlag(ItemFlag.HIDE_UNBREAKABLE)
+                .build();
+
+        return armor;
     }
 
     @Override
@@ -46,7 +80,8 @@ public class DarkKnight extends Kit {
 
         items[0] = new ItemBuilder(Material.NETHERITE_SWORD)
                 .setDisplayName(ChatColor.YELLOW + getName() + " Sword")
-                .setUnbreakable(true)
+
+                .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 

@@ -58,31 +58,38 @@ public class Swordsman extends Kit {
         ItemStack[] armor = new ItemStack[4];
 
         //boots
-        armor[0] = new ItemBuilder(Material.IRON_BOOTS)
-                .setDisplayName(ChatColor.YELLOW + "Swordsman Boots")
-                .setUnbreakable(true)
+        armor[0] = new ItemBuilder(Material.LEATHER_BOOTS)
+                .setDisplayName(ChatColor.YELLOW + getName() + " Boots")
+
+                .setLeatherArmorColor(140, 69, 23)
+
+                .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
         //leggings
         armor[1] = new ItemBuilder(Material.CHAINMAIL_LEGGINGS)
-                .setDisplayName(ChatColor.YELLOW + "Swordsman Leggings")
-                .setUnbreakable(true)
+                .setDisplayName(ChatColor.YELLOW + getName() + " Leggings")
+
+                .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
         //chestplate
         armor[2] = new ItemBuilder(Material.IRON_CHESTPLATE)
-                .setDisplayName(ChatColor.YELLOW + "Swordsman Chestplate")
+                .setDisplayName(ChatColor.YELLOW + getName() + " Chestplate")
+
                 .addEnchantment(Enchantment.PROTECTION_PROJECTILE, 3, true)
-                .setUnbreakable(true)
+
+                .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
         //helmet
-        armor[3] = new ItemBuilder(Material.GOLDEN_HELMET)
-                .setDisplayName(ChatColor.YELLOW + "Swordsman Helmet")
-                .setUnbreakable(true)
+        armor[3] = new ItemBuilder(Material.CHAINMAIL_HELMET)
+                .setDisplayName(ChatColor.YELLOW + getName() + " Helmet")
+
+                .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
@@ -96,10 +103,12 @@ public class Swordsman extends Kit {
         items[0] = new ItemBuilder(Material.IRON_SWORD)
                 .setDisplayName(ChatColor.YELLOW + "Swordsman Sword")
                 .setLore(ChatColor.RESET + "" + ChatColor.DARK_GRAY + Strings.repeat('\u2594' + "", 16),
-                        ChatColor.WHITE + "Hergestellt aus dem besten Stahl",
-                        ChatColor.WHITE + "des ganzen Landes")
+                        ChatColor.GRAY + "Hergestellt aus dem besten Stahl",
+                        ChatColor.GRAY + "des ganzen Landes")
+
                 .addEnchantment(Enchantment.SWEEPING_EDGE, 3, false)
-                .setUnbreakable(true)
+
+                .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 

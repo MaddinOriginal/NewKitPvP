@@ -24,14 +24,16 @@ public class DetonationAbility extends Ability {
         return 110;
     }
 
+    private int ticksToDetonate = 50;
+
     @Override
     public boolean useAbility(Player player) {
         Player p = player;
-        p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 30, 1));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, ticksToDetonate, 1));
         TNTPrimed primedTNT = p.getWorld().spawn(p.getLocation(), TNTPrimed.class);
         p.addPassenger(primedTNT);
-        primedTNT.setFuseTicks(30);
-        primedTNT.setFireTicks(30);
+        primedTNT.setFuseTicks(ticksToDetonate);
+        primedTNT.setFireTicks(ticksToDetonate);
         primedTNT.setCustomName(ChatColor.RED + ChatColor.BOLD.toString() + "DETONATING");
         primedTNT.setCustomNameVisible(true);
         return true;

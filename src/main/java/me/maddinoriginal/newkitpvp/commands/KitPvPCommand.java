@@ -4,17 +4,22 @@ import me.kodysimpson.simpapi.exceptions.MenuManagerException;
 import me.kodysimpson.simpapi.exceptions.MenuManagerNotSetupException;
 import me.kodysimpson.simpapi.menu.MenuManager;
 import me.maddinoriginal.newkitpvp.NewKitPvP;
+import me.maddinoriginal.newkitpvp.abilityitems.abilities.EvokerFangAbility;
 import me.maddinoriginal.newkitpvp.gui.KitSelectorGUI;
 import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
 import me.maddinoriginal.newkitpvp.data.PlayerData;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class KitPvPCommand implements CommandExecutor {
+
+    private int pointer = 0;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -52,6 +57,10 @@ public class KitPvPCommand implements CommandExecutor {
                 //p.sendMessage("" + Bukkit.getScheduler().getPendingTasks());
                 //p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 1.0f, 0.01f);
 
+                EvokerFangAbility ab = new EvokerFangAbility();
+                ab.useAbility(p);
+
+                /*
                 Location loc = p.getLocation();
                 loc.setY(loc.getY() - 1.2);
 
@@ -69,7 +78,7 @@ public class KitPvPCommand implements CommandExecutor {
                         loc.setPitch(0);
                         vex.setVelocity(loc.getDirection());
                     }
-                }.runTaskTimer(NewKitPvP.getInstance(), 0, 3);
+                }.runTaskTimer(NewKitPvP.getInstance(), 0, 3);*/
 
 
                 /*Location eyeLoc = p.getEyeLocation();

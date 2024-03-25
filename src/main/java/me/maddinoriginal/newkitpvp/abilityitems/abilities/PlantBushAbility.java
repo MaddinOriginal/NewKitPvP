@@ -25,7 +25,10 @@ import java.util.Map;
 
 public class PlantBushAbility extends Ability {
 
-    private int lifetimeTicks = 8;
+    private final int DELAY = 8;
+    private final int MAX_TRIES = 12;
+    private final int TICKS_BETWEEN_TRIES = 2;
+    private final int REMOVE_AFTER = 150;
     private Map<Location, BlockState> blockStates = new HashMap<>();
 
     @Override
@@ -40,7 +43,7 @@ public class PlantBushAbility extends Ability {
 
     @Override
     public int getCooldown() {
-        return 110;
+        return 75;
     }
 
     @Override
@@ -50,17 +53,31 @@ public class PlantBushAbility extends Ability {
         Vector dir = loc.getDirection().clone().normalize().multiply(2);
 
         Item drop = p.getWorld().dropItem(p.getEyeLocation(), seeds);
-        drop.setPickupDelay(lifetimeTicks + 10);
+        drop.setPickupDelay(DELAY + (MAX_TRIES * TICKS_BETWEEN_TRIES) + 1);
         drop.setVelocity(dir);
 
         new BukkitRunnable() {
+            int tries = MAX_TRIES;
 
             @Override
             public void run() {
                 Location loc = drop.getLocation();
+                Block block = loc.getBlock();
+
+                if (!block.getRelative(BlockFace.DOWN).getType().isSolid()) {
+                    if (tries > 0) {
+                        tries--;
+                    }
+                    else {
+                        block.getWorld().playEffect(block.getLocation().add(0.5, 0, 0.5), Effect.ENDER_SIGNAL, 0);
+                        drop.remove();
+                        cancel();
+                    }
+                    return;
+                }
+
                 drop.remove();
 
-                Block block = loc.getBlock();
                 Block north = block.getRelative(BlockFace.NORTH);
                 Block northEast = block.getRelative(BlockFace.NORTH_EAST);
                 Block east = block.getRelative(BlockFace.EAST);
@@ -81,22 +98,13 @@ public class PlantBushAbility extends Ability {
                 List<Block> blocklist = Arrays.asList(block, north, northEast, east, southEast, south, southWest, west, northWest,
                         top, topNorth, topEast, topSouth, topWest, botNorth, botEast, botSouth, botWest);
 
-                if (!block.getRelative(BlockFace.DOWN).getType().isSolid()) {
-                    block.getWorld().playEffect(block.getLocation().add(0.5, 0, 0.5), Effect.ENDER_SIGNAL, 0);
-                    return;
-                }
-
                 for (Block b : blocklist) {
                     if (b.getType().isSolid()) {
                         continue;
                     }
 
-                    //save current Block in a list and save the ID to its metadata
-                    int blockID = Helper.nextID();
-                    if (!blockStates.containsKey(b.getLocation())) {
-                        blockStates.put(b.getLocation(), b.getState());
-                    }
-                    b.setMetadata("BlockID", new FixedMetadataValue(NewKitPvP.getInstance(), blockID));
+                    //Resets the block after given ticks have passed
+                    Helper.resetBlockAfter(b, REMOVE_AFTER);
 
                     //replace current Block with the berry bush block
                     b.setType(Material.SWEET_BERRY_BUSH, false);
@@ -104,23 +112,10 @@ public class PlantBushAbility extends Ability {
                     data.setAge(1);
                     b.setBlockData(data);
                     b.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, b.getLocation().clone().add(0.5, 0.5, 0.5), 3, 0.2, 0.2, 0.2);
-
-                    //reset the Block after time
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            int currentID = b.getMetadata("BlockID").get(0).asInt();
-                            if (currentID == blockID) {
-                                BlockState previous = blockStates.get(b.getLocation());
-                                b.setType(previous.getType());
-                                b.setBlockData(previous.getBlockData());
-                                blockStates.remove(b.getLocation());
-                            }
-                        }
-                    }.runTaskLater(NewKitPvP.getInstance(), 290);
                 }
+                cancel();
             }
-        }.runTaskLater(NewKitPvP.getInstance(), lifetimeTicks);
+        }.runTaskTimer(NewKitPvP.getInstance(), DELAY, TICKS_BETWEEN_TRIES);
         return true;
     }
 }

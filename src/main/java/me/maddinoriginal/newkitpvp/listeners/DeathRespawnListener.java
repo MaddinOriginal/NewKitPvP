@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -39,11 +40,16 @@ public class DeathRespawnListener implements Listener {
                 }
 
                 //e.setCancelled(true);
-                createDeathEffect(damaged);
+                //createDeathEffect(damaged);
 
                 //damaged.teleport(new Location(damaged.getWorld(), 0.5, -14, 0.5)); //TODO
             }
         }
+    }
+
+    @EventHandler
+    public void onDeath(PlayerDeathEvent e) {
+        createDeathEffect(e.getEntity());
     }
 
     private void createDeathEffect(Player killed) {

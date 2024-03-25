@@ -1,6 +1,6 @@
 package me.maddinoriginal.newkitpvp.kits.standardkits;
 
-import me.maddinoriginal.newkitpvp.abilityitems.items.PlantBushAbilityItem;
+import me.maddinoriginal.newkitpvp.abilityitems.items.WolfHuntAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
@@ -39,17 +39,17 @@ public class Hunter extends Kit {
 
     @Override
     public Material getMaterial() {
-        return Material.CROSSBOW;
+        return Material.BONE;
     }
 
     @Override
     public KitCategory getCategory() {
-        return KitCategory.STANDARD;
+        return KitCategory.ADVANCED;
     }
 
     @Override
     public String getDescription() {
-        return "On a hunt with its crossbow. Can use his ability to plant bushes to slow down its prey.";
+        return "On a hunt with its crossbow. Can summon wolfs to hunt their prey with him.";
     }
 
     @Override
@@ -58,7 +58,7 @@ public class Hunter extends Kit {
 
         //boots
         armor[0] = new ItemBuilder(Material.LEATHER_BOOTS)
-                .setDisplayName(ChatColor.YELLOW + "Hunter Boots")
+                .setDisplayName(ChatColor.YELLOW + getName() + " Boots")
 
                 .setLeatherArmorColor(150, 150, 60, true)
 
@@ -71,7 +71,7 @@ public class Hunter extends Kit {
 
         //leggings
         armor[1] = new ItemBuilder(Material.LEATHER_LEGGINGS)
-                .setDisplayName(ChatColor.YELLOW + "Hunter Leggings")
+                .setDisplayName(ChatColor.YELLOW + getName() + " Leggings")
 
                 .setLeatherArmorColor(0, 120, 20, true)
 
@@ -86,7 +86,7 @@ public class Hunter extends Kit {
 
         //chestplate
         armor[2] = new ItemBuilder(Material.LEATHER_CHESTPLATE)
-                .setDisplayName(ChatColor.YELLOW + "Hunter Chestplate")
+                .setDisplayName(ChatColor.YELLOW + getName() + " Chestplate")
 
                 .setLeatherArmorColor(25, 180, 20, true)
 
@@ -99,7 +99,7 @@ public class Hunter extends Kit {
 
         //helmet
         armor[3] = new ItemBuilder(Material.LEATHER_HELMET)
-                .setDisplayName(ChatColor.YELLOW + "Hunter Helmet")
+                .setDisplayName(ChatColor.YELLOW + getName() + " Helmet")
 
                 .setLeatherArmorColor(90, 120, 60, true)
 
@@ -121,18 +121,21 @@ public class Hunter extends Kit {
 
         items[0] = new ItemBuilder(Material.CROSSBOW)
                 .setDisplayName(ChatColor.YELLOW + getName() + " Crossbow")
+
                 .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
-        items[1] = new PlantBushAbilityItem().getItem();
+        items[1] = new WolfHuntAbilityItem().getItem();
 
         items[2] = null;
         items[3] = null;
+
         items[4] = new ItemBuilder(Material.RABBIT_FOOT)
                 .setDisplayName(ChatColor.YELLOW + "Lucky Charm")
                 .addEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 3, true)
                 .build();
+
         items[5] = null;
         items[6] = null;
 

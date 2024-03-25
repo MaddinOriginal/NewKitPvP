@@ -117,6 +117,14 @@ public class ItemBuilder {
         }
         return this;
     }
+    public ItemBuilder setLeatherArmorColor(int rgb) {
+        if (meta instanceof LeatherArmorMeta) {
+            ((LeatherArmorMeta) meta).setColor(Color.fromRGB(rgb));
+        } else {
+            System.out.println(NewKitPvP.getInstance().getPrefix() + " item in ItemBuilder is not leather armor!");
+        }
+        return this;
+    }
     public ItemBuilder setLeatherArmorColor(int red, int green, int blue, boolean hideAttribute) {
         setLeatherArmorColor(red, green, blue);
         if (hideAttribute)

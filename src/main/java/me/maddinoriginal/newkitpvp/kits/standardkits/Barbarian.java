@@ -123,8 +123,9 @@ public class Barbarian extends Kit {
         items[0] = new ItemBuilder(Material.IRON_AXE)
                 .setDisplayName(ChatColor.YELLOW + "Barbarian Axe")
                 .setLore(ChatColor.RESET + "" + ChatColor.DARK_GRAY + Strings.repeat('\u2594' + "", 16),
-                        ChatColor.WHITE + "Smithed to smash heads",
-                        ChatColor.WHITE + "Use carefully")
+                        ChatColor.GRAY + "Smithed to smash heads",
+                        ChatColor.GRAY + "Use carefully")
+
                 .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
@@ -132,7 +133,8 @@ public class Barbarian extends Kit {
         items[1] = new ItemBuilder(Material.SHIELD)
                 .setDisplayName(ChatColor.YELLOW + "Barbarian Axe")
                 .setLore(ChatColor.RESET + "" + ChatColor.DARK_GRAY + Strings.repeat('\u2594' + "", 16),
-                        ChatColor.WHITE + "Shield to block")
+                        ChatColor.GRAY + "Shield to block")
+
                 .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();

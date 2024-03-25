@@ -17,7 +17,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.*;
 import java.sql.SQLException;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public final class NewKitPvP extends JavaPlugin {
 
@@ -71,6 +74,11 @@ public final class NewKitPvP extends JavaPlugin {
 
         connectDatabase();
 
+        //try world stuff
+        //extractWorld();
+        //copyWorld();
+        //loadWorld();
+
         System.out.println("[KitPvP] plugin started.");
     }
 
@@ -104,10 +112,11 @@ public final class NewKitPvP extends JavaPlugin {
     private void registerListeners() {
         pm.registerEvents(new ChatListener(), this);
         pm.registerEvents(new ConnectionListener(), this);
+        pm.registerEvents(new DamageListener(), this);
         pm.registerEvents(new DeathRespawnListener(), this);
         pm.registerEvents(new InteractListener(), this);
         pm.registerEvents(new MiscellaneousListener(), this);
-        pm.registerEvents(new SneakListener(), this);
+        pm.registerEvents(new SneakSprintListener(), this);
     }
 
     private void registerCustomListeners() {
@@ -154,7 +163,7 @@ public final class NewKitPvP extends JavaPlugin {
             //world.setGameRule(GameRule.MAX_COMMAND_CHAIN_LENGTH, 65536);
             //world.setGameRule(GameRule.MAX_ENTITY_CRAMMING, 24);
             //world.setGameRule(GameRule.MOB_EXPLOSION_DROP_DECAY, true);
-            world.setGameRule(GameRule.MOB_GRIEFING, false);
+            world.setGameRule(GameRule.MOB_GRIEFING, true); //TODO
             world.setGameRule(GameRule.NATURAL_REGENERATION, true);
             //world.setGameRule(GameRule.PLAYERS_SLEEPING_PERCENTAGE, 100);
             world.setGameRule(GameRule.RANDOM_TICK_SPEED, 0);
@@ -175,6 +184,215 @@ public final class NewKitPvP extends JavaPlugin {
         for (World world : getServer().getWorlds()) {
             world.setTime(6000);
             world.setClearWeatherDuration(Integer.MAX_VALUE);
+        }
+    }
+
+    public boolean extractWorld() {
+        // Returns true if the minigame_world folder already exists inside the datafolder
+        // Returns true if the minigame_world folder has successfully been placed inside the datafolder
+        // Returns false if something went wrong
+        try {
+            // Getting the data folder
+            // The data folder is located in the plugins folder of your server and by default is has the same name as the plugin
+            // If you have worked with config files before, this is the same folder where the default config is copied to
+            File dataFolder = getDataFolder();
+
+            // Making the folder if it doesn't exist yet
+            if (!dataFolder.exists())
+                dataFolder.mkdirs();
+
+            // This File object represents the minigame_world folder inside the data folder
+            File minigameWorld = new File(dataFolder, "world");
+
+            if (!minigameWorld.exists()) {
+
+                // Getting an Input Stream object with the getResourceAsStream method
+                // Make sure there is a "/" before "minigame_world.zip" otherwise it won't work
+                // "minigame_world" is the exact name I gave my world folder
+                // ".zip" indicates that the file is a zip file
+                InputStream inputStream = getClass().getResourceAsStream("/world.zip");
+
+                // This method gets the zipped world folder from the plugin resources, unzips it and puts it in the datafolder
+                // It will return true if it successfully extracted the world folder from the jar otherwise false
+                boolean extracted = extractFromJar(inputStream, dataFolder);
+
+                return extracted;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean extractFromJar(InputStream inputStream, File destination) {
+
+        // Creating a new ZipInputStream object that takes in inputStream as a parameter
+        // It is needed to use a zip input stream because the world folder is zipped
+        try (ZipInputStream input = new ZipInputStream(inputStream)) {
+
+            // Iterating over all the entries of the zip input stream
+            // Note that getNextEntry() does not only return a ZipEntry object, but it also positions
+            // the stream at the beginning of that entry
+            for (ZipEntry entry = input.getNextEntry(); entry != null; entry = input.getNextEntry()) {
+
+                // Checking if the entry is not a directory
+                // If it is not a directory, it is a file
+                // If the file is inside a directory, that directory will be made
+                if ( ! entry.isDirectory()) {
+
+                    // Making a file object that takes in destination en entry.getName() as parameters
+                    File file = new File(destination, entry.getName());
+
+                    // Getting the parent of the file and making the directories
+                    File parent = file.getParentFile();
+                    parent.mkdirs();
+
+                    // Making an output stream into the file
+                    FileOutputStream output = new FileOutputStream(file);
+
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+                    // The read method reads bytes from the entry where the stream is currently positioned
+                    // It puts the read bytes into the buffer and returns the amount of bytes that have been read
+                    // If there are no more bytes in the stream, the read method returns -1
+                    while ((bytesRead = input.read(buffer)) != -1)
+                        // Writing the bytes that are inside the buffer into the output stream
+                        output.write(buffer, 0, bytesRead);
+
+                    // Closing the output stream
+                    output.close();
+                }
+            }
+            // Once the method is done iterating over the zip entries, it closes the zip input stream
+            input.close();
+
+            // If there were no exceptions, the method will return true
+            return true;
+        } catch (IOException e) {
+            // If there is an exception, the method will print the stack trace and return false
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean copyWorld() {
+        // Returns false if the source doesn't exist
+        // Returns true if the method successfully copied the source folder into the destination folder
+        // Returns false if something went wrong
+        try {
+            // This file represents the minigame_world folder inside the plugin data folder
+            File sourceFolder = new File(getDataFolder(), "world");
+
+            // If the source doesn't exist, the method can't continue, so make sure you create the folder with the extractWorld method before using this method
+            if (!sourceFolder.exists())
+                return false;
+
+            // This File object represents the place where we're gonna copy the source folder
+            // The destination folder will be placed in the server folder (same folder with world, world_nether, plugins, etc)
+            File destinationFolder = new File("world_active");
+
+            // Making the destination folder if it doesn't exist yet
+            if (!destinationFolder.exists())
+                destinationFolder.mkdirs();
+
+            // This method makes a copy of the source and puts it into the destination
+            boolean copied = copyDirectory(sourceFolder, destinationFolder);
+            return copied;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean copyDirectory(File source, File destination) {
+
+        // This method assumes that File source is a directory (folder)
+        // It also assumes that File destination already exists
+        // It puts each file from the source directory in the destination directory
+        // If a file in the source is also a directory, this method calls itself again (Recursion) and passes in
+        // the file as the source and new File(destination, file) as the new destination
+
+        try {
+            // Putting all the files in an array
+            File[] files = source.listFiles();
+
+            // Iterating over the array
+            for (File file : files) {
+
+                // Storing the name of the file
+                String fileName = file.getName();
+                // Making a File object
+                File outputFile = new File(destination, fileName);
+
+                // Checking if the file is a directory
+                if (file.isDirectory()) {
+
+                    // Making the directory in the destination file
+                    outputFile.mkdirs();
+
+                    // Calling the copyDirectory method again
+                    copyDirectory(file, outputFile);
+
+                }
+                // If the file is a file
+                else {
+
+                    // Making an input stream from the file
+                    FileInputStream input = new FileInputStream(file);
+                    // Making an output stream to the destination
+                    FileOutputStream output = new FileOutputStream(outputFile);
+
+
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+                    // The read method reads bytes from the input stream and puts these bytes in the buffer
+                    // It also returns the amount of bytes that have been put in the buffer
+                    // If there are no more bytes to read, it returns -1
+                    while ((bytesRead = input.read(buffer)) != -1)
+                        // Writing the bytes that are in the buffer into the output stream
+                        output.write(buffer, 0, bytesRead);
+
+                    // Closing the input stream and the output stream
+                    input.close();
+                    output.close();
+
+                }
+
+            }
+
+            // If there are no errors, the method will return true
+            return true;
+        }
+        catch (IOException e) {
+            // If there is an error, the method will print out the stack trace and return false
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public World loadWorld() {
+        // Returns null if the world folder does not exist
+        // Returns the loaded world if the method successfully loaded the world
+        // Returns null if something went wrong
+        try {
+            // This file represents the world that we want to load
+            File worldToLoad = new File("world_active");
+
+            // Returning null if the world we want to load does not even exist
+            if (!worldToLoad.exists())
+                return null;
+
+            // Making a WorldCreator object which is used to load the world
+            WorldCreator worldCreator = new WorldCreator("world_active");
+
+            // The createWorld method does not only create new worlds but also loads worlds that already exist
+            World loadedWorld = worldCreator.createWorld();
+            return loadedWorld;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

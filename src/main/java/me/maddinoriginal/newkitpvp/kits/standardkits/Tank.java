@@ -1,5 +1,6 @@
 package me.maddinoriginal.newkitpvp.kits.standardkits;
 
+import com.google.common.base.Strings;
 import me.maddinoriginal.newkitpvp.abilityitems.items.DashAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
@@ -9,6 +10,8 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.trim.TrimMaterial;
+import org.bukkit.inventory.meta.trim.TrimPattern;
 
 /**
  * Type= Melee Kit with a stone sword
@@ -57,28 +60,46 @@ public class Tank extends Kit {
         //boots
         items[0] = new ItemBuilder(Material.IRON_BOOTS)
                 .setDisplayName(ChatColor.YELLOW + "Tank Boots")
-                .setUnbreakable(true)
+
+                .setArmorTrim(TrimMaterial.DIAMOND, TrimPattern.COAST)
+                .hideArmorTrim()
+
+                .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
         //leggings
         items[1] = new ItemBuilder(Material.IRON_LEGGINGS)
                 .setDisplayName(ChatColor.YELLOW + "Tank Leggings")
-                .setUnbreakable(true)
+
+                .setArmorTrim(TrimMaterial.DIAMOND, TrimPattern.TIDE)
+                .hideArmorTrim()
+
+                .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
         //chestplate
         items[2] = new ItemBuilder(Material.DIAMOND_CHESTPLATE)
                 .setDisplayName(ChatColor.YELLOW + "Tank Chestplate")
-                .setUnbreakable(true)
+
+                .setArmorTrim(TrimMaterial.IRON, TrimPattern.SHAPER)
+                .hideArmorTrim()
+
+                .addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 4, true)
+
+                .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
         //helmet
         items[3] = new ItemBuilder(Material.IRON_HELMET)
                 .setDisplayName(ChatColor.YELLOW + "Tank Helmet")
-                .setUnbreakable(true)
+
+                .setArmorTrim(TrimMaterial.DIAMOND, TrimPattern.TIDE)
+                .hideArmorTrim()
+
+                .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
@@ -91,15 +112,17 @@ public class Tank extends Kit {
 
         items[0] = new ItemBuilder(Material.STONE_SWORD)
                 .setDisplayName(ChatColor.YELLOW + "Tank Sword")
-                .setLore(ChatColor.RESET + "" + ChatColor.DARK_GRAY /*+ Strings.repeat('\u2594', 16)*/, //TODO
-                        ChatColor.YELLOW + "Aus verhärtetem Gestein, vom",
-                        ChatColor.YELLOW + "Steinmonster persönlich abgebaut")
-                .addEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 10, true)
-                .setUnbreakable(true)
-                .addItemFlag(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS)
+                .setLore(ChatColor.RESET + "" + ChatColor.DARK_GRAY + Strings.repeat('\u2594' + "", 16),
+                        ChatColor.GRAY + "Aus verhärtetem Gestein, vom",
+                        ChatColor.GRAY + "Steinmonster persönlich abgebaut")
+
+                //.addEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 10, true)
+
+                .setUnbreakable(true, true)
+                .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
-        items[1] = new DashAbilityItem().getItem();//TODO
+        //items[1] = new DashAbilityItem().getItem(); //TODO
 
         return items;
     }

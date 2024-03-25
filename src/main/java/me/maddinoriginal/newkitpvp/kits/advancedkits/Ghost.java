@@ -8,8 +8,11 @@ import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.trim.TrimMaterial;
+import org.bukkit.inventory.meta.trim.TrimPattern;
 
 /**
  * Type=
@@ -53,18 +56,65 @@ public class Ghost extends Kit {
 
     @Override
     public ItemStack[] getArmorContents() {
-        return new ItemStack[0];
+        ItemStack[] armor = new ItemStack[4];
+
+        //boots
+        armor[0] = null;/*new ItemBuilder(Material.CHAINMAIL_BOOTS)
+                .setDisplayName(ChatColor.YELLOW + "Ghost Boots")
+
+                .setArmorTrim(TrimMaterial.QUARTZ, TrimPattern.SPIRE)
+                .hideArmorTrim()
+
+                .setUnbreakable(true)
+                .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+                .build();*/
+
+        //leggings
+        armor[1] = new ItemBuilder(Material.CHAINMAIL_LEGGINGS)
+                .setDisplayName(ChatColor.YELLOW + "Ghost Leggings")
+
+                .setArmorTrim(TrimMaterial.REDSTONE, TrimPattern.HOST)
+                .hideArmorTrim()
+
+                .addEnchantment(Enchantment.SWIFT_SNEAK, 5, true)
+
+                .setUnbreakable(true)
+                .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+
+        //chestplate
+        armor[2] = new ItemBuilder(Material.CHAINMAIL_CHESTPLATE)
+                .setDisplayName(ChatColor.YELLOW + "Ghost Chestplate")
+
+                .setArmorTrim(TrimMaterial.REDSTONE, TrimPattern.SILENCE)
+                .hideArmorTrim()
+
+                .setUnbreakable(true)
+                .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+
+        //helmet
+        armor[3] = new ItemBuilder(Material.CHAINMAIL_HELMET)
+                .setDisplayName(ChatColor.YELLOW + "Ghost Helmet")
+
+                .setArmorTrim(TrimMaterial.REDSTONE, TrimPattern.SHAPER)
+                .hideArmorTrim()
+
+                .setUnbreakable(true)
+                .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+
+        return armor;
     }
 
     @Override
     public ItemStack[] getKitItems() {
         ItemStack[] items = new ItemStack[2];
 
-        items[0] = new ItemBuilder(Material.IRON_SWORD) //TODO
-                .setDisplayName(ChatColor.YELLOW + "Swordsman Sword")
+        items[0] = new ItemBuilder(Material.IRON_AXE) //TODO
+                .setDisplayName(ChatColor.YELLOW + "Ghost Axe")
                 .setLore(ChatColor.RESET + "" + ChatColor.DARK_GRAY + Strings.repeat('\u2594' + "", 16),
-                        ChatColor.WHITE + "Hergestellt aus dem besten Stahl",
-                        ChatColor.WHITE + "des ganzen Landes")
+                        ChatColor.WHITE + "Spooky...")
                 .setUnbreakable(true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
