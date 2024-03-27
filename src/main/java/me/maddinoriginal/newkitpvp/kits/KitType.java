@@ -14,7 +14,7 @@ public enum KitType {
     SWORDSMAN (new Swordsman()),
     ARCHER (new Archer()),
     TANK (new Tank()),
-    ARBALIST (new Arbalist()),
+    ARBALIST (new Marksman()),
     BARBARIAN (new Barbarian()),
 
     //Advanced Kits

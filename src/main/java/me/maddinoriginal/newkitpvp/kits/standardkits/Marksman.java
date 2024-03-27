@@ -1,8 +1,6 @@
 package me.maddinoriginal.newkitpvp.kits.standardkits;
 
 import com.google.common.base.Strings;
-import me.maddinoriginal.newkitpvp.abilityitems.items.AirStreamAbilityItem;
-import me.maddinoriginal.newkitpvp.abilityitems.items.EvokerFangsAbilityItem;
 import me.maddinoriginal.newkitpvp.abilityitems.items.PlantBushAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
@@ -24,20 +22,20 @@ import org.bukkit.inventory.meta.trim.TrimPattern;
  *
  * Active Ability= Plants a bush that slows down enemies and hurts half a heart when they try to move
  * Supportive Passive= Shooting enemies in bushes regains arrows TODO
- * Survivability Passive= Shooting enemies regains health //TODO
+ * Survivability Passive= Shooting enemies regains health TODO
  * Finisher Passive= Shooting enemies has a 33% chance to spawn a bush under them (if possible)
  */
 
-public class Arbalist extends Kit {
+public class Marksman extends Kit {
 
     @Override
     public String getName() {
-        return "Arbalist";
+        return "Marksman";
     }
 
     @Override
     public String getTag() {
-        return "[ARB]";
+        return "[MARK]";
     }
 
     @Override
@@ -52,7 +50,7 @@ public class Arbalist extends Kit {
 
     @Override
     public String getDescription() {
-        return "An arbalist is one who shoots a crossbow. Google it, if you never heard it. Can plant bushes to slow down enemies.";
+        return "The Marksman uses their crossbow to shoot arrows that pierce through any armor and shields.";
     }
 
     @Override
@@ -124,6 +122,7 @@ public class Arbalist extends Kit {
                         ChatColor.GRAY + "Shoots arrows lol")
 
                 .addEnchantment(Enchantment.QUICK_CHARGE, 2, false)
+                .addEnchantment(Enchantment.PIERCING, 5, true)
 
                 .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)

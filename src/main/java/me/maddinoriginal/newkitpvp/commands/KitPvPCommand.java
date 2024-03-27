@@ -57,9 +57,6 @@ public class KitPvPCommand implements CommandExecutor {
                 //p.sendMessage("" + Bukkit.getScheduler().getPendingTasks());
                 //p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 1.0f, 0.01f);
 
-                EvokerFangAbility ab = new EvokerFangAbility();
-                ab.useAbility(p);
-
                 /*
                 Location loc = p.getLocation();
                 loc.setY(loc.getY() - 1.2);
