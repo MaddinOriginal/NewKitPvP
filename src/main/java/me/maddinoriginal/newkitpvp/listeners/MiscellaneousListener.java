@@ -6,23 +6,15 @@ import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
 import me.maddinoriginal.newkitpvp.kits.KitType;
 import me.maddinoriginal.newkitpvp.utils.Helper;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.AbstractArrow;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.event.entity.*;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -56,7 +48,7 @@ public class MiscellaneousListener implements Listener {
         Arrow arrow = (Arrow) e.getEntity();
 
         if (kp.getCurrentKit().equals(KitType.BOMBERMAN)) {
-            arrow.getWorld().createExplosion(arrow.getLocation(), 2.5f, false, false, p);
+            arrow.getWorld().createExplosion(arrow.getLocation(), 2.0f, false, true, p);
             arrow.setPickupStatus(AbstractArrow.PickupStatus.DISALLOWED);
             if (e.getHitEntity() == null) {
                 new BukkitRunnable() {
@@ -72,9 +64,49 @@ public class MiscellaneousListener implements Listener {
         }
     }
 
+    /*@EventHandler
+    public void onPlayerKnockBack(EntityKnockbackByEntityEvent e) {
+        if (!(e.getEntity() instanceof Player)) {
+            return;
+        }
+
+        Player p = (Player) e.getEntity();
+        KitPlayer kp = KitPlayerManager.getInstance().getKitPlayer(p);
+
+        if (kp.getCurrentKit().equals(KitType.BOMBERMAN)) {
+            if (e.getCause().equals(EntityKnockbackEvent.KnockbackCause.ENTITY_ATTACK)) {
+                System.out.println("" + e.getSourceEntity());
+                if (e.getSourceEntity() instanceof LivingEntity) {
+                    e.setFinalKnockback(new Vector(0, 2, 0));
+                }
+            }
+        }
+    }*/
+
+    @EventHandler
+    public void onPrimeExplosion(ExplosionPrimeEvent e) {
+        Entity ent = e.getEntity();
+        Location loc = e.getEntity().getLocation();
+
+        //Bomberman Kit Grenade
+        if (ent instanceof TNTPrimed) {
+            //e.setRadius(ent.getMetadata("GrenadePower").get(0).asInt());
+            e.setCancelled(true);
+            ent.remove();
+            try {
+                loc.getWorld().createExplosion(loc, ent.getMetadata("GrenadePower").get(0).asFloat(), false,
+                        true, Bukkit.getPlayer(ent.getMetadata("GrenadeOwner").get(0).asString()));
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
     @EventHandler
     public void onExplosion(EntityExplodeEvent e) {
         List<Block> newBlockList = new ArrayList<>();
+
+        //allow passable blocks to explode
         for (Block b : e.blockList()) {
             if (b.isPassable()) {
                 Helper.resetBlockAfter(b, 40);
@@ -90,6 +122,8 @@ public class MiscellaneousListener implements Listener {
     @EventHandler
     public void onExplosion(BlockExplodeEvent e) {
         List<Block> newBlockList = new ArrayList<>();
+
+        //allow passable blocks to explode
         for (Block b : e.blockList()) {
             if (b.isPassable()) {
                 Helper.resetBlockAfter(b, 40);
