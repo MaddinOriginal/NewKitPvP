@@ -38,6 +38,22 @@ public class MiscellaneousListener implements Listener {
     }
 
     @EventHandler
+    public void onTargetChange(EntityTargetLivingEntityEvent e) {
+        Entity entity = e.getEntity();
+        LivingEntity target = e.getTarget();
+
+        if (target == null) {
+            return;
+        }
+
+        if (entity.hasMetadata("WolfSummonedBy")) {
+            if (target.getUniqueId().toString().equals(entity.getMetadata("WolfSummonedBy").get(0).asString())) {
+                e.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
     public void onArrowHit(ProjectileHitEvent e) {
         if (!(e.getEntity().getShooter() instanceof Player) || !(e.getEntity() instanceof Arrow)) {
             return;

@@ -4,8 +4,7 @@ import me.maddinoriginal.newkitpvp.abilityitems.items.WolfHuntAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -19,9 +18,9 @@ import org.bukkit.inventory.meta.trim.TrimPattern;
  * Strong against= Archer, Tank
  * Weak against= Swordsman, Barbarian
  *
- * Active Ability= Shoot homing arrows for X seconds
- * Supportive Passive= Hitting enemies with arrows wont give them no invincibility frames
- * Survivability Passive= When hit, summons a wolf with Speed effect that hunts nearby enemies (21% chance)
+ * Active Ability= Shoot (slightly) homing arrows for X seconds
+ * Supportive Passive= Hitting enemies with arrows won't give them no invincibility frames
+ * Survivability Passive= Hitting an enemy with an arrow 3 times summons a Wolf with speed effect that hunts that enemy
  * Finisher Passive= Killing enemies gives back the amount of arrows shot since the last kill (max 7 arrows)
  */
 
@@ -49,7 +48,7 @@ public class Hunter extends Kit {
 
     @Override
     public String getDescription() {
-        return "On a hunt with its crossbow. Can summon wolfs to hunt their prey with him.";
+        return "On a hunt with its crossbow. Can shoot homing arrows and summon wolfs to hunt their prey with them.";
     }
 
     @Override

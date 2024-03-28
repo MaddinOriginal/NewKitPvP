@@ -20,10 +20,10 @@ import org.bukkit.inventory.meta.trim.TrimPattern;
  * Strong against= Archer, Tank
  * Weak against= Swordsman, Barbarian
  *
- * Active Ability= Plants a bush that slows down enemies and hurts half a heart when they try to move
- * Supportive Passive= Shooting enemies in bushes regains arrows TODO
- * Survivability Passive= Shooting enemies regains health TODO
- * Finisher Passive= Shooting enemies has a 33% chance to spawn a bush under them (if possible)
+ * Active Ability=
+ * Supportive Passive=
+ * Survivability Passive=
+ * Finisher Passive=
  */
 
 public class Marksman extends Kit {
@@ -121,7 +121,7 @@ public class Marksman extends Kit {
                 .setLore(ChatColor.RESET + "" + ChatColor.DARK_GRAY + Strings.repeat('\u2594' + "", 16),
                         ChatColor.GRAY + "Shoots arrows lol")
 
-                .addEnchantment(Enchantment.QUICK_CHARGE, 2, false)
+                .addEnchantment(Enchantment.QUICK_CHARGE, 1, false)
                 .addEnchantment(Enchantment.PIERCING, 5, true)
 
                 .setUnbreakable(true, true)
@@ -132,7 +132,7 @@ public class Marksman extends Kit {
 
         items[7] = new ItemBuilder(Material.ARROW)
                 .setDisplayName(ChatColor.YELLOW + getName() + " Arrow")
-                .setAmount(12)
+                .setAmount(16)
                 .build();
 
         return items;
