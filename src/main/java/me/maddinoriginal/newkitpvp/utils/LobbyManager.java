@@ -8,6 +8,7 @@ import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
 import me.maddinoriginal.newkitpvp.data.PlayerState;
 import me.maddinoriginal.newkitpvp.gui.AchievementsGUI;
 import me.maddinoriginal.newkitpvp.gui.KitSelectorGUI;
+import me.maddinoriginal.newkitpvp.gui.QuitServerGUI;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -91,7 +92,11 @@ public class LobbyManager {
                 }
                 break;
             case quitServerId:
-                player.kickPlayer(ChatColor.GREEN + "Thank you for playing! See you soon.");
+                try {
+                    MenuManager.openMenu(QuitServerGUI.class, player);
+                } catch (MenuManagerException | MenuManagerNotSetupException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             default:
                 break;

@@ -32,8 +32,6 @@ public class KitPvPCommand implements CommandExecutor {
         Player p = (Player) sender;
 
         //TODO implement permissions correctly
-        if (!p.isOp())
-            return false;
 
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("stats")) {
@@ -45,14 +43,18 @@ public class KitPvPCommand implements CommandExecutor {
                 p.sendMessage("Coins: " + data.getCoins().getAmount());
                 p.sendMessage("Tokens: " + data.getTokens().getAmount());
             }
-            if (args[0].equalsIgnoreCase("selectkit")) {
+
+            if (!p.isOp())
+                return false;
+
+            else if (args[0].equalsIgnoreCase("selectkit")) {
                 try {
                     MenuManager.openMenu(KitSelectorGUI.class, p);
                 } catch (MenuManagerException | MenuManagerNotSetupException e) {
                     throw new RuntimeException(e);
                 }
             }
-            if (args[0].equalsIgnoreCase("test")) {
+            else if (args[0].equalsIgnoreCase("test")) {
                 //AbilityType.WOLF_HUNT.getAbility().useAbility(p);
                 //p.sendMessage("" + Bukkit.getScheduler().getPendingTasks());
                 //p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 1.0f, 0.01f);
