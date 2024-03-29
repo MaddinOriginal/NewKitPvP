@@ -6,18 +6,15 @@ import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
 import me.maddinoriginal.newkitpvp.kits.KitType;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
 import org.bukkit.*;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Random;
@@ -28,7 +25,7 @@ public class DeathRespawnListener implements Listener {
     private Random random = new Random();
     private int lifetimeTicks = 75;
     private int addedLifetimeTicks = 15;
-    private int pickupDelay = lifetimeTicks + addedLifetimeTicks + 10;
+    private int pickupDelay = lifetimeTicks + addedLifetimeTicks;
 
     @EventHandler
     public void onDeathRespawn(EntityDamageEvent e) {
@@ -41,7 +38,7 @@ public class DeathRespawnListener implements Listener {
                     e.setCancelled(true);
                     damaged.playEffect(EntityEffect.TOTEM_RESURRECT);
                     damaged.setHealth(20.0);
-                    damaged.getInventory().remove(Material.TOTEM_OF_UNDYING);
+                    damaged.getInventory().remove(Material.TOTEM_OF_UNDYING); //TODO removes all totems of undying if there is more than one
                     return;
                 }
 
@@ -64,7 +61,7 @@ public class DeathRespawnListener implements Listener {
             Player killer = e.getEntity().getKiller();
             KitPlayer killer_kp = KitPlayerManager.getInstance().getKitPlayer(killer);
 
-            if (killer_kp.getCurrentKit().equals(KitType.BOMBERMAN)) {
+            if (killer_kp.getKitType().equals(KitType.BOMBERMAN)) {
                 ItemStack item = killer.getInventory().getItem(killer.getInventory().first(Material.ARROW));
                 if (item != null) {
                     item.setAmount(item.getAmount() + 5);
@@ -90,14 +87,16 @@ public class DeathRespawnListener implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                skull.remove();
+                if (!skull.isDead()) {
+                    skull.remove();
+                }
             }
         }.runTaskLater(NewKitPvP.getInstance(), lifetimeTicks + random.nextInt(addedLifetimeTicks));
 
         //drop a lot of redstone dust, bones and beef at the location that the player died at
         for (int i = 0; i < 8 + random.nextInt(4); i++) {
             double chance = random.nextDouble();
-            ItemStack item = new ItemStack(Material.DIAMOND);
+            ItemStack item = new ItemStack(Material.AIR);
             if (chance < 0.66) {
                 item.setType(Material.REDSTONE);
             } else if (chance < 0.85) {
@@ -120,7 +119,9 @@ public class DeathRespawnListener implements Listener {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    drop.remove();
+                    if (!drop.isDead()) {
+                        drop.remove();
+                    }
                 }
             }.runTaskLater(NewKitPvP.getInstance(), lifetimeTicks + random.nextInt(addedLifetimeTicks));
         }

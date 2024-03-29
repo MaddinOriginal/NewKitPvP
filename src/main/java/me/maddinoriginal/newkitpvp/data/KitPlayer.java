@@ -1,6 +1,7 @@
 package me.maddinoriginal.newkitpvp.data;
 
 import me.maddinoriginal.newkitpvp.NewKitPvP;
+import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitType;
 
 import java.util.UUID;
@@ -20,14 +21,16 @@ public class KitPlayer {
     private PlayerData data;
 
     private PlayerState playerState;
-    private KitType currentKit;
+    private KitType kitType;
+    private Kit kit;
 
     public KitPlayer(UUID uuid, String playerName) {
         this.uuid = uuid;
         this.playerName = playerName;
         this.data = new PlayerData(uuid, playerName);
         playerState = PlayerState.LOBBY;
-        currentKit = KitType.NONE;
+        kitType = KitType.NONE;
+        kit = null;
     }
 
     public UUID getUuid() {
@@ -47,10 +50,17 @@ public class KitPlayer {
         playerState = state;
     }
 
-    public KitType getCurrentKit() {
-        return currentKit;
+    public KitType getKitType() {
+        return kitType;
     }
-    public void setCurrentKit(KitType kitType) {
-        currentKit = kitType;
+    public void setKitType(KitType type) {
+        kitType = type;
+    }
+
+    public Kit getKit() {
+        return kit;
+    }
+    public void setKit(Kit kit) {
+        this.kit = kit;
     }
 }

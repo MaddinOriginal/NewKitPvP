@@ -36,7 +36,7 @@ public class DamageListener implements Listener {
         KitPlayer kp = KitPlayerManager.getInstance().getKitPlayer(p);
 
         //prevent explosion damage for bomber kit
-        if (kp.getCurrentKit().equals(KitType.BOMBERMAN)) {
+        if (kp.getKitType().equals(KitType.BOMBERMAN)) {
             if (e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION)
                     || e.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)) {
                 e.setCancelled(true);
@@ -44,7 +44,7 @@ public class DamageListener implements Listener {
         }
 
         //prevent fire damage for pyro kit
-        else if (kp.getCurrentKit().equals(KitType.PYRO)) {
+        else if (kp.getKitType().equals(KitType.PYRO)) {
             if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE)
                     || e.getCause().equals(EntityDamageEvent.DamageCause.FIRE_TICK)
                     || e.getCause().equals(EntityDamageEvent.DamageCause.HOT_FLOOR)
@@ -101,8 +101,8 @@ public class DamageListener implements Listener {
         }
 
         //active wolfs attack entity if it damages Hunter Kit
-        if (kp.getCurrentKit().equals(KitType.HUNTER)) {
-            Hunter kit = (Hunter) kp.getCurrentKit().getKit(); //TODO allgemeines Kit ändern zu individuellem Spieler Kit
+        if (kp.getKitType().equals(KitType.HUNTER)) {
+            Hunter kit = (Hunter) kp.getKitType().getKit(); //TODO allgemeines Kit ändern zu individuellem Spieler Kit
             LivingEntity target = null;
 
             if (ent instanceof Projectile && ((Projectile) ent).getShooter() instanceof LivingEntity) {
@@ -124,7 +124,7 @@ public class DamageListener implements Listener {
         }
 
         //Bomber Kit drop live TNT when attacked
-        else if (kp.getCurrentKit().equals(KitType.BOMBERMAN)) {
+        else if (kp.getKitType().equals(KitType.BOMBERMAN)) {
             if (ent instanceof LivingEntity) {
                 if (p.getHealth() >= 10.0 || grenadeOnCooldown) {
                     return;
@@ -173,7 +173,7 @@ public class DamageListener implements Listener {
         KitPlayer kp = KitPlayerManager.getInstance().getKitPlayer(p);
 
         //assassin kit instant kill under 2.5 hearts && damage entity from behind 150%
-        if (kp.getCurrentKit().equals(KitType.ASSASSIN)) {
+        if (kp.getKitType().equals(KitType.ASSASSIN)) {
             //instantkill under 2.5 hearts (5.0 health points)
             if (ent.getHealth() <= 5) {
                 //e.setCancelled(true);
@@ -213,14 +213,14 @@ public class DamageListener implements Listener {
             KitPlayer kp = KitPlayerManager.getInstance().getKitPlayer(p);
 
             //assassin ability to get resistance 1
-            if (kp.getCurrentKit().equals(KitType.ASSASSIN)) {
+            if (kp.getKitType().equals(KitType.ASSASSIN)) {
                 if (proj instanceof Arrow) {
                     p.addPotionEffect(PotionEffectType.DAMAGE_RESISTANCE.createEffect(150, 0));
                 }
             }
 
             //swordsman ability no knockback from projectiles
-            else if (kp.getCurrentKit().equals(KitType.SWORDSMAN)) {
+            else if (kp.getKitType().equals(KitType.SWORDSMAN)) {
                 e.setCancelled(true);
                 p.damage(e.getDamage(), proj);
             }
@@ -231,7 +231,7 @@ public class DamageListener implements Listener {
             KitPlayer kp = KitPlayerManager.getInstance().getKitPlayer(shooter);
 
             //Arbalist ability chance to try and place a bush under hit enemy
-            if (kp.getCurrentKit().equals(KitType.ARBALIST)) {
+            if (kp.getKitType().equals(KitType.ARBALIST)) {
 
                 //33% chance to do it
                 if (RANDOM.nextDouble() < 0.33) {
@@ -258,7 +258,7 @@ public class DamageListener implements Listener {
                 }
             }
 
-            else if (kp.getCurrentKit().equals(KitType.HUNTER)) {
+            else if (kp.getKitType().equals(KitType.HUNTER)) {
                 ((Hunter) KitType.HUNTER.getKit()).summonWolf(shooter, ent);
             }
         }

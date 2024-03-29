@@ -39,7 +39,7 @@ public class Hunter extends Kit {
 
     //Hunter Passive to summon a Wolf
     private final double WOLF_HEALTH = 3.0;
-    private final int LIFESPAN_TICKS = 97 * 20;
+    private final int LIFESPAN_TICKS = 7 * 20;
     private List<Wolf> wolfs = new ArrayList<>();
 
     @Override

@@ -9,7 +9,8 @@ import java.util.UUID;
 
 public class KitPlayerManager {
 
-    private HashMap<String, KitPlayer> kitplayers = new HashMap<>();
+    //String = UUID of player, KitPlayer the KitPlayer Object
+    private final HashMap<String, KitPlayer> kitplayers = new HashMap<>();
 
     /**
      * Handling of singleton pattern below...
@@ -40,7 +41,7 @@ public class KitPlayerManager {
     }
 
     public void addKitPlayer(UUID uuid, String name) {
-        if (kitplayers.containsKey(uuid)) {
+        if (kitplayers.containsKey(uuid.toString())) {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Spielerdaten existieren bereits ??");
             return;
         }
@@ -80,6 +81,4 @@ public class KitPlayerManager {
         kitplayers.get(uuid.toString()).getPlayerData().save();
         kitplayers.remove(uuid.toString());
     }
-
-
 }

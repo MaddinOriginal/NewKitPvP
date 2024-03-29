@@ -63,7 +63,7 @@ public class MiscellaneousListener implements Listener {
         KitPlayer kp = KitPlayerManager.getInstance().getKitPlayer(p);
         Arrow arrow = (Arrow) e.getEntity();
 
-        if (kp.getCurrentKit().equals(KitType.BOMBERMAN)) {
+        if (kp.getKitType().equals(KitType.BOMBERMAN)) {
             arrow.getWorld().createExplosion(arrow.getLocation(), 2.0f, false, true, p);
             arrow.setPickupStatus(AbstractArrow.PickupStatus.DISALLOWED);
             if (e.getHitEntity() == null) {

@@ -77,7 +77,7 @@ public class InteractListener implements Listener {
         Player p = (Player) e.getEntity();
         KitPlayer kp = KitPlayerManager.getInstance().getKitPlayer(p);
 
-        if (kp.getCurrentKit().equals(KitType.BOMBERMAN)) {
+        if (kp.getKitType().equals(KitType.BOMBERMAN)) {
             Arrow arrow = (Arrow) e.getProjectile();
             arrow.setColor(Color.MAROON);
         }

@@ -22,7 +22,8 @@ public class KitSelectListener implements Listener {
         }
 
         kit.getKit().setPlayerKit(p);
-        KitPlayerManager.getInstance().getKitPlayer(p).setCurrentKit(kit);
+        KitPlayerManager.getInstance().getKitPlayer(p).setKitType(kit);
+        //TODO KitPlayerManager.getInstance().getKitPlayer(p).setKit();
         joinArena(p);
     }
 

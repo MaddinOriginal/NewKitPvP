@@ -54,7 +54,7 @@ public class SneakSprintListener implements Listener {
         KitPlayer kp = KitPlayerManager.getInstance().getKitPlayer(p);
 
         //Ghost Kit Invisibility Ability
-        if (kp.getCurrentKit().equals(KitType.GHOST)) {
+        if (kp.getKitType().equals(KitType.GHOST)) {
             if (!p.isSneaking()) {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, -1, 0));
             } else {
@@ -63,7 +63,7 @@ public class SneakSprintListener implements Listener {
         }
 
         //Blaster Kit Sneak Ability
-        else if (kp.getCurrentKit().equals(KitType.BLASTER)) {
+        else if (kp.getKitType().equals(KitType.BLASTER)) {
             //return if on cooldown or player stopped sneaking instead of starting to sneak
             if (blasterSneakOnCooldown || p.isSneaking()) {
                 return;
@@ -109,7 +109,7 @@ public class SneakSprintListener implements Listener {
         Player p = e.getPlayer();
         KitPlayer kp = KitPlayerManager.getInstance().getKitPlayer(p);
 
-        if (kp.getCurrentKit().equals(KitType.PYRO)) {
+        if (kp.getKitType().equals(KitType.PYRO)) {
             new BukkitRunnable() {
 
                 @Override
