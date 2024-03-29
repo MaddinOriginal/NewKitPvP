@@ -1,15 +1,23 @@
 package me.maddinoriginal.newkitpvp.kits.advancedkits;
 
+import me.maddinoriginal.newkitpvp.NewKitPvP;
 import me.maddinoriginal.newkitpvp.abilityitems.items.WolfHuntAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Wolf;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 /**
  * Type= Hybrid Kit with a crossbow and a knife
@@ -148,5 +156,46 @@ public class Hunter extends Kit {
         items[8] = null;
 
         return items;
+    }
+
+    private final double WOLF_HEALTH = 3.0;
+    private final int LIFESPAN_TICKS = 7 * 20;
+
+    /**
+     * Summon Wolf passive ability (when hitting enemy with arrow 3 times)
+     * @param player The player with the kit who activates the ability
+     * @param target The other player that gets targeted by the wolf
+     */
+    public void summonWolf(Player player, LivingEntity target) {
+        player.getWorld().playSound(player.getLocation(), Sound.ENTITY_WOLF_HOWL, 0.5f, 1.0f);
+
+        Wolf wolf = player.getWorld().spawn(player.getLocation(), Wolf.class, c -> {
+            //c.setTamed(true);
+            //c.setCollarColor(DyeColor.values()[random.nextInt(DyeColor.values().length)]);
+            //c.setOwner(player);
+            c.setAngry(true);
+            c.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 4));
+            c.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0));
+            c.setHealth(WOLF_HEALTH);
+            c.setMetadata("WolfSummonedBy", new FixedMetadataValue(NewKitPvP.getInstance(), player.getUniqueId()));
+            c.setTarget(target);
+        });
+        //wolf.setTarget(target);
+
+        //remove wolfs after lifespan
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                removeWolf(wolf);
+            }
+        }.runTaskLater(NewKitPvP.getInstance(), LIFESPAN_TICKS);
+    }
+
+    private void removeWolf(Wolf wolf) {
+        Location loc = wolf.getLocation();
+
+        wolf.remove();
+        loc.getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, loc.add(0, 0.4, 0), 8, 0.3, 0.2, 0.3, 0.01);
+        loc.getWorld().playSound(loc, Sound.ENTITY_WOLF_DEATH, 1.0f, 1.0f);
     }
 }

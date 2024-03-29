@@ -4,6 +4,7 @@ import me.maddinoriginal.newkitpvp.NewKitPvP;
 import me.maddinoriginal.newkitpvp.data.KitPlayer;
 import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
 import me.maddinoriginal.newkitpvp.kits.KitType;
+import me.maddinoriginal.newkitpvp.kits.advancedkits.Hunter;
 import me.maddinoriginal.newkitpvp.utils.Helper;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -235,49 +236,8 @@ public class DamageListener implements Listener {
             }
 
             else if (kp.getCurrentKit().equals(KitType.HUNTER)) {
-                summonWolfPassive(shooter, ent);
+                ((Hunter) KitType.HUNTER.getKit()).summonWolf(shooter, ent);
             }
         }
-    }
-
-    private final double WOLF_HEALTH = 3.0;
-
-    /**
-     * Summon Wolf passive ability (when hitting enemy with arrow 3 times)
-     * @param player The player with the kit who activates the ability
-     * @param target The other player that gets targeted by the wolf
-     */
-    public void summonWolfPassive(Player player, LivingEntity target) {
-        player.getWorld().playSound(player.getLocation(), Sound.ENTITY_WOLF_HOWL, 0.5f, 1.0f);
-
-        Wolf wolf = player.getWorld().spawn(player.getLocation(), Wolf.class, c -> {
-            //c.setTamed(true);
-            //c.setCollarColor(DyeColor.values()[random.nextInt(DyeColor.values().length)]);
-            //c.setOwner(player);
-            c.setAngry(true);
-            c.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 4));
-            c.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0));
-            c.setHealth(WOLF_HEALTH);
-            c.setMetadata("WolfSummonedBy", new FixedMetadataValue(NewKitPvP.getInstance(), player.getUniqueId()));
-            c.setTarget(target);
-        });
-        //wolf.setTarget(target);
-
-        //remove wolfs after lifespan
-        final int LIFESPAN_TICKS = 7 * 20;
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                removeWolf(wolf);
-            }
-        }.runTaskLater(NewKitPvP.getInstance(), LIFESPAN_TICKS);
-    }
-
-    private void removeWolf(Wolf wolf) {
-        Location loc = wolf.getLocation();
-
-        wolf.remove();
-        loc.getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, loc.add(0, 0.4, 0), 8, 0.3, 0.2, 0.3, 0.01);
-        loc.getWorld().playSound(loc, Sound.ENTITY_WOLF_DEATH, 1.0f, 1.0f);
     }
 }
