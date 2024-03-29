@@ -19,6 +19,9 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Type= Hybrid Kit with a crossbow and a knife
  * Armor= Mostly green-ish leather armor with some brown tones
@@ -33,6 +36,11 @@ import org.bukkit.scheduler.BukkitRunnable;
  */
 
 public class Hunter extends Kit {
+
+    //Hunter Passive to summon a Wolf
+    private final double WOLF_HEALTH = 3.0;
+    private final int LIFESPAN_TICKS = 97 * 20;
+    private List<Wolf> wolfs = new ArrayList<>();
 
     @Override
     public String getName() {
@@ -158,9 +166,6 @@ public class Hunter extends Kit {
         return items;
     }
 
-    private final double WOLF_HEALTH = 3.0;
-    private final int LIFESPAN_TICKS = 7 * 20;
-
     /**
      * Summon Wolf passive ability (when hitting enemy with arrow 3 times)
      * @param player The player with the kit who activates the ability
@@ -180,22 +185,29 @@ public class Hunter extends Kit {
             c.setMetadata("WolfSummonedBy", new FixedMetadataValue(NewKitPvP.getInstance(), player.getUniqueId()));
             c.setTarget(target);
         });
-        //wolf.setTarget(target);
+        wolfs.add(wolf);
 
         //remove wolfs after lifespan
         new BukkitRunnable() {
             @Override
             public void run() {
-                removeWolf(wolf);
+                if (!wolf.isDead()) {
+                    removeWolf(wolf);
+                }
             }
         }.runTaskLater(NewKitPvP.getInstance(), LIFESPAN_TICKS);
     }
 
     private void removeWolf(Wolf wolf) {
         Location loc = wolf.getLocation();
+        wolfs.remove(wolf);
 
         wolf.remove();
         loc.getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, loc.add(0, 0.4, 0), 8, 0.3, 0.2, 0.3, 0.01);
         loc.getWorld().playSound(loc, Sound.ENTITY_WOLF_DEATH, 1.0f, 1.0f);
+    }
+
+    public List<Wolf> getWolfs() {
+        return wolfs;
     }
 }

@@ -15,7 +15,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -55,6 +54,7 @@ public class DamageListener implements Listener {
         }
     }
 
+    //TODO: remove
     @EventHandler
     public void onZombieDamage(EntityDamageEvent e) {
         Entity ent = e.getEntity();
@@ -100,8 +100,31 @@ public class DamageListener implements Listener {
             e.setCancelled(true);
         }
 
+        //active wolfs attack entity if it damages Hunter Kit
+        if (kp.getCurrentKit().equals(KitType.HUNTER)) {
+            Hunter kit = (Hunter) kp.getCurrentKit().getKit(); //TODO allgemeines Kit ändern zu individuellem Spieler Kit
+            LivingEntity target = null;
+
+            if (ent instanceof Projectile && ((Projectile) ent).getShooter() instanceof LivingEntity) {
+                target = (LivingEntity) ((Projectile) ent).getShooter();
+            }
+            else if (ent instanceof LivingEntity) {
+                target = (LivingEntity) ent;
+            }
+
+            if (target != null) {
+                if (!kit.getWolfs().isEmpty()) {
+                    for (Wolf wolf : kit.getWolfs()) {
+                        if (wolf.getTarget() == null) {
+                            wolf.setTarget(target);
+                        }
+                    }
+                }
+            }
+        }
+
         //Bomber Kit drop live TNT when attacked
-        if (kp.getCurrentKit().equals(KitType.BOMBERMAN)) {
+        else if (kp.getCurrentKit().equals(KitType.BOMBERMAN)) {
             if (ent instanceof LivingEntity) {
                 if (p.getHealth() >= 10.0 || grenadeOnCooldown) {
                     return;
