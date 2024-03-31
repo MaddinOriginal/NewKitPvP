@@ -8,7 +8,7 @@ import me.maddinoriginal.newkitpvp.powerup.PowerUpManager;
 import me.maddinoriginal.newkitpvp.powerup.PowerUpType;
 import me.maddinoriginal.newkitpvp.data.KitPlayer;
 import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
-import me.maddinoriginal.newkitpvp.utils.LobbyManager;
+import me.maddinoriginal.newkitpvp.maps.LobbyManager;
 import me.maddinoriginal.newkitpvp.data.PlayerState;
 import org.bukkit.*;
 import org.bukkit.block.Block;

@@ -43,8 +43,20 @@ public class MapManager {
      * actual class
      */
 
+    public Map getCurrentMap() {
+        return currentMap;
+    }
+
     private void setup() {
-        importWorlds();
+        //importWorlds(); TODO
+        World world = Bukkit.getWorld("world");
+        String name = "Sky Islands";
+        String creator = "MaddinOriginal";
+        Location lobbySpawn = new Location(world, 0.5, 0, 0.5, 0, 0);
+        List<Location> playerSpawns = null;
+        List<Location> powerupSpawns = null;
+
+        currentMap = new Map(world, name, creator, lobbySpawn, playerSpawns, powerupSpawns);
     }
 
     private void importWorlds() {

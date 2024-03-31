@@ -203,6 +203,11 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder addCanDestroy(Material mat) {
+        //TODO
+        return this;
+    }
+
     /**
      * Adds the ItemFlag that hides all attributes
      */

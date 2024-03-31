@@ -1,9 +1,7 @@
 package me.maddinoriginal.newkitpvp.kits;
 
 import me.maddinoriginal.newkitpvp.kits.advancedkits.*;
-import me.maddinoriginal.newkitpvp.kits.legendarykits.BlackDragon;
-import me.maddinoriginal.newkitpvp.kits.legendarykits.DarkKnight;
-import me.maddinoriginal.newkitpvp.kits.legendarykits.GrimReaper;
+import me.maddinoriginal.newkitpvp.kits.legendarykits.*;
 import me.maddinoriginal.newkitpvp.kits.standardkits.*;
 
 public enum KitType {

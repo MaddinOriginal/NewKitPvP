@@ -1,7 +1,6 @@
 package me.maddinoriginal.newkitpvp.kits.advancedkits;
 
 import com.google.common.base.Strings;
-import me.maddinoriginal.newkitpvp.abilityitems.items.AirStreamAbilityItem;
 import me.maddinoriginal.newkitpvp.abilityitems.items.TeleportForwardAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;

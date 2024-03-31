@@ -1,19 +1,16 @@
 package me.maddinoriginal.newkitpvp.kits.advancedkits;
 
 import com.google.common.base.Strings;
-import me.maddinoriginal.newkitpvp.abilityitems.items.AirStreamAbilityItem;
 import me.maddinoriginal.newkitpvp.abilityitems.items.DetonationAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
-import org.bukkit.potion.PotionType;
 
 /**
  * Type=

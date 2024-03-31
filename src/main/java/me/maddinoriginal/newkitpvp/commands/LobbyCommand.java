@@ -1,6 +1,6 @@
 package me.maddinoriginal.newkitpvp.commands;
 
-import me.maddinoriginal.newkitpvp.utils.LobbyManager;
+import me.maddinoriginal.newkitpvp.maps.LobbyManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

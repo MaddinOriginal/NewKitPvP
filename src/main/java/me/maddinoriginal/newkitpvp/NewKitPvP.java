@@ -19,6 +19,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -64,13 +65,17 @@ public final class NewKitPvP extends JavaPlugin {
 
         //init managers
         kitPlayerManager = KitPlayerManager.getInstance();
+        //kitPlayerManager.setup();
         mapManager = MapManager.getInstance();
+        //mapManager.setup();
         powerUpManager = PowerUpManager.getInstance();
+        //powerUpManager.setup();
 
         setGameRules();
         prepareWorld();
 
-        prefix = ChatColor.translateAlternateColorCodes('&', getConfig().getString("Prefix"));
+        prefix = ChatColor.translateAlternateColorCodes('&',
+                Objects.requireNonNull(getConfig().getString("Prefix")));
 
         connectDatabase();
 
@@ -150,12 +155,12 @@ public final class NewKitPvP extends JavaPlugin {
             world.setGameRule(GameRule.DO_VINES_SPREAD, false);
             world.setGameRule(GameRule.DO_WARDEN_SPAWNING, false);
             world.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
-            //world.setGameRule(GameRule.DROWNING_DAMAGE, false);
+            //world.setGameRule(GameRule.DROWNING_DAMAGE, true);
             //world.setGameRule(GameRule.ENDER_PEARLS_VANISH_ON_DEATH, false);
             world.setGameRule(GameRule.FALL_DAMAGE, false);
-            //world.setGameRule(GameRule.FIRE_DAMAGE, true);
+            world.setGameRule(GameRule.FIRE_DAMAGE, true);
             //world.setGameRule(GameRule.FORGIVE_DEAD_PLAYERS, true);
-            //world.setGameRule(GameRule.FREEZE_DAMAGE, false);
+            world.setGameRule(GameRule.FREEZE_DAMAGE, true);
             //world.setGameRule(GameRule.GLOBAL_SOUND_EVENTS, true);
             world.setGameRule(GameRule.KEEP_INVENTORY, true);
             //world.setGameRule(GameRule.LAVA_SOURCE_CONVERSION, false);

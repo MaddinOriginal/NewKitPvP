@@ -52,23 +52,12 @@ public class DamageListener implements Listener {
                 e.setCancelled(true);
             }
         }
-    }
 
-    //TODO: remove
-    @EventHandler
-    public void onZombieDamage(EntityDamageEvent e) {
-        Entity ent = e.getEntity();
-
-        if (ent instanceof Zombie) {
-            Bukkit.broadcastMessage("Zombie: " + ((Zombie) ent).getHealth());
-
-            new BukkitRunnable() {
-
-                @Override
-                public void run() {
-                    Bukkit.broadcastMessage("" + ((Zombie) ent).getHealth());
-                }
-            }.runTaskLater(NewKitPvP.getInstance(), 2);
+        //prevent freezing damage from yeti kit
+        else if (kp.getKitType().equals(KitType.YETI)) {
+            if (e.getCause().equals(EntityDamageEvent.DamageCause.FREEZE)) {
+                e.setCancelled(true);
+            }
         }
     }
 
@@ -160,8 +149,6 @@ public class DamageListener implements Listener {
         }
     }
 
-    private int rangeLimitFromBehind = 36;
-
     @EventHandler
     public void onEntityDamageByPlayer(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player) || !(e.getEntity() instanceof LivingEntity)) {
@@ -174,21 +161,36 @@ public class DamageListener implements Listener {
 
         //assassin kit instant kill under 2.5 hearts && damage entity from behind 150%
         if (kp.getKitType().equals(KitType.ASSASSIN)) {
+
             //instantkill under 2.5 hearts (5.0 health points)
             if (ent.getHealth() <= 5) {
                 //e.setCancelled(true);
                 ent.setHealth(0);
             }
+
             //more damage when attack from behind entity
             else {
-                double yawPlayer = p.getLocation().getYaw();
-                double yawEntity = ent.getLocation().getYaw();
-                double distance = distanceBetweenTwoAngles(yawPlayer, yawEntity);
-
-                if (distance <= rangeLimitFromBehind) {
+                if (isBehind(p, ent)) {
                     e.setDamage(e.getDamage() * 1.5);
                 }
             }
+        }
+
+        //more damage depending on freeze ticks (max 1.5x)
+        else if (kp.getKitType().equals(KitType.YETI)) {
+            e.setDamage(e.getDamage() * Math.min((ent.getFreezeTicks()/100f + 1), 1.5));
+        }
+    }
+
+    private boolean isBehind(Player player, LivingEntity target) {
+        double yawPlayer = player.getLocation().getYaw();
+        double yawEntity = target.getLocation().getYaw();
+        double distance = distanceBetweenTwoAngles(yawPlayer, yawEntity);
+
+        if (distance <= 36) {
+            return true;
+        } else {
+            return false;
         }
     }
 

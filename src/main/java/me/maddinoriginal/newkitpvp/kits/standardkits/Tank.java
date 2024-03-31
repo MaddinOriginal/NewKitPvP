@@ -1,7 +1,6 @@
 package me.maddinoriginal.newkitpvp.kits.standardkits;
 
 import com.google.common.base.Strings;
-import me.maddinoriginal.newkitpvp.abilityitems.items.DashAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;

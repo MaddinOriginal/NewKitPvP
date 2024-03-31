@@ -3,7 +3,7 @@ package me.maddinoriginal.newkitpvp.listeners;
 import me.maddinoriginal.newkitpvp.NewKitPvP;
 import me.maddinoriginal.newkitpvp.data.models.PlayerStats;
 import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
-import me.maddinoriginal.newkitpvp.utils.LobbyManager;
+import me.maddinoriginal.newkitpvp.maps.LobbyManager;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.attribute.Attribute;

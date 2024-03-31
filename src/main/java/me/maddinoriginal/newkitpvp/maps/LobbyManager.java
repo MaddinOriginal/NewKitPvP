@@ -1,4 +1,4 @@
-package me.maddinoriginal.newkitpvp.utils;
+package me.maddinoriginal.newkitpvp.maps;
 
 import me.kodysimpson.simpapi.exceptions.MenuManagerException;
 import me.kodysimpson.simpapi.exceptions.MenuManagerNotSetupException;
@@ -9,6 +9,7 @@ import me.maddinoriginal.newkitpvp.data.PlayerState;
 import me.maddinoriginal.newkitpvp.gui.AchievementsGUI;
 import me.maddinoriginal.newkitpvp.gui.KitSelectorGUI;
 import me.maddinoriginal.newkitpvp.gui.QuitServerGUI;
+import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -110,7 +111,7 @@ public class LobbyManager {
     }
 
     public void teleportToLobby(Player player) {
-        player.teleport(new Location(player.getWorld(), 0.5, 0, 0.5)); //TODO change teleport coordinates according to map
+        player.teleport(MapManager.getInstance().getCurrentMap().getLobbySpawn());
     }
 
     public NamespacedKey getLobbyItemKey() {

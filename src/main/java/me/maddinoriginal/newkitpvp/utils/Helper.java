@@ -7,13 +7,19 @@ import org.bukkit.block.BlockState;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Helper {
 
     private static Map<Location, BlockState> blockStates = new HashMap<>();
     private static int currentID = 0;
+
+    public static int nextID() {
+        return currentID++;
+    }
 
     public static void resetBlockAfter(Block b, int ticks) {
         //give block a unique id to recognize later if it is still the same block we want to revert the state for
@@ -43,7 +49,24 @@ public class Helper {
         }.runTaskLater(NewKitPvP.getInstance(), ticks);
     }
 
-    public static int nextID() {
-        return currentID++;
+    public static List<Block> getSphere(Location location, int radius, boolean empty) {
+        List<Block> blocks = new ArrayList<>();
+
+        int bx = location.getBlockX();
+        int by = location.getBlockY();
+        int bz = location.getBlockZ();
+
+        for (int x = bx - radius; x <= bx + radius; x++) {
+            for (int y = by - radius; y <= by + radius; y++) {
+                for (int z = bz - radius; z <= bz + radius; z++) {
+                    double distance = ((bx - x) * (bx - x) + (bz - z) * (bz - z) + (by - y) * (by - y));
+                    if (distance < radius * radius && (!empty && distance < (radius - 1) * (radius - 1))) {
+                        blocks.add(new Location(location.getWorld(), x, y, z).getBlock());
+                    }
+                }
+            }
+        }
+
+        return blocks;
     }
 }

@@ -8,8 +8,11 @@ import me.maddinoriginal.newkitpvp.abilityitems.abilities.EvokerFangAbility;
 import me.maddinoriginal.newkitpvp.gui.KitSelectorGUI;
 import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
 import me.maddinoriginal.newkitpvp.data.PlayerData;
+import me.maddinoriginal.newkitpvp.utils.Helper;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -58,6 +61,14 @@ public class KitPvPCommand implements CommandExecutor {
                 //AbilityType.WOLF_HUNT.getAbility().useAbility(p);
                 //p.sendMessage("" + Bukkit.getScheduler().getPendingTasks());
                 //p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 1.0f, 0.01f);
+
+                for (Block block : Helper.getSphere(p.getLocation(), 5, false)) {
+                    block.getWorld().spawnParticle(Particle.SNOWFLAKE, block.getLocation(), 1, 0.1, 0.1, 0.1, 0.1);
+                    if (block.isPassable() && block.canPlace(Material.SNOW.createBlockData())) {
+                        Helper.resetBlockAfter(block, 100);
+                        block.setType(Material.SNOW);
+                    }
+                }
 
                 /*
                 Location loc = p.getLocation();

@@ -1,17 +1,24 @@
 package me.maddinoriginal.newkitpvp.kits.advancedkits;
 
 import com.google.common.base.Strings;
+import me.maddinoriginal.newkitpvp.NewKitPvP;
 import me.maddinoriginal.newkitpvp.abilityitems.items.SnowstormAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
+import me.maddinoriginal.newkitpvp.utils.Helper;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Random;
 
 /**
  * Type=
@@ -120,8 +127,11 @@ public class Yeti extends Kit {
         items[0] = new ItemBuilder(Material.IRON_SHOVEL)
                 .setDisplayName(ChatColor.YELLOW + "Yeti Shovel")
                 .setLore(ChatColor.RESET + "" + ChatColor.DARK_GRAY + Strings.repeat('\u2594' + "", 16),
-                        ChatColor.WHITE + "Belonged to Bigfoot")
+                        ChatColor.GRAY + "Belonged to Bigfoot")
+
+                //.addEnchantment(Enchantment.DAMAGE_ALL, 1, false)
                 .addEnchantment(Enchantment.DIG_SPEED, 3, false)
+
                 .setUnbreakable(true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
@@ -129,5 +139,40 @@ public class Yeti extends Kit {
         items[1] = new SnowstormAbilityItem().getItem();
 
         return items;
+    }
+
+    private Player player;
+    private Random random = new Random();
+    public void startSnowfall() {
+        new BukkitRunnable() {
+
+            @Override
+            public void run() {
+                Location loc = player.getLocation();
+
+                if (random.nextInt(2) == 0) {
+                    loc.setX(loc.getX() + 2 + random.nextInt(4));
+                } else {
+                    loc.setX(loc.getX() - 2 - random.nextInt(4));
+                }
+                if (random.nextInt(2) == 0) {
+                    loc.setZ(loc.getZ() + 2 + random.nextInt(4));
+                } else {
+                    loc.setZ(loc.getZ() - 2 - random.nextInt(4));
+                }
+
+                loc.setY(loc.getY() + 5);
+
+                while (loc.getY() > 0 && !loc.getBlock().getType().isSolid()) {
+                    loc.setY(loc.getY() - 1);
+                }
+
+                if (loc.getBlock().getType().isSolid()) {
+                    loc.setY(loc.getY() + 1);
+                    Helper.resetBlockAfter(loc.getBlock(), 10*20);
+                    loc.getBlock().setType(Material.SNOW);
+                }
+            }
+        }.runTaskTimer(NewKitPvP.getInstance(), 20, 20);
     }
 }
