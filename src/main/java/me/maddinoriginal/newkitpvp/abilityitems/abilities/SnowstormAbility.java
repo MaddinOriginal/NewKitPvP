@@ -95,7 +95,7 @@ public class SnowstormAbility extends Ability {
                 .filter(ent -> ent instanceof LivingEntity).map(ent -> (LivingEntity) ent).collect(Collectors.toList());
         for (LivingEntity ent : nearbyLivingEntities) {
             if (ent instanceof Player && KitPlayerManager.getInstance().getKitPlayer(player).getKitType().equals(KitType.YETI)) {
-                //continue;
+                continue;
             }
             ent.setFreezeTicks(RESET_AFTER + 140);
         }

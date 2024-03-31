@@ -62,13 +62,7 @@ public class KitPvPCommand implements CommandExecutor {
                 //p.sendMessage("" + Bukkit.getScheduler().getPendingTasks());
                 //p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 1.0f, 0.01f);
 
-                for (Block block : Helper.getSphere(p.getLocation(), 5, false)) {
-                    block.getWorld().spawnParticle(Particle.SNOWFLAKE, block.getLocation(), 1, 0.1, 0.1, 0.1, 0.1);
-                    if (block.isPassable() && block.canPlace(Material.SNOW.createBlockData())) {
-                        Helper.resetBlockAfter(block, 100);
-                        block.setType(Material.SNOW);
-                    }
-                }
+
 
                 /*
                 Location loc = p.getLocation();
