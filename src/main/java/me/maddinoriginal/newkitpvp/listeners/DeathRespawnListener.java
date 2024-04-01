@@ -127,7 +127,7 @@ public class DeathRespawnListener implements Listener {
         }
 
         //spawn lava particles
-        killed.getWorld().spawnParticle(Particle.DRIP_LAVA, loc.getX(),loc.getY() + killed.getHeight()/2, loc.getZ(),
+        killed.getWorld().spawnParticle(Particle.FALLING_LAVA, loc.getX(),loc.getY() + killed.getHeight()/2, loc.getZ(),
                 100, killed.getWidth() / 2, killed.getHeight() / 4, killed.getWidth() / 2,
                 5, null, true);
     }

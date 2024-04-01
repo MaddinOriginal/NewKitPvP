@@ -92,9 +92,11 @@ public class DemonCircleAbility extends Ability {
                     timer--;
                 }
                 else {
+                    Location goatDeath = goat.getLocation().add(0, 0.3, 0);
                     goat.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, goat.getLocation(), 40, 3.5, 0.5, 3.5, 0.2);
                     goat.getWorld().playSound(goat.getEyeLocation(), Sound.ENTITY_WITHER_HURT, 0.6f, 1.0f);
-                    goat.remove();
+                    goat.setHealth(0);
+                    goatDeath.getWorld().spawnParticle(Particle.FALLING_LAVA, goatDeath, 24, 0.4, 0.2, 0.4);
 
                     if (heal > 0) {
                         player.getWorld().spawnParticle(Particle.HEART, player.getLocation().add(0, 1.8, 0), (int) heal*2, 0.5, 0.2, 0.5, 1);
