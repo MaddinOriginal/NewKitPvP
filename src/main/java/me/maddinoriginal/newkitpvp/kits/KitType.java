@@ -36,7 +36,8 @@ public enum KitType {
     //Legendary Kits
     DARK_KNIGHT (new DarkKnight()),
     GRIM_REAPER (new GrimReaper()),
-    BLACK_DRAGON (new BlackDragon());
+    BLACK_DRAGON (new BlackDragon()),
+    DEMON_KING (new DemonKing());
 
     private Kit kit;
 
