@@ -1,11 +1,14 @@
 package me.maddinoriginal.newkitpvp.utils;
 
 import me.maddinoriginal.newkitpvp.NewKitPvP;
+import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,8 +44,8 @@ public class Helper {
                 //check if still the same unique id as before and only then change it back
                 if (currentID == blockID) {
                     BlockState previous = blockStates.get(b.getLocation());
-                    b.setType(previous.getType());
-                    b.setBlockData(previous.getBlockData());
+                    b.setType(previous.getType(), false);
+                    b.setBlockData(previous.getBlockData(), false);
                     blockStates.remove(b.getLocation());
                 }
             }
@@ -60,7 +63,7 @@ public class Helper {
             for (int y = by - radius; y <= by + radius; y++) {
                 for (int z = bz - radius; z <= bz + radius; z++) {
                     double distance = ((bx - x) * (bx - x) + (bz - z) * (bz - z) + (by - y) * (by - y));
-                    if (distance < radius * radius && (!empty && distance < (radius - 1) * (radius - 1))) {
+                    if (distance < radius * radius && (!empty || distance > (radius - 1.01) * (radius - 1.01))) {
                         blocks.add(new Location(location.getWorld(), x, y, z).getBlock());
                     }
                 }
@@ -68,5 +71,146 @@ public class Helper {
         }
 
         return blocks;
+    }
+
+    public static List<Block> getSphereFlat(Location location, int radius, boolean empty) {
+        List<Block> blocks = new ArrayList<>();
+
+        int bx = location.getBlockX();
+        int by = location.getBlockY();
+        int bz = location.getBlockZ();
+
+        for (int x = bx - radius; x <= bx + radius; x++) {
+            for (int z = bz - radius; z <= bz + radius; z++) {
+                double distance = ((bx - x) * (bx - x) + (bz - z) * (bz - z));
+                if (distance < radius * radius && (!empty || distance > (radius - 1.01) * (radius - 1.01))) {
+                    blocks.add(new Location(location.getWorld(), x, by, z).getBlock());
+                }
+            }
+        }
+
+        return blocks;
+    }
+
+    public static void drawAlchemyCircle(Location loc, double size, int ticks, int period) {
+        Helper.drawCircle(loc, 3.0 *size, 0.2, ticks, period);
+        Helper.drawHexagon(loc, 2.94 *size, 0.2, ticks, period, false);
+        Helper.drawHexagon(loc, 2.486 *size, 0.2, ticks, period, true);
+        Helper.drawSmallCircles(loc, 0.2 *size, 2.0, 1.4 *size, ticks, period);
+        Helper.drawLines(loc, 1.1 *size, 0, 0.2, ticks, period);
+        Helper.drawLines(loc, 0.6 *size, 1.5 *size, 0.2, ticks, period);
+        Helper.drawCircle(loc, 0.75 *size, 1.0, ticks, period);
+    }
+
+    public static void drawLines(Location location, double length, double skip, double precision, int ticksAlive, int period) {
+        location.setPitch(0);
+
+        new BukkitRunnable() {
+            Location loc;
+            Vector dir;
+            int timer = ticksAlive;
+
+            @Override
+            public void run() {
+                if (timer <= 0) {
+                    cancel();
+                    return;
+                } else {
+                    timer = timer - period;
+                }
+
+                for (int i = 0; i < 6; i++) {
+                    location.setYaw(location.getYaw() + 60);
+                    loc = location.clone().add(location.clone().getDirection().multiply(skip));
+                    dir = loc.getDirection().multiply(length);
+
+                    for (int j = 0; j < dir.length()/precision; j++) {
+                        loc.add(dir.clone().normalize().multiply(precision));
+                        loc.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, new Particle.DustOptions(Color.RED, 1));
+                    }
+                }
+            }
+        }.runTaskTimer(NewKitPvP.getInstance(), 0, period);
+    }
+
+    public static void drawCircle(Location location, double size, double precision, int ticksAlive, int period) {
+        new BukkitRunnable() {
+            Location loc;
+            int timer = ticksAlive;
+
+            float angle = 0f;
+
+            @Override
+            public void run() {
+                if (timer <= 0) {
+                    cancel();
+                    return;
+                } else {
+                    timer = timer - period;
+                }
+
+                loc = location;//.add(location.getDirection().setY(0).normalize().multiply(size));
+
+                for (double d = 0; d <= 90; d += Math.max(precision, 0.1)) {
+                    Location particleLoc = new Location(location.getWorld(), location.getX(), location.getY(), location.getZ());
+                    particleLoc.setX(location.getX() + Math.cos(d) * size);
+                    particleLoc.setZ(location.getZ() + Math.sin(d) * size);
+                    location.getWorld().spawnParticle(Particle.REDSTONE, particleLoc, 1, new Particle.DustOptions(Color.RED, 1));
+                }
+
+                /*loc.setX(size * Math.sin(angle));
+                loc.setZ(size * Math.cos(angle));
+                angle += 1;
+
+                loc.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, new Particle.DustOptions(Color.RED, 1));*/
+            }
+        }.runTaskTimer(NewKitPvP.getInstance(), 0, period);
+    }
+
+    public static void drawSmallCircles(Location location, double size, double precision, double distance, int ticksAlive, int period) {
+        location.setPitch(0);
+
+        for (int i = 0; i < 6; i++) {
+            location.setYaw(location.getYaw() + 60);
+            drawCircle(location.clone().add(location.getDirection().multiply(distance)), size, precision, ticksAlive, period);
+        }
+    }
+
+    public static void drawHexagon(Location location, double size, double precision, int ticksAlive, int period, boolean rotated) {
+        new BukkitRunnable() {
+            Location loc;
+            int timer = ticksAlive;
+
+            @Override
+            public void run() {
+                if (timer <= 0) {
+                    cancel();
+                    return;
+                } else {
+                    timer = timer - period;
+                }
+
+                loc = location.clone();
+                loc.setPitch(0);
+
+                if (rotated) {
+                    loc.setYaw(loc.getYaw() + 30);
+                }
+
+                Vector dir = loc.getDirection().setY(0).normalize().multiply(size);
+                loc.add(dir);
+                loc.setYaw(loc.getYaw() + 60);
+
+                for (int i = 0; i < 6; i++) {
+                    loc.setYaw(loc.getYaw() + 60);
+                    dir = loc.getDirection().normalize().multiply(size);
+
+                    for (int j = 0; j < dir.length()/precision; j++) {
+                        loc.add(dir.clone().normalize().multiply(precision));
+                        loc.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, new Particle.DustOptions(Color.RED, 1));
+                    }
+                }
+            }
+        }.runTaskTimer(NewKitPvP.getInstance(), 0, period);
     }
 }

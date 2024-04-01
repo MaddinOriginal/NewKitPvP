@@ -4,11 +4,13 @@ import me.kodysimpson.simpapi.exceptions.MenuManagerException;
 import me.kodysimpson.simpapi.exceptions.MenuManagerNotSetupException;
 import me.kodysimpson.simpapi.menu.MenuManager;
 import me.maddinoriginal.newkitpvp.NewKitPvP;
+import me.maddinoriginal.newkitpvp.abilityitems.abilities.DemonCircleAbility;
 import me.maddinoriginal.newkitpvp.abilityitems.abilities.EvokerFangAbility;
 import me.maddinoriginal.newkitpvp.gui.KitSelectorGUI;
 import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
 import me.maddinoriginal.newkitpvp.data.PlayerData;
 import me.maddinoriginal.newkitpvp.utils.Helper;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -19,6 +21,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 public class KitPvPCommand implements CommandExecutor {
 
@@ -62,7 +65,41 @@ public class KitPvPCommand implements CommandExecutor {
                 //p.sendMessage("" + Bukkit.getScheduler().getPendingTasks());
                 //p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 1.0f, 0.01f);
 
+                //Helper.drawAlchemyCircle(p.getLocation().add(0, 0.1, 0), 2.0, 120, 3);
+                new DemonCircleAbility().useAbility(p);
 
+                /*Location loc = p.getLocation().add(0, 0.1, 0);
+                double size = 2.0;
+                int ticks = 120;
+                int period = 3;
+                Helper.drawCircle(loc, 3.0 *size, 0.2, ticks, period);
+                Helper.drawHexagon(loc, 2.94 *size, 0.2, ticks, period, false);
+                Helper.drawHexagon(loc, 2.486 *size, 0.2, ticks, period, true);
+                Helper.drawSmallCircles(loc, 0.2 *size, 2.0, 1.4 *size, ticks, period);
+                Helper.drawLines(loc, 1.1 *size, 0, 0.2, ticks, period);
+                Helper.drawLines(loc, 0.66 *size, 1.5 *size, 0.2, ticks, period);
+                Helper.drawCircle(loc, 0.75 *size, 1.0, ticks, period);*/
+
+                /*
+                double multiplier = 2.66;
+                double stepLength = 0.2;
+
+                Location loc = p.getLocation().add(0, 0.2, 0);
+                loc.setPitch(0);
+
+                Vector dir = loc.getDirection().setY(0).normalize().multiply(multiplier);
+                loc.add(dir);
+                loc.setYaw(loc.getYaw() + 60);
+
+                for (int i = 0; i < 6; i++) {
+                    loc.setYaw(loc.getYaw() + 60);
+                    dir = loc.getDirection().normalize().multiply(multiplier);
+
+                    for (int j = 0; j < dir.length()/stepLength; j++) {
+                        loc.add(dir.clone().normalize().multiply(stepLength));
+                        loc.getWorld().spawnParticle(Particle.FLAME, loc, 1, 0, 0, 0, 0);
+                    }
+                }*/
 
                 /*
                 Location loc = p.getLocation();

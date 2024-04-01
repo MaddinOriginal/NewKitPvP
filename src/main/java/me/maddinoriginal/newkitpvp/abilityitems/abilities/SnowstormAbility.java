@@ -67,13 +67,13 @@ public class SnowstormAbility extends Ability {
                 ItemDisplay display = block.getWorld().spawn(blockLoc, ItemDisplay.class, dis -> dis.setItemStack(new ItemStack(Material.SNOW_BLOCK)));
                 displayList.add(display);
                 Helper.resetBlockAfter(block, RESET_AFTER);
-                block.setType(Material.BARRIER);
+                block.setType(Material.BARRIER, false);
             }
 
             //Place snow layer
             if (block.isPassable() && block.canPlace(Material.SNOW.createBlockData())) {
                 Helper.resetBlockAfter(block, RESET_AFTER + random.nextInt(11));
-                block.setType(Material.SNOW);
+                block.setType(Material.SNOW, false);
             }
         }
 

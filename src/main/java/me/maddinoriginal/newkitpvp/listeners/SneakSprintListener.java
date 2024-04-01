@@ -120,7 +120,7 @@ public class SneakSprintListener implements Listener {
                         //only if block is passable (fully non-collidable in every state)
                         if (b.isPassable() && b.canPlace(Material.FIRE.createBlockData()) && b.getRelative(BlockFace.DOWN).getType().isSolid()) {
                             Helper.resetBlockAfter(b, 42);
-                            p.getLocation().getBlock().setType(Material.FIRE);
+                            p.getLocation().getBlock().setType(Material.FIRE, false);
                         }
                     } else {
                         cancel();

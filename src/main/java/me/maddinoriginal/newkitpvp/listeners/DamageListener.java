@@ -251,7 +251,7 @@ public class DamageListener implements Listener {
                         Helper.resetBlockAfter(b, RESET_AFTER);
 
                         //sets block to a berry bush
-                        b.setType(Material.SWEET_BERRY_BUSH, true);
+                        b.setType(Material.SWEET_BERRY_BUSH, false);
                         Ageable data = (Ageable) b.getBlockData();
                         data.setAge(1);
                         b.setBlockData(data);

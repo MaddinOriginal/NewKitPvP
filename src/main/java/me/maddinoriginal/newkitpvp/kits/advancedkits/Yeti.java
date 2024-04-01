@@ -170,7 +170,7 @@ public class Yeti extends Kit {
                 if (loc.getBlock().getType().isSolid()) {
                     loc.setY(loc.getY() + 1);
                     Helper.resetBlockAfter(loc.getBlock(), 10*20);
-                    loc.getBlock().setType(Material.SNOW);
+                    loc.getBlock().setType(Material.SNOW, false);
                 }
             }
         }.runTaskTimer(NewKitPvP.getInstance(), 20, 20);

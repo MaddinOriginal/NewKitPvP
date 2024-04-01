@@ -145,7 +145,7 @@ public class MiscellaneousListener implements Listener {
                 Helper.resetBlockAfter(b, 40);
                 newBlockList.add(b);
                 if (RANDOM.nextBoolean()) {
-                    b.setType(Material.FIRE);
+                    b.setType(Material.FIRE, false);
                 }
             }
         }
