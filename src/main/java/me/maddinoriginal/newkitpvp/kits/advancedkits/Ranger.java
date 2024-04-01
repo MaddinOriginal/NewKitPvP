@@ -40,17 +40,17 @@ public class Ranger extends Kit {
 
     @Override
     public Material getMaterial() {
-        return Material.SWEET_BERRY_BUSH;
+        return Material.SWEET_BERRIES;
     }
 
     @Override
     public KitCategory getCategory() {
-        return null;
+        return KitCategory.ADVANCED;
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return "Ranged Kit with a crossbow specialised in surviving in the wild. Can plant bushes to slow down enemies, making them easier targets to shoot.";
     }
 
     @Override

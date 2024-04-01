@@ -38,7 +38,7 @@ public class KitSelectorGUI extends Menu {
 
     @Override
     public int getSlots() {
-        return 9*2;
+        return 9*3;
     }
 
     @Override

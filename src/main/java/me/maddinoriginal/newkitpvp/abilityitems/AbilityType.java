@@ -8,10 +8,10 @@ public enum AbilityType {
 
     //Standard Kit Abilities
     DASH (new DashAbility()),                           //Swordsman Kit
-    MINIGUN (new MinigunAbility()),                   //Archer Kit
-    //HEALAURA,
-    PLANT_BUSH (new PlantBushAbility()),                //Hunter Kit
-    //SHIELD,
+    MINIGUN (new MinigunAbility()),                     //Archer Kit
+    //HEALAURA, (Tank Kit)
+    //HOMING_ARROWS, (Marksman Kit)
+    //SHIELD, (Barbarian Kit)
 
     //Advanced Kit Abilities
     MAGMA_LAUNCHER (new MagmaLauncherAbility()),        //Pyro Kit
@@ -23,8 +23,10 @@ public enum AbilityType {
     SNOWSTORM (new SnowstormAbility()),                 //Yeti Kit
     DETONATE (new DetonationAbility()),                 //Bomber Kit
     THROW_POTION (new ThrowNegativePotionAbility()),    //Elementalist Kit
-    WOLF_HUNT (new WolfHuntAbility()),                  //Arbalist Kit (?)
-    EVOKER_FANGS (new EvokerFangAbility()),             //Arbaslist (?)
+    WOLF_HUNT (new WolfHuntAbility()),                  //Unused (previously Hunter Kit)
+    EVOKER_FANGS (new EvokerFangAbility()),             //Hunter Kit
+    PLANT_BUSH (new PlantBushAbility()),                //Ranger Kit
+    DEMON_CIRCLE (new DemonCircleAbility()),            //Demon Kit (?)
 
     //Other (Shop Items and Powerups)
     //SMASHER,

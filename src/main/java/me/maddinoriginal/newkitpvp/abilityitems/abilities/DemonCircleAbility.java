@@ -36,7 +36,7 @@ public class DemonCircleAbility extends Ability {
 
     @Override
     public int getCooldown() {
-        return 200;
+        return TICKS_ALIVE + 200;
     }
 
     @Override

@@ -233,7 +233,7 @@ public class DamageListener implements Listener {
             KitPlayer kp = KitPlayerManager.getInstance().getKitPlayer(shooter);
 
             //Arbalist ability chance to try and place a bush under hit enemy
-            if (kp.getKitType().equals(KitType.ARBALIST)) {
+            if (kp.getKitType().equals(KitType.MARKSMAN)) {
 
                 //33% chance to do it
                 if (RANDOM.nextDouble() < 0.33) {
