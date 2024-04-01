@@ -21,7 +21,7 @@ public class DemonCircleAbility extends Ability {
     private final double SIZE = 1.6;
     private final int DELAY = 10;
     private final int DAMAGE_TICKS = 15;
-    private final int DAMAGE_TIMES = 7;
+    private final int DAMAGE_TIMES = 6;
     private final int TICKS_ALIVE = DAMAGE_TICKS * DAMAGE_TIMES + DELAY;
 
     @Override
@@ -42,7 +42,13 @@ public class DemonCircleAbility extends Ability {
     @Override
     public boolean useAbility(Player player) {
         Location spawnLoc = player.getLocation().clone();
-        spawnLoc.setY(player.getLocation().getBlockY());
+        spawnLoc.setX(spawnLoc.getBlockX() + 0.5);
+        spawnLoc.setY(spawnLoc.getBlockY());
+        spawnLoc.setZ(spawnLoc.getBlockZ() + 0.5);
+
+        if (!spawnLoc.getBlock().getRelative(BlockFace.DOWN).getType().isSolid()) {
+            spawnLoc.setY(spawnLoc.getY() - 1);
+        }
 
         /*int tries = 3;
 
@@ -57,7 +63,7 @@ public class DemonCircleAbility extends Ability {
             return false;
         }*/
 
-        createPlatform(spawnLoc);
+        createPlatformUnderneath(spawnLoc, false);
 
         Helper.drawAlchemyCircle(spawnLoc.add(0, 0.1, 0), SIZE, TICKS_ALIVE, 3);
 
@@ -74,7 +80,7 @@ public class DemonCircleAbility extends Ability {
             ent.setInvulnerable(true);
         });
 
-        goat.getWorld().playSound(goat, Sound.ENTITY_WITHER_SPAWN, 1.0f, 1.0f);
+        goat.getWorld().playSound(goat, Sound.ENTITY_WITHER_SPAWN, 0.8f, 1.0f);
 
         new BukkitRunnable() {
             int timer = DAMAGE_TIMES;
@@ -86,8 +92,8 @@ public class DemonCircleAbility extends Ability {
                     timer--;
                 }
                 else {
-                    goat.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, goat.getLocation(), 64, 3.5, 0.5, 3.5, 0.5);
-                    goat.getWorld().playSound(goat.getEyeLocation(), Sound.ENTITY_WITHER_HURT, 1.0f, 1.0f);
+                    goat.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, goat.getLocation(), 40, 3.5, 0.5, 3.5, 0.2);
+                    goat.getWorld().playSound(goat.getEyeLocation(), Sound.ENTITY_WITHER_HURT, 0.6f, 1.0f);
                     goat.remove();
 
                     if (heal > 0) {
@@ -113,7 +119,7 @@ public class DemonCircleAbility extends Ability {
                 if (!nearby.isEmpty()) {
                     goat.setScreaming(true);
                     goat.playEffect(EntityEffect.GOAT_RAISE_HEAD);
-                    goat.getWorld().spawnParticle(Particle.FLAME, goat.getLocation(), 64, 3.5, 0.5, 3.5, 0.5);
+                    goat.getWorld().spawnParticle(Particle.FLAME, goat.getLocation(), 40, 3.5, 0.5, 3.5, 0.2);
                     goat.getWorld().playSound(goat.getEyeLocation(), Sound.ENTITY_BLAZE_SHOOT, 0.75f, 1.0f);
 
                     for (LivingEntity ent : nearby) {
@@ -121,7 +127,9 @@ public class DemonCircleAbility extends Ability {
                         heal += 1.0;
                     }
                 } else {
-                    goat.getWorld().spawnParticle(Particle.WHITE_SMOKE, goat.getLocation(), 48, 3.5, 0.5, 3.5, 0.5);
+                    goat.setScreaming(false);
+                    goat.playEffect(EntityEffect.GOAT_LOWER_HEAD);
+                    goat.getWorld().spawnParticle(Particle.WHITE_SMOKE, goat.getLocation(), 40, 3.5, 0.5, 3.5, 0.2);
                     goat.getWorld().playSound(goat.getEyeLocation(), Sound.ENTITY_EVOKER_PREPARE_SUMMON, 0.75f, 1.0f);
                 }
             }
@@ -130,14 +138,20 @@ public class DemonCircleAbility extends Ability {
         return true;
     }
 
-    private void createPlatform(Location location) {
-        for (Block block : Helper.getSphereFlat(location.clone(), 6, false)) {
-            Helper.resetBlockAfter(block, TICKS_ALIVE);
-            block.setType(Material.AIR, false);
-        }
+    private void createPlatformUnderneath(Location location, boolean airAbove) {
+        //Platform below circle
         for (Block block : Helper.getSphereFlat(location.clone().add(0, -1, 0), 6, false)) {
-            Helper.resetBlockAfter(block, TICKS_ALIVE);
-            block.setType(Material.DEEPSLATE_BRICKS, false);
+            if (block.isPassable()) {
+                Helper.resetBlockAfter(block, TICKS_ALIVE);
+                block.setType(Material.TINTED_GLASS, false);
+            }
+        }
+        //blocks above platform replaced to air
+        if (airAbove) {
+            for (Block block : Helper.getSphereFlat(location.clone(), 6, false)) {
+                Helper.resetBlockAfter(block, TICKS_ALIVE);
+                block.setType(Material.AIR, false);
+            }
         }
     }
 }

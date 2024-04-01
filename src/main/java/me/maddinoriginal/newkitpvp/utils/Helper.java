@@ -93,13 +93,13 @@ public class Helper {
     }
 
     public static void drawAlchemyCircle(Location loc, double size, int ticks, int period) {
-        Helper.drawCircle(loc, 3.0 *size, 0.2, ticks, period);
-        Helper.drawHexagon(loc, 2.94 *size, 0.2, ticks, period, false);
-        Helper.drawHexagon(loc, 2.486 *size, 0.2, ticks, period, true);
-        Helper.drawSmallCircles(loc, 0.2 *size, 2.0, 1.4 *size, ticks, period);
-        Helper.drawLines(loc, 1.1 *size, 0, 0.2, ticks, period);
-        Helper.drawLines(loc, 0.6 *size, 1.5 *size, 0.2, ticks, period);
-        Helper.drawCircle(loc, 0.75 *size, 1.0, ticks, period);
+        Helper.drawCircle(loc, 3.0 *size, 0.04, ticks, period); //outer circle
+        Helper.drawHexagon(loc, 2.94 *size, 0.2, ticks, period, false); //outer hexagon
+        Helper.drawHexagon(loc, 2.486 *size, 0.2, ticks, period, true); //inner hexagon
+        Helper.drawSmallCircles(loc, 0.2 *size, 0.6, 1.4 *size, ticks, period); //small circles
+        Helper.drawLines(loc, 1.1 *size, 0, 0.2, ticks, period); //lines from center to circles
+        Helper.drawLines(loc, 0.6 *size, 1.5 *size, 0.2, ticks, period); //lines from circles away
+        Helper.drawCircle(loc, 0.75 *size, 0.16, ticks, period); //inner circle
     }
 
     public static void drawLines(Location location, double length, double skip, double precision, int ticksAlive, int period) {
@@ -134,11 +134,11 @@ public class Helper {
     }
 
     public static void drawCircle(Location location, double size, double precision, int ticksAlive, int period) {
+        assert precision > 0;
+
         new BukkitRunnable() {
             Location loc;
             int timer = ticksAlive;
-
-            float angle = 0f;
 
             @Override
             public void run() {
@@ -149,20 +149,14 @@ public class Helper {
                     timer = timer - period;
                 }
 
-                loc = location;//.add(location.getDirection().setY(0).normalize().multiply(size));
+                loc = location;
 
-                for (double d = 0; d <= 90; d += Math.max(precision, 0.1)) {
-                    Location particleLoc = new Location(location.getWorld(), location.getX(), location.getY(), location.getZ());
+                for (double d = 0; d <= 2*Math.PI; d += precision) {
+                    Location particleLoc = location.clone();
                     particleLoc.setX(location.getX() + Math.cos(d) * size);
                     particleLoc.setZ(location.getZ() + Math.sin(d) * size);
                     location.getWorld().spawnParticle(Particle.REDSTONE, particleLoc, 1, new Particle.DustOptions(Color.RED, 1));
                 }
-
-                /*loc.setX(size * Math.sin(angle));
-                loc.setZ(size * Math.cos(angle));
-                angle += 1;
-
-                loc.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, new Particle.DustOptions(Color.RED, 1));*/
             }
         }.runTaskTimer(NewKitPvP.getInstance(), 0, period);
     }
