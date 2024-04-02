@@ -1,6 +1,7 @@
 package me.maddinoriginal.newkitpvp.kits.standardkits;
 
 import com.google.common.base.Strings;
+import me.maddinoriginal.newkitpvp.abilityitems.items.AxeThrowAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
@@ -115,7 +116,7 @@ public class Barbarian extends Kit {
 
     @Override
     public ItemStack[] getKitItems() {
-        ItemStack[] items = new ItemStack[2];
+        ItemStack[] items = new ItemStack[9];
 
         items[0] = new ItemBuilder(Material.IRON_AXE)
                 .setDisplayName(ChatColor.YELLOW + "Barbarian Axe")
@@ -136,7 +137,14 @@ public class Barbarian extends Kit {
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
-        //items[1] = new DashAbilityItem().getItem();
+        items[2] = new AxeThrowAbilityItem().getItem();
+
+        items[3] = null;
+        items[4] = null;
+        items[5] = null;
+        items[6] = null;
+        items[7] = null;
+        items[8] = null;
 
         return items;
     }

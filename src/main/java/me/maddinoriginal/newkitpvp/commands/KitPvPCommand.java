@@ -4,24 +4,21 @@ import me.kodysimpson.simpapi.exceptions.MenuManagerException;
 import me.kodysimpson.simpapi.exceptions.MenuManagerNotSetupException;
 import me.kodysimpson.simpapi.menu.MenuManager;
 import me.maddinoriginal.newkitpvp.NewKitPvP;
-import me.maddinoriginal.newkitpvp.abilityitems.abilities.DemonCircleAbility;
-import me.maddinoriginal.newkitpvp.abilityitems.abilities.EvokerFangAbility;
 import me.maddinoriginal.newkitpvp.gui.KitSelectorGUI;
 import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
 import me.maddinoriginal.newkitpvp.data.PlayerData;
-import me.maddinoriginal.newkitpvp.utils.Helper;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.block.Block;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
+import org.bukkit.util.Transformation;
+import org.joml.AxisAngle4f;
+import org.joml.Vector3f;
 
 public class KitPvPCommand implements CommandExecutor {
 
@@ -65,8 +62,85 @@ public class KitPvPCommand implements CommandExecutor {
                 //p.sendMessage("" + Bukkit.getScheduler().getPendingTasks());
                 //p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 1.0f, 0.01f);
 
-                //Helper.drawAlchemyCircle(p.getLocation().add(0, 0.1, 0), 2.0, 120, 3);
-                new DemonCircleAbility().useAbility(p);
+                //p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 1.0f, 0.2f, Trident.class);
+
+
+
+                /*Location loc = p.getEyeLocation().clone();
+                loc.setPitch(0);
+
+                Snowball snowball = p.getWorld().spawn(p.getEyeLocation(), Snowball.class, sb -> {
+                    sb.setShooter(p);
+                    sb.setGravity(false);
+                    sb.setVelocity(loc.getDirection().multiply(1.2));
+                    sb.setItem(new ItemStack(Material.CAVE_AIR));
+                });
+
+                ItemDisplay display = p.getWorld().spawn(p.getEyeLocation(), ItemDisplay.class, disp -> {
+                    disp.setItemStack(new ItemStack(Material.IRON_AXE));
+                    //id.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIRSTPERSON_RIGHTHAND);
+                    disp.setTransformation(new Transformation(
+                            new Vector3f(0, 0, 0),
+                            new AxisAngle4f(1.0f, 0f, 0f, -1f),
+                            new Vector3f(2, 2, 2),
+                            new AxisAngle4f(0f, 0f, 0f, 0f)));
+                    disp.setRotation(p.getLocation().getYaw() + 90, 0);
+                    snowball.addPassenger(disp);
+                });
+
+                new BukkitRunnable() {
+                    int timer = 42;
+                    float fl = 1.0f;
+                    float added = 1.5f;
+                    Projectile proj = snowball;
+
+                    @Override
+                    public void run() {
+                        if (timer <= 0 || proj.isDead()) {
+                            cancel();
+                            return;
+                        } else {
+                            timer--;
+                        }
+
+                        if (timer <= 7) {
+                            proj.setGravity(true);
+                        }
+
+                        fl += added;
+                        added = added * 0.95f;
+
+                        proj.getLocation().getWorld().playSound(proj.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_SHOOT, added + 0.1f, 1.0f);
+
+                        display.setTransformation(new Transformation(
+                                new Vector3f(0, 0, 0),
+                                new AxisAngle4f(fl, 0f, 0f, -1f),
+                                new Vector3f(2, 2, 2),
+                                new AxisAngle4f(0f, 0f, 0f, 0f)));
+
+                        //display.setRotation(p.getLocation().getYaw() + 90, 0);
+                    }
+                }.runTaskTimer(NewKitPvP.getInstance(), 1, 1);*/
+
+                /*ItemDisplay display = p.getWorld().spawn(p.getEyeLocation(), ItemDisplay.class, id -> {
+                    id.setItemStack(new ItemStack(Material.IRON_AXE));
+                    id.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIRSTPERSON_RIGHTHAND);
+                    id.setTransformation(new Transformation(
+                            new Vector3f(0, -1, 0),
+                            new AxisAngle4f(0f, 0f, 45f, 0f),
+                            new Vector3f(3, 2, 2),
+                            new AxisAngle4f(0f, 0f, 0f, 0f)));
+                    proj.addPassenger(id);
+                });*/
+
+                /*ItemFrame frame = (ItemFrame) p.getWorld().spawnEntity(p.getEyeLocation(), EntityType.ITEM_FRAME);
+                frame.setItem(new ItemStack(Material.IRON_AXE));
+                frame.setVisible(false);
+
+                p.getWorld().spawn(p.getEyeLocation(), ArmorStand.class, as -> {
+                    as.setVelocity(p.getLocation().getDirection().multiply(1.5));
+                    as.addPassenger(frame);
+                });*/
 
                 /*Location loc = p.getLocation().add(0, 0.1, 0);
                 double size = 2.0;

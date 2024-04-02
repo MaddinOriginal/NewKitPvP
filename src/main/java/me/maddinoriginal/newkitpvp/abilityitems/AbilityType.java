@@ -11,7 +11,7 @@ public enum AbilityType {
     MINIGUN (new MinigunAbility()),                     //Archer Kit
     //HEALAURA, (Tank Kit)
     //HOMING_ARROWS, (Marksman Kit)
-    //SHIELD, (Barbarian Kit)
+    AXE_THROW (new AxeThrowAbility()),                  //Barbarian Kit
 
     //Advanced Kit Abilities
     MAGMA_LAUNCHER (new MagmaLauncherAbility()),        //Pyro Kit

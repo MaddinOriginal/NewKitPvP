@@ -5,9 +5,7 @@ import me.maddinoriginal.newkitpvp.data.KitPlayer;
 import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
 import me.maddinoriginal.newkitpvp.kits.KitType;
 import me.maddinoriginal.newkitpvp.utils.Helper;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -15,11 +13,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.entity.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class MiscellaneousListener implements Listener {
 
@@ -78,6 +79,45 @@ public class MiscellaneousListener implements Listener {
                 e.setCancelled(true);
             }
         }
+    }
+
+    @EventHandler
+    public void onAxeThrownHit(ProjectileHitEvent e) {
+        if (e.getEntity() instanceof Snowball) {
+            Snowball snowball = (Snowball) e.getEntity();
+
+            if (!snowball.getPassengers().stream().filter(ent -> ent instanceof ItemDisplay).collect(Collectors.toList()).isEmpty()) {
+                ItemDisplay axeDisplay = (ItemDisplay) snowball.getPassengers().stream().filter(ent -> ent instanceof ItemDisplay).findFirst().get();
+
+                if (e.getHitBlock() != null) {
+                    axeDisplay.leaveVehicle();
+
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            axeRemoval(axeDisplay);
+                        }
+                    }.runTaskLater(NewKitPvP.getInstance(), 110);
+                }
+
+                else if (e.getHitEntity() != null) {
+                    if (e.getHitEntity() instanceof LivingEntity) {
+                        LivingEntity hit = (LivingEntity) e.getHitEntity();
+                        hit.damage(4.5, snowball);
+                        hit.addPotionEffect(PotionEffectType.SLOW.createEffect(100, 2));
+                    }
+                    axeRemoval(axeDisplay);
+                }
+
+                snowball.remove();
+            }
+        }
+    }
+
+    private void axeRemoval(ItemDisplay axeDisplay) {
+        axeDisplay.getWorld().spawnParticle(Particle.ITEM_CRACK, axeDisplay.getLocation(), 12, 0.3, 0.3, 0.3, 0, new ItemStack(Material.IRON_AXE));
+        axeDisplay.getWorld().playSound(axeDisplay.getLocation(), Sound.ENTITY_ITEM_BREAK, 0.8f, 1.0f);
+        axeDisplay.remove();
     }
 
     /*@EventHandler
