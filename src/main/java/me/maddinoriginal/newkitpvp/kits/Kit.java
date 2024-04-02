@@ -1,5 +1,6 @@
 package me.maddinoriginal.newkitpvp.kits;
 
+import me.maddinoriginal.newkitpvp.utils.PlayStyle;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -11,6 +12,7 @@ public abstract class Kit {
 
     public abstract Material getMaterial();
     public abstract KitCategory getCategory();
+    public abstract PlayStyle[] getPlayStyles();
     public abstract String getDescription();
 
     public abstract ItemStack[] getArmorContents();

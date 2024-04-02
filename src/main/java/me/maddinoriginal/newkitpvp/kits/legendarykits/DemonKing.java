@@ -1,13 +1,12 @@
 package me.maddinoriginal.newkitpvp.kits.legendarykits;
 
 import me.maddinoriginal.newkitpvp.abilityitems.items.DemonCircleAbilityItem;
-import me.maddinoriginal.newkitpvp.abilityitems.items.WolfHuntAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
+import me.maddinoriginal.newkitpvp.utils.PlayStyle;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
@@ -31,6 +30,11 @@ public class DemonKing extends Kit {
     @Override
     public KitCategory getCategory() {
         return KitCategory.LEGENDARY;
+    }
+
+    @Override
+    public PlayStyle[] getPlayStyles() {
+        return new PlayStyle[]{PlayStyle.DAMAGE, PlayStyle.CONTROL};
     }
 
     @Override

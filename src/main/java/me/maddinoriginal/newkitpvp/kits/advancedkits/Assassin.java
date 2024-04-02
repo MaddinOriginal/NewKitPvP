@@ -5,6 +5,7 @@ import me.maddinoriginal.newkitpvp.abilityitems.items.TeleportBehindAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
+import me.maddinoriginal.newkitpvp.utils.PlayStyle;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -44,6 +45,11 @@ public class Assassin extends Kit {
     @Override
     public KitCategory getCategory() {
         return KitCategory.ADVANCED;
+    }
+
+    @Override
+    public PlayStyle[] getPlayStyles() {
+        return new PlayStyle[]{PlayStyle.DAMAGE, PlayStyle.FIGHTER};
     }
 
     @Override

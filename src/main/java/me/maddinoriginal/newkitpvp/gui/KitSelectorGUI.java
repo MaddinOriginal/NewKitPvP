@@ -11,6 +11,7 @@ import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.kits.KitType;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
 import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
+import me.maddinoriginal.newkitpvp.utils.PlayStyle;
 import org.apache.commons.text.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -22,6 +23,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class KitSelectorGUI extends Menu {
 
@@ -57,7 +59,7 @@ public class KitSelectorGUI extends Menu {
                 continue;
             }
 
-            if (kitType.getKit().getMaterial().equals(e.getCurrentItem().getType())) { //TODO kits with same icon
+            if (kitType.getKit().getMaterial().equals(Objects.requireNonNull(e.getCurrentItem()).getType())) { //TODO kits with same icon
                 Player p = (Player) e.getWhoClicked();
                 InventoryAction action = e.getAction();
 
@@ -130,6 +132,20 @@ public class KitSelectorGUI extends Menu {
         } catch (NullPointerException e) {
             lore.add(ChatColor.DARK_RED + "ERROR_UNKNOWN_CATEGORY");
         }
+
+        StringBuilder sb = new StringBuilder(ChatColor.GRAY + "Playstyle(s): ");
+        if (kit.getPlayStyles().length > 0) {
+            for (PlayStyle style : kit.getPlayStyles()) {
+                String append = style.getString() + ChatColor.GRAY + "/";
+                sb.append(append);
+            }
+            sb.deleteCharAt(sb.length() - 1);
+        } else {
+            String append = ChatColor.DARK_GRAY + "None/Unknown";
+            sb.append(append);
+        }
+        lore.add(sb.toString());
+
         lore.add("");
 
         try {

@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
+import me.maddinoriginal.newkitpvp.utils.PlayStyle;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -45,6 +46,11 @@ public class Tank extends Kit {
     @Override
     public KitCategory getCategory() {
         return KitCategory.STANDARD;
+    }
+
+    @Override
+    public PlayStyle[] getPlayStyles() {
+        return new PlayStyle[]{PlayStyle.TANK, PlayStyle.CONTROL};
     }
 
     @Override

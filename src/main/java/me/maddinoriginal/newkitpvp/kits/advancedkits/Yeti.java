@@ -7,6 +7,7 @@ import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.Helper;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
+import me.maddinoriginal.newkitpvp.utils.PlayStyle;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -53,6 +54,11 @@ public class Yeti extends Kit {
     @Override
     public KitCategory getCategory() {
         return KitCategory.ADVANCED;
+    }
+
+    @Override
+    public PlayStyle[] getPlayStyles() {
+        return new PlayStyle[]{PlayStyle.CONTROL, PlayStyle.FIGHTER};
     }
 
     @Override

@@ -5,6 +5,7 @@ import me.maddinoriginal.newkitpvp.abilityitems.items.WolfHuntAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
+import me.maddinoriginal.newkitpvp.utils.PlayStyle;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
@@ -60,6 +61,11 @@ public class Hunter extends Kit {
     @Override
     public KitCategory getCategory() {
         return KitCategory.ADVANCED;
+    }
+
+    @Override
+    public PlayStyle[] getPlayStyles() {
+        return new PlayStyle[]{PlayStyle.DAMAGE, PlayStyle.RANGED};
     }
 
     @Override
