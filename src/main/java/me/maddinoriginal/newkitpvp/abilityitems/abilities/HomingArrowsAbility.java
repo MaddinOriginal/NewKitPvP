@@ -2,10 +2,8 @@ package me.maddinoriginal.newkitpvp.abilityitems.abilities;
 
 import me.maddinoriginal.newkitpvp.NewKitPvP;
 import me.maddinoriginal.newkitpvp.abilityitems.Ability;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.RayTraceResult;
@@ -15,19 +13,21 @@ import java.util.*;
 
 public class HomingArrowsAbility extends Ability {
 
-    private final int ACTIVE_TICKS = 140;
+    private final int ACTIVE_TICKS = 150;
     private final int PERIOD = 1;
+    private final double RAY_SIZE = 1.6; //upgrades 1.64, 1.68, 1.72, 1.76, 1.8, 1.84, 1.88, 1.92, 1.96, 2.0
+    private final double MAX_DISTANCE = 12;
 
     private static final List<Player> activePlayers = new ArrayList<>();
 
     @Override
     public String getName() {
-        return null;
+        return "Homing Arrows";
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return "Upon activation all arrows will automatically change direction to the nearest target if there is one";
     }
 
     @Override
@@ -38,14 +38,11 @@ public class HomingArrowsAbility extends Ability {
     @Override
     public boolean useAbility(Player player) {
         if (activePlayers.contains(player)) {
-            System.out.println("Player " + player.getName() + " tried activating Homing Arrows, but the effect is already/still active.");
             return false;
         }
 
         activePlayers.add(player);
-
-        System.out.println("Homing Arrows for player " + player.getName() + " activated for " + ACTIVE_TICKS + " ticks.");
-        player.sendMessage(ChatColor.GREEN + "");
+        player.sendMessage(ChatColor.GREEN + "Homing Arrows activated for " + ChatColor.YELLOW + ACTIVE_TICKS/20 + ChatColor.GREEN + " seconds!");
 
         new BukkitRunnable() {
             int ticksRemaining = ACTIVE_TICKS;
@@ -86,18 +83,13 @@ public class HomingArrowsAbility extends Ability {
         return true;
     }
 
-    private final double RAY_SIZE = 1.6; //upgrades 1.64, 1.68, 1.72, 1.76, 1.8, 1.84, 1.88, 1.92, 1.96, 2.0
-    private final double MAX_DISTANCE = 12;
-
     private LivingEntity getHomingTarget(Projectile proj) {
         Player shooter = (Player) proj.getShooter();
 
-        //System.out.println("Testing arrow at " + proj.getLocation());
-
         RayTraceResult result = proj.getWorld().rayTraceEntities(proj.getLocation(),
                 proj.getLocation().getDirection(), MAX_DISTANCE, RAY_SIZE,
-                ent -> (ent instanceof HumanEntity || ent instanceof Creature) && ent != shooter &&
-                        !(ent.hasMetadata("SummonedBy") && ent.getMetadata("SummonedBy").get(0).asString().equals(shooter.getUniqueId().toString())));
+                ent -> (ent instanceof LivingEntity && !(ent instanceof ArmorStand) && ent != shooter &&
+                        !(ent.hasMetadata("SummonedBy") && ent.getMetadata("SummonedBy").get(0).asString().equals(shooter.getUniqueId().toString()))));
 
         try {
             return (LivingEntity) result.getHitEntity();

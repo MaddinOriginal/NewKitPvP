@@ -59,7 +59,7 @@ public class KitPvPCommand implements CommandExecutor {
                 }
             }
             else if (args[0].equalsIgnoreCase("test")) {
-                new HomingArrowsAbility().useAbility(p);
+                //new HomingArrowsAbility().useAbility(p);
 
                 //p.sendMessage("" + Bukkit.getScheduler().getPendingTasks());
 
