@@ -63,7 +63,7 @@ public class Yeti extends Kit {
 
     @Override
     public String getDescription() {
-        return "Missing description";
+        return "An expert of surviving in cold biomes. Freezes their enemies with snowballs and captures them inside igloo-like snow domes. Deals more damage to freezing enemies.";
     }
 
     @Override

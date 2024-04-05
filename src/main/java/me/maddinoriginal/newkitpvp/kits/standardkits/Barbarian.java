@@ -56,7 +56,7 @@ public class Barbarian extends Kit {
 
     @Override
     public String getDescription() {
-        return "Equipped with an axe and a shield and ready to smash heads. With this kit one is able to break through armor easily and go on a rampage.";
+        return "Equipped with an axe that it can throw and a shield to block incoming attacks.";
     }
 
     @Override

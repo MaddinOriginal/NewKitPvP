@@ -56,7 +56,7 @@ public class Ghost extends Kit {
 
     @Override
     public String getDescription() {
-        return null;
+        return "Can turn invisible and scare their enemies away.";
     }
 
     @Override

@@ -10,11 +10,11 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 import java.util.List;
 
-public class EvokerFangsAbilityItem extends AbilityItem {
+public class HomingArrowsAbilityItem extends AbilityItem {
 
     @Override
     public String getName() {
-        return "Evoker Fangs";
+        return "Homing Arrows";
     }
 
     @Override
@@ -24,21 +24,21 @@ public class EvokerFangsAbilityItem extends AbilityItem {
 
     @Override
     public List<String> getLore() {
-        return Arrays.asList("random lore");
+        return Arrays.asList("Shoots homing arrows");
     }
 
     @Override
     public AbilityType getAbilityType() {
-        return AbilityType.EVOKER_FANGS;
+        return AbilityType.HOMING_ARROWS;
     }
 
     @Override
     public void handleLeftClick(Player player, ItemStack item, PlayerInteractEvent event) {
-        //AbilityType.EVOKER_FANGS.getAbility().useAbility(player);
+        //AbilityType.HOMING_ARROWS.getAbility().useAbility(player);
     }
 
     @Override
     public void handleRightClick(Player player, ItemStack item, PlayerInteractEvent event) {
-        AbilityType.EVOKER_FANGS.getAbility().useAbility(player);
+        AbilityType.HOMING_ARROWS.getAbility().useAbility(player);
     }
 }

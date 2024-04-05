@@ -38,7 +38,7 @@ public class GrimReaper extends Kit {
 
     @Override
     public String getDescription() {
-        return null;
+        return "Death itself.";
     }
 
     @Override

@@ -54,7 +54,7 @@ public class Assassin extends Kit {
 
     @Override
     public String getDescription() {
-        return null;
+        return "Beware of this kit at all times because they might just teleport behind you in the blink of an eye. Deals more damage from behind as well.";
     }
 
     @Override

@@ -48,7 +48,7 @@ public class Ninja extends Kit {
 
     @Override
     public String getDescription() {
-        return null;
+        return "The ninja is the master of deception and illusion. Good luck trying to even hit them consistently.";
     }
 
     @Override

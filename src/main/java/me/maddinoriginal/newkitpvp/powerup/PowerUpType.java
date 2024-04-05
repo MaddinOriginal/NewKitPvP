@@ -4,8 +4,7 @@ import org.bukkit.Material;
 
 public enum PowerUpType {
 
-    // Possible blocks: Coal, Iron, Gold, Diamond, Redstone, Lapis Lazuli, Emerald, Netherite,
-    // Copper, Amethyst
+    // Possible blocks: Coal, Iron, Gold, Diamond, Redstone, Lapis Lazuli, Emerald, Netherite, Copper, Amethyst
 
     SPEED ("Speed Up", Material.DIAMOND_BLOCK),
     REGEN ("Health Regeneration", Material.REDSTONE_BLOCK),

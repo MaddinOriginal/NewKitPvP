@@ -64,7 +64,7 @@ public class DamageListener implements Listener {
     private final double EVOKER_MULTIPLIER = 0.5; //multiplier for the damage taken by evoker fangs to its owner
 
     private boolean grenadeOnCooldown = false;
-    private int GRENADE_COOLDOWN_TICKS = 200; //cooldown in ticks for the grenade ability of bomber kit
+    private final int GRENADE_COOLDOWN_TICKS = 200; //cooldown in ticks for the grenade ability of bomber kit
     private final double KNOCKBACK_MULTIPLIER = 3.3; //the multiplier for the players knockback added on grenade drop
     private final int GRENADE_FUSE_TICKS = 13; //grenade fuse ticks before it explodes
     private final float GRENADE_POWER = 0.6f; //explosion radius of grenades explosion
@@ -187,11 +187,7 @@ public class DamageListener implements Listener {
         double yawEntity = target.getLocation().getYaw();
         double distance = distanceBetweenTwoAngles(yawPlayer, yawEntity);
 
-        if (distance <= 36) {
-            return true;
-        } else {
-            return false;
-        }
+        return distance <= 36;
     }
 
     private double distanceBetweenTwoAngles(double yaw1, double yaw2) {
@@ -199,7 +195,8 @@ public class DamageListener implements Listener {
         return phi > 180 ? 360 - phi : phi;
     }
 
-    private final int RESET_AFTER = 50;
+    private final double BUSH_CHANCE = 0.45;
+    private final int RESET_BUSH_AFTER = 90;
 
     @EventHandler
     public void onEntityDamageByProjectile(EntityDamageByEntityEvent e) {
@@ -232,11 +229,11 @@ public class DamageListener implements Listener {
             Player shooter = (Player) proj.getShooter();
             KitPlayer kp = KitPlayerManager.getInstance().getKitPlayer(shooter);
 
-            //Arbalist ability chance to try and place a bush under hit enemy
-            if (kp.getKitType().equals(KitType.MARKSMAN)) {
+            //Ranger ability chance to try and place a bush under hit enemy
+            if (kp.getKitType().equals(KitType.RANGER)) {
 
-                //33% chance to do it
-                if (RANDOM.nextDouble() < 0.33) {
+                //45% chance to do it
+                if (RANDOM.nextDouble() < BUSH_CHANCE) {
                     Block b = ent.getLocation().getBlock();
 
                     //only if a berry bush can be placed here naturally
@@ -248,7 +245,7 @@ public class DamageListener implements Listener {
                         }
 
                         //resets block after given ticks
-                        Helper.resetBlockAfter(b, RESET_AFTER);
+                        Helper.resetBlockAfter(b, RESET_BUSH_AFTER);
 
                         //sets block to a berry bush
                         b.setType(Material.SWEET_BERRY_BUSH, false);
@@ -260,6 +257,7 @@ public class DamageListener implements Listener {
                 }
             }
 
+            //Hunter summon Wolf on hit ability
             else if (kp.getKitType().equals(KitType.HUNTER)) {
                 ((Hunter) KitType.HUNTER.getKit()).summonWolf(shooter, ent);
             }

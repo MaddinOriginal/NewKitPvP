@@ -56,7 +56,7 @@ public class Blaster extends Kit {
 
     @Override
     public String getDescription() {
-        return null;
+        return "Knocks its enemies far away and channels air abilities to push them off the map, possibly into the void.";
     }
 
     @Override

@@ -1,6 +1,7 @@
 package me.maddinoriginal.newkitpvp.kits.standardkits;
 
 import com.google.common.base.Strings;
+import me.maddinoriginal.newkitpvp.abilityitems.items.HomingArrowsAbilityItem;
 import me.maddinoriginal.newkitpvp.abilityitems.items.PlantBushAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
@@ -134,7 +135,7 @@ public class Marksman extends Kit {
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
-        items[1] = new PlantBushAbilityItem().getItem();
+        items[1] = new HomingArrowsAbilityItem().getItem();
 
         items[7] = new ItemBuilder(Material.ARROW)
                 .setDisplayName(ChatColor.YELLOW + getName() + " Arrow")

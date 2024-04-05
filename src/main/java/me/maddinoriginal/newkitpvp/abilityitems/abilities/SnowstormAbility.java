@@ -41,14 +41,6 @@ public class SnowstormAbility extends Ability {
         Location loc = player.getLocation().getBlock().getLocation().add(0.5, 0.5, 0.5);
         double radius = 7.0;
 
-        ArmorStand armorStand = player.getWorld().spawn(loc, ArmorStand.class, as -> {
-            as.setMarker(true);
-            as.setInvisible(true);
-            as.setAI(false);
-            as.setGravity(false);
-            as.setInvulnerable(true);
-        });
-
         //list for fake igloo blocks to be removed again after x amount ticks
         List<ItemDisplay> displayList = new ArrayList<>();
 
@@ -91,13 +83,18 @@ public class SnowstormAbility extends Ability {
         }.runTaskLater(NewKitPvP.getInstance(), RESET_AFTER);
 
         //Freeze nearby LivingEntities
-        List<LivingEntity> nearbyLivingEntities = armorStand.getNearbyEntities(radius, radius, radius).stream()
+        List<LivingEntity> nearbyLivingEntities = player.getWorld().getNearbyEntities(player.getLocation(), radius, radius, radius).stream()
                 .filter(ent -> ent instanceof LivingEntity).map(ent -> (LivingEntity) ent).collect(Collectors.toList());
+
         for (LivingEntity ent : nearbyLivingEntities) {
-            if (ent instanceof Player && KitPlayerManager.getInstance().getKitPlayer(player).getKitType().equals(KitType.YETI)) {
-                continue;
+
+            if (ent instanceof Player) {
+                Player target = (Player) ent;
+
+                if (!KitPlayerManager.getInstance().getKitPlayer(target).getKitType().equals(KitType.YETI)) {
+                    ent.setFreezeTicks(RESET_AFTER + 140);
+                }
             }
-            ent.setFreezeTicks(RESET_AFTER + 140);
         }
 
         return false;

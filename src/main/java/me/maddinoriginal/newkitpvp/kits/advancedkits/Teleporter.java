@@ -56,7 +56,7 @@ public class Teleporter extends Kit {
 
     @Override
     public String getDescription() {
-        return null;
+        return "Can teleport instantly in the direction they are looking. Teleporting while sneaking turns them 180 degrees while teleporting.";
     }
 
     @Override

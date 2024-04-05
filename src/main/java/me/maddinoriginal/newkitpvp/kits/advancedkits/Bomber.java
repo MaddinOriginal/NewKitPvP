@@ -55,7 +55,7 @@ public class Bomber extends Kit {
 
     @Override
     public String getDescription() {
-        return null;
+        return "Stacked with explosions and the ability to detonate itself. Can not take damage from explosions themselves.";
     }
 
     @Override

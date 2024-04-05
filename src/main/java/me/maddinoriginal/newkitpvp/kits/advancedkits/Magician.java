@@ -48,7 +48,7 @@ public class Magician extends Kit {
 
     @Override
     public String getDescription() {
-        return null;
+        return "A truly magical class that can do absolutely nothing whatsoever";
     }
 
     @Override

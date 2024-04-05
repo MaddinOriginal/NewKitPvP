@@ -4,6 +4,7 @@ import me.kodysimpson.simpapi.exceptions.MenuManagerException;
 import me.kodysimpson.simpapi.exceptions.MenuManagerNotSetupException;
 import me.kodysimpson.simpapi.menu.MenuManager;
 import me.maddinoriginal.newkitpvp.NewKitPvP;
+import me.maddinoriginal.newkitpvp.abilityitems.abilities.HomingArrowsAbility;
 import me.maddinoriginal.newkitpvp.gui.KitSelectorGUI;
 import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
 import me.maddinoriginal.newkitpvp.data.PlayerData;
@@ -58,13 +59,9 @@ public class KitPvPCommand implements CommandExecutor {
                 }
             }
             else if (args[0].equalsIgnoreCase("test")) {
-                //AbilityType.WOLF_HUNT.getAbility().useAbility(p);
+                new HomingArrowsAbility().useAbility(p);
+
                 //p.sendMessage("" + Bukkit.getScheduler().getPendingTasks());
-                //p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 1.0f, 0.01f);
-
-                //p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 1.0f, 0.2f, Trident.class);
-
-
 
                 /*Location loc = p.getEyeLocation().clone();
                 loc.setPitch(0);

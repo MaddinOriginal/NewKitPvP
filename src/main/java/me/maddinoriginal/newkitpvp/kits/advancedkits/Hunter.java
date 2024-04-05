@@ -40,7 +40,7 @@ public class Hunter extends Kit {
 
     //Hunter Passive to summon a Wolf
     private final double WOLF_HEALTH = 3.0;
-    private final int LIFESPAN_TICKS = 7 * 20;
+    private final int LIFESPAN_TICKS = 6 * 20;
     private List<Wolf> wolfs = new ArrayList<>();
 
     @Override
@@ -188,7 +188,7 @@ public class Hunter extends Kit {
             c.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 4));
             c.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0));
             c.setHealth(WOLF_HEALTH);
-            c.setMetadata("WolfSummonedBy", new FixedMetadataValue(NewKitPvP.getInstance(), player.getUniqueId()));
+            c.setMetadata("SummonedBy", new FixedMetadataValue(NewKitPvP.getInstance(), player.getUniqueId()));
             c.setTarget(target);
         });
         wolfs.add(wolf);

@@ -1,5 +1,6 @@
 package me.maddinoriginal.newkitpvp.listeners;
 
+import com.google.common.collect.Sets;
 import me.maddinoriginal.newkitpvp.NewKitPvP;
 import me.maddinoriginal.newkitpvp.data.KitPlayer;
 import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
@@ -17,9 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MiscellaneousListener implements Listener {
@@ -47,8 +46,29 @@ public class MiscellaneousListener implements Listener {
             return;
         }
 
-        if (entity.hasMetadata("WolfSummonedBy")) {
-            if (target.getUniqueId().toString().equals(entity.getMetadata("WolfSummonedBy").get(0).asString())) {
+        if (entity.hasMetadata("SummonedBy")) {
+            if (target.getUniqueId().toString().equals(entity.getMetadata("SummonedBy").get(0).asString())) {
+                e.setCancelled(true);
+            }
+        }
+    }
+
+    private Set<PotionEffectType> negativePotionEffects = Sets.newHashSet(PotionEffectType.BAD_OMEN,
+            PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, PotionEffectType.DARKNESS, PotionEffectType.HARM,
+            PotionEffectType.HUNGER, PotionEffectType.POISON, PotionEffectType.SLOW, PotionEffectType.SLOW_DIGGING,
+            PotionEffectType.UNLUCK, PotionEffectType.WEAKNESS, PotionEffectType.WITHER);
+
+    public void onPotionEffect(EntityPotionEffectEvent e) {
+        if (!(e.getEntity() instanceof Player)) {
+            return;
+        }
+
+        Player p = (Player) e.getEntity();
+        KitPlayer kp = KitPlayerManager.getInstance().getKitPlayer(p);
+
+        //Elementalist Kit immune to negative potion effects
+        if (kp.getKitType().equals(KitType.ELEMENTALIST)) {
+            if (negativePotionEffects.contains(e.getNewEffect().getType())) {
                 e.setCancelled(true);
             }
         }
@@ -79,6 +99,13 @@ public class MiscellaneousListener implements Listener {
                 e.setCancelled(true);
             }
         }
+
+        //No damage ticks from arrows from hunters
+        else if (kp.getKitType().equals(KitType.HUNTER)) {
+            if (e.getHitEntity() == null && e.getHitEntity() instanceof HumanEntity || e.getHitEntity() instanceof Creature) {
+                ((LivingEntity) e.getHitEntity()).setNoDamageTicks(0);
+            }
+        }
     }
 
     @EventHandler
@@ -103,7 +130,7 @@ public class MiscellaneousListener implements Listener {
                 else if (e.getHitEntity() != null) {
                     if (e.getHitEntity() instanceof LivingEntity) {
                         LivingEntity hit = (LivingEntity) e.getHitEntity();
-                        hit.damage(4.5, snowball);
+                        hit.damage(8.0, snowball);
                         hit.addPotionEffect(PotionEffectType.SLOW.createEffect(100, 2));
                     }
                     axeRemoval(axeDisplay);
@@ -146,14 +173,16 @@ public class MiscellaneousListener implements Listener {
 
         //Bomberman Kit Grenade
         if (ent instanceof TNTPrimed) {
-            //e.setRadius(ent.getMetadata("GrenadePower").get(0).asInt());
-            e.setCancelled(true);
-            ent.remove();
-            try {
-                loc.getWorld().createExplosion(loc, ent.getMetadata("GrenadePower").get(0).asFloat(), false,
-                        true, Bukkit.getPlayer(ent.getMetadata("GrenadeOwner").get(0).asString()));
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            if(ent.hasMetadata("GrenadePower")) {
+                //e.setRadius(ent.getMetadata("GrenadePower").get(0).asInt());
+                e.setCancelled(true);
+                ent.remove();
+                try {
+                    loc.getWorld().createExplosion(loc, ent.getMetadata("GrenadePower").get(0).asFloat(), false,
+                            true, Bukkit.getPlayer(ent.getMetadata("GrenadeOwner").get(0).asString()));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }

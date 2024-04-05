@@ -10,7 +10,7 @@ public enum AbilityType {
     DASH (new DashAbility()),                           //Swordsman Kit
     MINIGUN (new MinigunAbility()),                     //Archer Kit
     //HEALAURA, (Tank Kit)
-    //HOMING_ARROWS, (Marksman Kit)
+    HOMING_ARROWS (new HomingArrowsAbility()),          //Marksman Kit
     AXE_THROW (new AxeThrowAbility()),                  //Barbarian Kit
 
     //Advanced Kit Abilities

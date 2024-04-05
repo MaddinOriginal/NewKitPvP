@@ -23,7 +23,7 @@ import org.bukkit.inventory.meta.trim.TrimPattern;
  *
  * Active Ability=
  * Supportive Passive=
- * Survivability Passive=
+ * Survivability Passive= Immune to (most) negative potion effects
  * Finisher Passive=
  */
 
@@ -56,7 +56,7 @@ public class Elementalist extends Kit {
 
     @Override
     public String getDescription() {
-        return null;
+        return "Master of potions and effects. Applies negative effects to their enemies while being immune to them.";
     }
 
     @Override

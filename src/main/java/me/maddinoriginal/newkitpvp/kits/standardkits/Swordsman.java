@@ -54,9 +54,7 @@ public class Swordsman extends Kit {
 
     @Override
     public String getDescription() {
-        return "A melee based Kit with an iron sword and good armor. " +
-                "Has the ability to quickly dash forward. " +
-                "It is also resistent to most projectiles including arrows.";
+        return "Has the ability to quickly dash forward. It is also resistent to knockback from most projectiles including arrows.";
     }
 
     @Override

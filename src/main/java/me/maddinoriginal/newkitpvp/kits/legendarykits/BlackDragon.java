@@ -39,7 +39,7 @@ public class BlackDragon extends Kit {
 
     @Override
     public String getDescription() {
-        return null;
+        return "Turns into a black dragon, hence the name of this kit.";
     }
 
     @Override

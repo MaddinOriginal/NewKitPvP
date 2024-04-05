@@ -39,7 +39,7 @@ public class DemonKing extends Kit {
 
     @Override
     public String getDescription() {
-        return null;
+        return "Summoned from hell.";
     }
 
     @Override
