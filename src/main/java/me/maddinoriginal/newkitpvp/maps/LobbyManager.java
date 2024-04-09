@@ -14,6 +14,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -71,6 +72,7 @@ public class LobbyManager {
     }
 
     public void joinLobby(Player player) {
+        clearPlayer(player);
         teleportToLobby(player);
         KitPlayerManager.getInstance().getKitPlayer(player).setPlayerState(PlayerState.LOBBY);
         setLobbyInventory(player);
@@ -104,14 +106,21 @@ public class LobbyManager {
         }
     }
 
-    public void setLobbyInventory(Player player) {
-        player.getInventory().clear();
-        player.getInventory().setContents(lobbyInventory);
-        player.getInventory().setHeldItemSlot(0);
+    //Teleport bug fix: Player will not teleport to lobby if surrounded by floating item display passenger entities
+    private void clearPlayer(Player player) {
+        for (Entity pass : player.getPassengers()) {
+            pass.remove();
+        }
     }
 
     public void teleportToLobby(Player player) {
         player.teleport(MapManager.getInstance().getCurrentMap().getLobbySpawn());
+    }
+
+    public void setLobbyInventory(Player player) {
+        player.getInventory().clear();
+        player.getInventory().setContents(lobbyInventory);
+        player.getInventory().setHeldItemSlot(0);
     }
 
     public NamespacedKey getLobbyItemKey() {

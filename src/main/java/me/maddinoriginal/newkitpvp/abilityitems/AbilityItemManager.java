@@ -36,7 +36,7 @@ public class AbilityItemManager {
     private void setup() {
         registerItems(new AirStreamAbilityItem(), new AxeThrowAbilityItem(), new DashAbilityItem(), new DemonCircleAbilityItem(), new EvokerFangsAbilityItem(),
                 new DetonationAbilityItem(), new HomingArrowsAbilityItem(), new MagmaLauncherAbilityItem(), new MinigunAbilityItem(),
-                new PlantBushAbilityItem(), new ScareOffAbilityItem(), new SnowstormAbilityItem(),
+                new PlantBushAbilityItem(), new ScareOffAbilityItem(), new SnowstormAbilityItem(), new SurroundingShieldsAbilityItem(),
                 new TeleportBehindAbilityItem(), new TeleportForwardAbilityItem(), new ThrowNegativePotionAbilityItem(),
                 new WolfHuntAbilityItem(), new EvokerFangsAbilityItem());
     }

@@ -8,9 +8,10 @@ import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.Helper;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
 import me.maddinoriginal.newkitpvp.utils.PlayStyle;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import org.bukkit.*;
+import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -135,12 +136,23 @@ public class Yeti extends Kit {
                 .setLore(ChatColor.RESET + "" + ChatColor.DARK_GRAY + Strings.repeat('\u2594' + "", 16),
                         ChatColor.GRAY + "Belonged to Bigfoot")
 
-                //.addEnchantment(Enchantment.DAMAGE_ALL, 1, false)
+                .addEnchantment(Enchantment.DAMAGE_ALL, 1, false)
                 .addEnchantment(Enchantment.DIG_SPEED, 3, false)
 
-                .setUnbreakable(true)
+                .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
+
+        net.minecraft.world.item.ItemStack nmsItemStack = CraftItemStack.asNMSCopy(items[0]);
+        NBTTagCompound compound = (nmsItemStack.w());
+
+        NBTTagList canDestroyList = new NBTTagList();
+        canDestroyList.add(net.minecraft.nbt.NBTTagString.a("minecraft:snow"));
+
+        compound.a("CanDestroy", canDestroyList);
+        nmsItemStack.c(compound);
+
+        items[0] = org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack.asBukkitCopy(nmsItemStack);
 
         items[1] = new SnowstormAbilityItem().getItem();
 

@@ -2,6 +2,7 @@ package me.maddinoriginal.newkitpvp.kits;
 
 import me.maddinoriginal.newkitpvp.utils.PlayStyle;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -22,6 +23,9 @@ public abstract class Kit {
 
     public void setPlayerKit(Player p) {
         p.getInventory().clear();
+        ItemStack[] items = getKitItems();
+        net.minecraft.world.item.ItemStack nmsItemStack = CraftItemStack.asNMSCopy(items[0]);
+        items.clone();
         p.getInventory().setContents(getKitItems());
         p.getInventory().setArmorContents(getArmorContents());
         p.setPlayerListName(getTag() + p.getDisplayName());

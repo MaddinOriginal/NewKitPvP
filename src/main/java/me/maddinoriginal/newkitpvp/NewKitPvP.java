@@ -1,6 +1,7 @@
 package me.maddinoriginal.newkitpvp;
 
 import me.kodysimpson.simpapi.menu.MenuManager;
+import me.maddinoriginal.newkitpvp.abilityitems.abilities.SurroundingShielsAbility;
 import me.maddinoriginal.newkitpvp.commands.KitPvPCommand;
 import me.maddinoriginal.newkitpvp.commands.LobbyCommand;
 import me.maddinoriginal.newkitpvp.configuration.MapsConfig;
@@ -122,6 +123,8 @@ public final class NewKitPvP extends JavaPlugin {
         pm.registerEvents(new InteractListener(), this);
         pm.registerEvents(new MiscellaneousListener(), this);
         pm.registerEvents(new SneakSprintListener(), this);
+
+        pm.registerEvents(new SurroundingShielsAbility(), this);
     }
 
     private void registerCustomListeners() {

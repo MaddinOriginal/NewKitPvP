@@ -2,6 +2,7 @@ package me.maddinoriginal.newkitpvp.kits.standardkits;
 
 import com.google.common.base.Strings;
 import me.maddinoriginal.newkitpvp.abilityitems.items.EvokerFangsAbilityItem;
+import me.maddinoriginal.newkitpvp.abilityitems.items.SurroundingShieldsAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
@@ -128,7 +129,7 @@ public class Tank extends Kit {
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
-        items[1] = new EvokerFangsAbilityItem().getItem(); //TODO
+        items[1] = new SurroundingShieldsAbilityItem().getItem();
 
         return items;
     }

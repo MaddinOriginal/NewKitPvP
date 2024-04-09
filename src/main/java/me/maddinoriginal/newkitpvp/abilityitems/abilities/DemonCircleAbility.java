@@ -7,6 +7,7 @@ import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Goat;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -112,7 +113,7 @@ public class DemonCircleAbility extends Ability {
                 }
 
                 List<LivingEntity> nearby = goat.getNearbyEntities(SIZE*3, SIZE*3, SIZE*3).stream()
-                        .filter(ent -> ent instanceof LivingEntity).map(ent -> (LivingEntity) ent).collect(Collectors.toList());
+                        .filter(ent -> ent instanceof LivingEntity && !(ent instanceof ArmorStand)).map(ent -> (LivingEntity) ent).collect(Collectors.toList());
 
                 if (nearby.contains(player)) {
                     nearby.remove(player);

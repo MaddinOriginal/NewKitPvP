@@ -51,6 +51,10 @@ public class MiscellaneousListener implements Listener {
                 e.setCancelled(true);
             }
         }
+
+        else if (entity instanceof Creeper) {
+            e.setCancelled(true);
+        }
     }
 
     private Set<PotionEffectType> negativePotionEffects = Sets.newHashSet(PotionEffectType.BAD_OMEN,
@@ -71,6 +75,13 @@ public class MiscellaneousListener implements Listener {
             if (negativePotionEffects.contains(e.getNewEffect().getType())) {
                 e.setCancelled(true);
             }
+        }
+    }
+
+    @EventHandler
+    public void onCreeperIgnite(EntityExplodeEvent e) {
+        if (e.getEntity() instanceof Creeper) {
+            e.setCancelled(true);
         }
     }
 

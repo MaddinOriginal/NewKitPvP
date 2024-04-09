@@ -3,23 +3,17 @@ package me.maddinoriginal.newkitpvp.commands;
 import me.kodysimpson.simpapi.exceptions.MenuManagerException;
 import me.kodysimpson.simpapi.exceptions.MenuManagerNotSetupException;
 import me.kodysimpson.simpapi.menu.MenuManager;
-import me.maddinoriginal.newkitpvp.NewKitPvP;
-import me.maddinoriginal.newkitpvp.abilityitems.abilities.HomingArrowsAbility;
 import me.maddinoriginal.newkitpvp.gui.KitSelectorGUI;
 import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
 import me.maddinoriginal.newkitpvp.data.PlayerData;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack;
 import org.bukkit.entity.*;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Transformation;
-import org.joml.AxisAngle4f;
-import org.joml.Vector3f;
 
 public class KitPvPCommand implements CommandExecutor {
 
@@ -59,7 +53,89 @@ public class KitPvPCommand implements CommandExecutor {
                 }
             }
             else if (args[0].equalsIgnoreCase("test")) {
+                org.bukkit.inventory.ItemStack stack = p.getInventory().getItemInMainHand();
+                net.minecraft.world.item.ItemStack nmsItemStack = CraftItemStack.asNMSCopy(stack);
+
+
+
+                org.bukkit.inventory.ItemStack bukkitItemStack = org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack.asBukkitCopy(nmsItemStack);
+            }
+            else if (args[0].equalsIgnoreCase("test2")) {
                 //new HomingArrowsAbility().useAbility(p);
+
+                //Illusioner illusioner = p.getWorld().spawn(p.getLocation(), Illusioner.class);
+                //Entity ent = p.getWorld().spawnEntity(p.getLocation(), EntityType.MINECART_MOB_SPAWNER);
+
+                //Bukkit.broadcastMessage("" + p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(new NamespacedKey(NamespacedKey.MINECRAFT, "can-destroy")));
+                //p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().set(new NamespacedKey(NamespacedKey.MINECRAFT, "can-destroy"), PersistentDataType.STRING, "minecraft:snow");
+
+                org.bukkit.inventory.ItemStack itemMain = p.getInventory().getItemInMainHand();
+                org.bukkit.inventory.ItemStack itemOff = p.getInventory().getItemInOffHand();
+
+                net.minecraft.world.item.ItemStack nmsItemStackMain = CraftItemStack.asNMSCopy(itemMain);
+                net.minecraft.world.item.ItemStack nmsItemStackOff = CraftItemStack.asNMSCopy(itemOff);
+
+                NBTTagCompound compoundMain = (nmsItemStackMain.w());
+                NBTTagCompound compoundOff = (nmsItemStackMain.w());
+
+                NBTTagList canDestroyList = new NBTTagList();
+                canDestroyList.add(net.minecraft.nbt.NBTTagString.a("minecraft:snow"));
+
+                compoundMain.a("CanDestroy", canDestroyList);
+                nmsItemStackMain.c(compoundMain);
+
+                org.bukkit.inventory.ItemStack bukkitItemStack = org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack.asBukkitCopy(nmsItemStackMain);
+                p.getInventory().addItem(bukkitItemStack);
+
+                Bukkit.broadcastMessage("dummy garbage");
+
+                //new SurroundingShielsAbility().useAbility(p);
+
+                /*Material material = Material.DIAMOND_CHESTPLATE;
+
+                ItemDisplay disp1 = p.getWorld().spawn(p.getLocation(), ItemDisplay.class, ent -> {
+                    ent.setItemStack(new ItemStack(material));
+                    ent.setTransformation(new Transformation(
+                            new Vector3f(0, -0.75f, 0),
+                            new AxisAngle4f(0, 0, 0, 0),
+                            new Vector3f(1, 1, 1),
+                            new AxisAngle4f(0, 0, 0, 0)));
+                    p.addPassenger(ent);
+                });
+
+                ItemDisplay disp2 = p.getWorld().spawn(p.getLocation(), ItemDisplay.class, ent -> {
+                    ent.setItemStack(new ItemStack(material));
+                    ent.setTransformation(new Transformation(
+                            new Vector3f(0, -0.75f, 0),
+                            new AxisAngle4f(0, 0, 0, 0),
+                            new Vector3f(1, 1, 1),
+                            new AxisAngle4f(0, 0, 0, 0)));
+                    p.addPassenger(ent);
+                });
+
+                ItemDisplay disp3 = p.getWorld().spawn(p.getLocation(), ItemDisplay.class, ent -> {
+                    ent.setItemStack(new ItemStack(material));
+                    ent.setTransformation(new Transformation(
+                            new Vector3f(0, -0.75f, 0),
+                            new AxisAngle4f(0, 0, 0, 0),
+                            new Vector3f(1, 1, 1),
+                            new AxisAngle4f(0, 0, 0, 0)));
+                    p.addPassenger(ent);
+                });
+
+                new BukkitRunnable() {
+                    float time = 0f;
+
+                    @Override
+                    public void run() {
+                        time = time + 0.05f;
+                        Helper.rotateDisplayPassenger(disp1, time);
+                        Helper.rotateDisplayPassenger(disp2, time + 0.3333f);
+                        Helper.rotateDisplayPassenger(disp3, time + 0.6667f);
+                        //Helper.rotateDisplayPassenger(disp4, time + 0.75f);
+                    }
+                }.runTaskTimer(NewKitPvP.getInstance(), 1, 1);*/
+
 
                 //p.sendMessage("" + Bukkit.getScheduler().getPendingTasks());
 

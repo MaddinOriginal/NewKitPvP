@@ -15,6 +15,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -53,11 +54,16 @@ public class DamageListener implements Listener {
             }
         }
 
-        //prevent freezing damage from yeti kit
+        //prevent freezing damage for yeti kit
         else if (kp.getKitType().equals(KitType.YETI)) {
             if (e.getCause().equals(EntityDamageEvent.DamageCause.FREEZE)) {
                 e.setCancelled(true);
             }
+        }
+
+        //ghost kit invisible for a split second when hurt
+        else if (kp.getKitType().equals(KitType.GHOST)) {
+            p.addPotionEffect(PotionEffectType.INVISIBILITY.createEffect(3, 0));
         }
     }
 
@@ -89,8 +95,23 @@ public class DamageListener implements Listener {
             e.setCancelled(true);
         }
 
+        //barbar kit block with shield
+        if (kp.getKitType().equals(KitType.BARBARIAN)) {
+            if (p.isBlocking() && ent instanceof Projectile) {
+                if (p.hasPotionEffect(PotionEffectType.SPEED)) {
+                    PotionEffect oldEffect = p.getPotionEffect(PotionEffectType.SPEED);
+                    int newDuration = 30;
+                    int newAmplifier = oldEffect.getAmplifier() >= 4 ? oldEffect.getAmplifier() : oldEffect.getAmplifier() + 1;
+                    p.addPotionEffect(PotionEffectType.SPEED.createEffect(newDuration, newAmplifier));
+                }
+                else {
+                    p.addPotionEffect(PotionEffectType.SPEED.createEffect(30, 1));
+                }
+            }
+        }
+
         //active wolfs attack entity if it damages Hunter Kit
-        if (kp.getKitType().equals(KitType.HUNTER)) {
+        else if (kp.getKitType().equals(KitType.HUNTER)) {
             Hunter kit = (Hunter) kp.getKitType().getKit(); //TODO allgemeines Kit ändern zu individuellem Spieler Kit
             LivingEntity target = null;
 

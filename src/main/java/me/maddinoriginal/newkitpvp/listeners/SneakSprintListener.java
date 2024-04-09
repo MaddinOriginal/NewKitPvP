@@ -53,6 +53,11 @@ public class SneakSprintListener implements Listener {
         Player p = e.getPlayer();
         KitPlayer kp = KitPlayerManager.getInstance().getKitPlayer(p);
 
+        //Pyro extinguish itself if on fire (removes visual fire)
+        if (kp.getKitType().equals(KitType.PYRO)) {
+            p.setFireTicks(0);
+        }
+
         //Ghost Kit Invisibility Ability
         if (kp.getKitType().equals(KitType.GHOST)) {
             if (!p.isSneaking()) {

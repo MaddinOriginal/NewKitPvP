@@ -1,14 +1,26 @@
 package me.maddinoriginal.newkitpvp.utils;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.wrappers.EnumWrappers;
+import com.comphenix.protocol.wrappers.Pair;
 import me.maddinoriginal.newkitpvp.NewKitPvP;
 import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
+import org.bukkit.entity.ItemDisplay;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
+import org.joml.AxisAngle4f;
+import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,6 +62,54 @@ public class Helper {
                 }
             }
         }.runTaskLater(NewKitPvP.getInstance(), ticks);
+    }
+
+    private static float offset = 0.66f; //min 0.55f or above
+
+    public static void rotateDisplayPassenger(ItemDisplay display, float time) {
+        float x = (float) Math.sin(2 * Math.PI * time);
+        float z = (float) Math.cos(2 * Math.PI * time);
+        float angle = (float) (time * 2 * Math.PI);
+
+        display.setTransformation(new Transformation(
+                new Vector3f(x * offset, -0.75f, z * offset),
+                new AxisAngle4f(angle, 0, 1, 0),
+                new Vector3f(1, 1, 1),
+                new AxisAngle4f(0, 0, 0, 0)));
+    }
+
+    public static void hideArmor(Player player) {
+        PacketContainer clearArmorPacket = ProtocolLibrary.getProtocolManager().createPacket(PacketType.Play.Server.ENTITY_EQUIPMENT);
+        clearArmorPacket.getIntegers().write(0, player.getEntityId());
+
+        ArrayList<EnumWrappers.ItemSlot> slots = new ArrayList<>();
+        slots.add(EnumWrappers.ItemSlot.FEET);
+        slots.add(EnumWrappers.ItemSlot.LEGS);
+        slots.add(EnumWrappers.ItemSlot.CHEST);
+        slots.add(EnumWrappers.ItemSlot.HEAD);
+        slots.add(EnumWrappers.ItemSlot.MAINHAND);
+        slots.add(EnumWrappers.ItemSlot.OFFHAND);
+
+        // Create a list of slot-item pairs with empty items (air) for the packet
+        List<Pair<EnumWrappers.ItemSlot, ItemStack>> slotItemPairs = new ArrayList<>();
+        for (EnumWrappers.ItemSlot itemSlot : slots) {
+            ItemStack airItem = new ItemStack(Material.AIR);
+            Pair<EnumWrappers.ItemSlot, ItemStack> slotItemPair = new Pair<>(itemSlot, airItem);
+            slotItemPairs.add(slotItemPair);
+        }
+        clearArmorPacket.getSlotStackPairLists().write(0, slotItemPairs);
+
+        // Send the clear armor packet to all players in the same world
+        List<Player> playersInWorld = player.getWorld().getPlayers();
+        for (Player currentPlayer : playersInWorld) {
+            try {
+                if (currentPlayer != player) {
+                    ProtocolLibrary.getProtocolManager().sendServerPacket(currentPlayer, clearArmorPacket);
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public static List<Block> getSphere(Location location, int radius, boolean empty) {
