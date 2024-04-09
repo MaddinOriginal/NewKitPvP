@@ -53,12 +53,11 @@ public class KitPvPCommand implements CommandExecutor {
                 }
             }
             else if (args[0].equalsIgnoreCase("test")) {
-                org.bukkit.inventory.ItemStack stack = p.getInventory().getItemInMainHand();
+
+
+                /*org.bukkit.inventory.ItemStack stack = p.getInventory().getItemInMainHand();
                 net.minecraft.world.item.ItemStack nmsItemStack = CraftItemStack.asNMSCopy(stack);
-
-
-
-                org.bukkit.inventory.ItemStack bukkitItemStack = org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack.asBukkitCopy(nmsItemStack);
+                org.bukkit.inventory.ItemStack bukkitItemStack = org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack.asBukkitCopy(nmsItemStack);*/
             }
             else if (args[0].equalsIgnoreCase("test2")) {
                 //new HomingArrowsAbility().useAbility(p);
@@ -69,7 +68,7 @@ public class KitPvPCommand implements CommandExecutor {
                 //Bukkit.broadcastMessage("" + p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(new NamespacedKey(NamespacedKey.MINECRAFT, "can-destroy")));
                 //p.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().set(new NamespacedKey(NamespacedKey.MINECRAFT, "can-destroy"), PersistentDataType.STRING, "minecraft:snow");
 
-                org.bukkit.inventory.ItemStack itemMain = p.getInventory().getItemInMainHand();
+                /*org.bukkit.inventory.ItemStack itemMain = p.getInventory().getItemInMainHand();
                 org.bukkit.inventory.ItemStack itemOff = p.getInventory().getItemInOffHand();
 
                 net.minecraft.world.item.ItemStack nmsItemStackMain = CraftItemStack.asNMSCopy(itemMain);
@@ -87,7 +86,7 @@ public class KitPvPCommand implements CommandExecutor {
                 org.bukkit.inventory.ItemStack bukkitItemStack = org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack.asBukkitCopy(nmsItemStackMain);
                 p.getInventory().addItem(bukkitItemStack);
 
-                Bukkit.broadcastMessage("dummy garbage");
+                Bukkit.broadcastMessage("dummy garbage");*/
 
                 //new SurroundingShielsAbility().useAbility(p);
 

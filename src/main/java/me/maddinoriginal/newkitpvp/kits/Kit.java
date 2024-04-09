@@ -23,9 +23,6 @@ public abstract class Kit {
 
     public void setPlayerKit(Player p) {
         p.getInventory().clear();
-        ItemStack[] items = getKitItems();
-        net.minecraft.world.item.ItemStack nmsItemStack = CraftItemStack.asNMSCopy(items[0]);
-        items.clone();
         p.getInventory().setContents(getKitItems());
         p.getInventory().setArmorContents(getArmorContents());
         p.setPlayerListName(getTag() + p.getDisplayName());
