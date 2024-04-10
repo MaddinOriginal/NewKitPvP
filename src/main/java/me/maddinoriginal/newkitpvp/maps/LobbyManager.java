@@ -9,6 +9,8 @@ import me.maddinoriginal.newkitpvp.data.PlayerState;
 import me.maddinoriginal.newkitpvp.gui.AchievementsGUI;
 import me.maddinoriginal.newkitpvp.gui.KitSelectorGUI;
 import me.maddinoriginal.newkitpvp.gui.QuitServerGUI;
+import me.maddinoriginal.newkitpvp.kits.KitType;
+import me.maddinoriginal.newkitpvp.kits.advancedkits.Elementalist;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -110,6 +112,9 @@ public class LobbyManager {
     private void clearPlayer(Player player) {
         for (Entity pass : player.getPassengers()) {
             pass.remove();
+        }
+        if (KitPlayerManager.getInstance().getKitPlayer(player).getKitType().equals(KitType.ELEMENTALIST)) {
+            ((Elementalist) KitPlayerManager.getInstance().getKitPlayer(player).getKitType().getKit()).cancelEffects(player);
         }
     }
 

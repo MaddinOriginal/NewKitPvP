@@ -4,6 +4,7 @@ import me.maddinoriginal.newkitpvp.events.KitSelectEvent;
 import me.maddinoriginal.newkitpvp.kits.KitType;
 import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
 import me.maddinoriginal.newkitpvp.data.PlayerState;
+import me.maddinoriginal.newkitpvp.kits.advancedkits.Elementalist;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,6 +26,10 @@ public class KitSelectListener implements Listener {
         KitPlayerManager.getInstance().getKitPlayer(p).setKitType(kit);
         //TODO KitPlayerManager.getInstance().getKitPlayer(p).setKit();
         joinArena(p);
+
+        if (kit == KitType.ELEMENTALIST) {
+            ((Elementalist) kit.getKit()).runEffects(p);
+        }
     }
 
     private void joinArena(Player p) {

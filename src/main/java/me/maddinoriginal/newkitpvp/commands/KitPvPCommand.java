@@ -6,13 +6,9 @@ import me.kodysimpson.simpapi.menu.MenuManager;
 import me.maddinoriginal.newkitpvp.gui.KitSelectorGUI;
 import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
 import me.maddinoriginal.newkitpvp.data.PlayerData;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack;
 import org.bukkit.entity.*;
 
 public class KitPvPCommand implements CommandExecutor {

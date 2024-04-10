@@ -1,18 +1,27 @@
 package me.maddinoriginal.newkitpvp.kits.advancedkits;
 
 import com.google.common.base.Strings;
+import me.maddinoriginal.newkitpvp.NewKitPvP;
 import me.maddinoriginal.newkitpvp.abilityitems.items.ThrowNegativePotionAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
 import me.maddinoriginal.newkitpvp.utils.PlayStyle;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+
+import java.util.*;
 
 /**
  * Type=
@@ -138,5 +147,40 @@ public class Elementalist extends Kit {
         items[1] = new ThrowNegativePotionAbilityItem().getItem();
 
         return items;
+    }
+
+    private Random random = new Random();
+    private Map<Player, Integer> effectsRunnables = new HashMap<>();
+    private List<PotionEffect> effects = new ArrayList<>(Arrays.asList(
+            PotionEffectType.JUMP.createEffect(160, 0),
+            PotionEffectType.REGENERATION.createEffect(160, 0),
+            PotionEffectType.FIRE_RESISTANCE.createEffect(160, 0),
+            PotionEffectType.DAMAGE_RESISTANCE.createEffect(160, 0),
+            PotionEffectType.ABSORPTION.createEffect(160, 0),
+            PotionEffectType.SPEED.createEffect(160, 0),
+            PotionEffectType.LUCK.createEffect(160, 0)
+    ));
+
+    public void runEffects(Player p) {
+        if (effectsRunnables.containsKey(p)) {
+            return;
+        }
+
+        BukkitTask runnable = new BukkitRunnable() {
+
+            @Override
+            public void run() {
+                p.addPotionEffect(effects.get(random.nextInt(effects.size())));
+            }
+        }.runTaskTimer(NewKitPvP.getInstance(), 20, 300);
+
+        effectsRunnables.put(p, runnable.getTaskId());
+    }
+
+    public void cancelEffects(Player p) {
+        if (effectsRunnables.containsKey(p)) {
+            Bukkit.getScheduler().cancelTask(effectsRunnables.get(p));
+            effectsRunnables.remove(p);
+        }
     }
 }

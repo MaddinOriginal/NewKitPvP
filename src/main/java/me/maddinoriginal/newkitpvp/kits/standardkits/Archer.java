@@ -118,6 +118,7 @@ public class Archer extends Kit {
                 .setDisplayName(ChatColor.RESET + "" + ChatColor.YELLOW + "Archer Bow")
 
                 .addEnchantment(Enchantment.DAMAGE_ALL, 1, true)
+                .addEnchantment(Enchantment.ARROW_INFINITE, 1, true)
 
                 .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
@@ -131,7 +132,7 @@ public class Archer extends Kit {
         items[6] = null;
 
         items[7] = new ItemBuilder(Material.ARROW)
-                .setAmount(25)
+                .setAmount(8)
                 .setDisplayName(ChatColor.YELLOW + getName() + " Arrow")
                 .build();
 

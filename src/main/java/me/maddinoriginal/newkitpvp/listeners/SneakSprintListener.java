@@ -3,8 +3,12 @@ package me.maddinoriginal.newkitpvp.listeners;
 import me.maddinoriginal.newkitpvp.NewKitPvP;
 import me.maddinoriginal.newkitpvp.data.KitPlayer;
 import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
+import me.maddinoriginal.newkitpvp.kits.ArrowKit;
 import me.maddinoriginal.newkitpvp.kits.KitType;
+import me.maddinoriginal.newkitpvp.kits.standardkits.Marksman;
 import me.maddinoriginal.newkitpvp.utils.Helper;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -22,6 +26,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,6 +53,8 @@ public class SneakSprintListener implements Listener {
     private final int BLASTER_SNEAK_COOLDOWN_TICKS = 30;
     private boolean blasterSneakOnCooldown = false;
 
+    private final List<Player> RELOADING = new ArrayList<>();
+
     @EventHandler
     public void onSneak(PlayerToggleSneakEvent e) {
         Player p = e.getPlayer();
@@ -59,11 +66,40 @@ public class SneakSprintListener implements Listener {
         }
 
         //Ghost Kit Invisibility Ability
-        if (kp.getKitType().equals(KitType.GHOST)) {
+        else if (kp.getKitType().equals(KitType.GHOST)) {
             if (!p.isSneaking()) {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, -1, 0));
             } else {
                 p.removePotionEffect(PotionEffectType.INVISIBILITY);
+            }
+        }
+
+        //ArrowKits regain X arrows on sneak when below Y amount arrows in inventory
+        else if (kp.getKitType().getKit() instanceof ArrowKit) {
+            int amount = 0;
+            for (ItemStack stack : p.getInventory().all(Material.ARROW).values()) {
+                amount += stack.getAmount();
+            }
+            if (p.getInventory().getItemInOffHand().getType().equals(Material.ARROW)) {
+                amount += p.getInventory().getItemInOffHand().getAmount();
+            }
+
+            if (amount < 5) {
+                if (!RELOADING.contains(p)) {
+                    RELOADING.add(p);
+                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.BOLD + "" + ChatColor.RED + "Reloading Arrows..."));
+                    ItemStack item = ((ArrowKit)kp.getKitType().getKit()).getArrowItem();
+                    p.addPotionEffect(PotionEffectType.SLOW.createEffect(30, 9));
+                    p.addPotionEffect(PotionEffectType.JUMP.createEffect(30, 250));
+
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            p.getInventory().addItem(item);
+                            RELOADING.remove(p);
+                        }
+                    }.runTaskLater(NewKitPvP.getInstance(), 30);
+                }
             }
         }
 

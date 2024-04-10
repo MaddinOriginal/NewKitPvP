@@ -2,6 +2,7 @@ package me.maddinoriginal.newkitpvp.kits.advancedkits;
 
 import com.google.common.base.Strings;
 import me.maddinoriginal.newkitpvp.abilityitems.items.PlantBushAbilityItem;
+import me.maddinoriginal.newkitpvp.kits.ArrowKit;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
@@ -27,7 +28,7 @@ import org.bukkit.inventory.meta.trim.TrimPattern;
  * Finisher Passive= Shooting enemies has a 33% chance to spawn a bush under them (if possible)
  */
 
-public class Ranger extends Kit {
+public class Ranger extends Kit implements ArrowKit {
 
     @Override
     public String getName() {
@@ -135,11 +136,16 @@ public class Ranger extends Kit {
 
         items[1] = new PlantBushAbilityItem().getItem();
 
-        items[7] = new ItemBuilder(Material.ARROW)
+        items[7] = getArrowItem();
+
+        return items;
+    }
+
+    @Override
+    public ItemStack getArrowItem() {
+        return new ItemBuilder(Material.ARROW)
                 .setDisplayName(ChatColor.YELLOW + getName() + " Arrow")
                 .setAmount(12)
                 .build();
-
-        return items;
     }
 }

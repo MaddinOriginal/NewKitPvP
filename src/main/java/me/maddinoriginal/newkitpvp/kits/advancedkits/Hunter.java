@@ -2,6 +2,7 @@ package me.maddinoriginal.newkitpvp.kits.advancedkits;
 
 import me.maddinoriginal.newkitpvp.NewKitPvP;
 import me.maddinoriginal.newkitpvp.abilityitems.items.WolfHuntAbilityItem;
+import me.maddinoriginal.newkitpvp.kits.ArrowKit;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
@@ -36,7 +37,7 @@ import java.util.List;
  * Finisher Passive= Killing enemies gives back the amount of arrows shot since the last kill (max 7 arrows)
  */
 
-public class Hunter extends Kit {
+public class Hunter extends Kit implements ArrowKit {
 
     //Hunter Passive to summon a Wolf
     private final double WOLF_HEALTH = 3.0;
@@ -162,10 +163,7 @@ public class Hunter extends Kit {
         items[5] = null;
         items[6] = null;
 
-        items[7] = new ItemBuilder(Material.ARROW)
-                .setAmount(21)
-                .setDisplayName(ChatColor.YELLOW + getName() + " Arrow")
-                .build();
+        items[7] = getArrowItem();
 
         items[8] = null;
 
@@ -215,5 +213,13 @@ public class Hunter extends Kit {
 
     public List<Wolf> getWolfs() {
         return wolfs;
+    }
+
+    @Override
+    public ItemStack getArrowItem() {
+        return new ItemBuilder(Material.ARROW)
+                .setAmount(20)
+                .setDisplayName(ChatColor.YELLOW + getName() + " Arrow")
+                .build();
     }
 }

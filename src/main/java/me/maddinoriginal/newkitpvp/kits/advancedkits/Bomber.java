@@ -2,6 +2,7 @@ package me.maddinoriginal.newkitpvp.kits.advancedkits;
 
 import com.google.common.base.Strings;
 import me.maddinoriginal.newkitpvp.abilityitems.items.DetonationAbilityItem;
+import me.maddinoriginal.newkitpvp.kits.ArrowKit;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
@@ -26,11 +27,11 @@ import org.bukkit.inventory.meta.trim.TrimPattern;
  * Finisher Passive=killing enemies gives back X arrows
  */
 
-public class Bomber extends Kit {
+public class Bomber extends Kit implements ArrowKit {
 
     @Override
     public String getName() {
-        return "Boomber";
+        return "Boomer";
     }
 
     @Override
@@ -138,11 +139,16 @@ public class Bomber extends Kit {
         items[5] = null;
         items[6] = null;
         items[7] = null;
-        items[8] = new ItemBuilder(Material.ARROW)
-                .setAmount(11)
-                .setDisplayName(ChatColor.YELLOW + getName() + " Arrow")
-                .build();
+        items[8] = getArrowItem();
 
         return items;
+    }
+
+    @Override
+    public ItemStack getArrowItem() {
+        return new ItemBuilder(Material.ARROW)
+                .setAmount(5)
+                .setDisplayName(ChatColor.YELLOW + getName() + " Arrow")
+                .build();
     }
 }
