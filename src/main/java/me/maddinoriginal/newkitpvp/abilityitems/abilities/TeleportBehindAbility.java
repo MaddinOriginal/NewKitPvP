@@ -1,12 +1,14 @@
 package me.maddinoriginal.newkitpvp.abilityitems.abilities;
 
 import me.maddinoriginal.newkitpvp.abilityitems.Ability;
-import org.bukkit.Bukkit;
+import org.bukkit.FluidCollisionMode;
 import org.bukkit.Location;
 import org.bukkit.Particle;
-import org.bukkit.entity.Entity;
+import org.bukkit.Sound;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 
 public class TeleportBehindAbility extends Ability {
@@ -28,10 +30,22 @@ public class TeleportBehindAbility extends Ability {
 
     @Override
     public boolean useAbility(Player p) {
-        Location tpLoc = p.getEyeLocation();
-        Vector dir = tpLoc.getDirection().normalize();
+        RayTraceResult result = p.getWorld().rayTrace(p.getEyeLocation(), p.getEyeLocation().getDirection(), 16, FluidCollisionMode.NEVER, true, 2.0,
+                entity -> (entity instanceof LivingEntity && !(entity instanceof ArmorStand) && !entity.equals(p)));
 
-        for (int i = 0; i < 24; i++) {
+        try {
+            assert result != null;
+            LivingEntity target = (LivingEntity) result.getHitEntity();
+            p.getWorld().spawnParticle(Particle.REVERSE_PORTAL, p.getEyeLocation(), 20, 0.5, 0.5, 0.5, 0.05);
+            p.getWorld().playSound(p.getEyeLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
+            assert target != null;
+            teleportToTarget(p, target);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+
+        /*for (int i = 0; i < 24; i++) {
             tpLoc.add(dir);
             tpLoc.getWorld().spawnParticle(Particle.FLAME, tpLoc, 1, 0, 0, 0, 0.01);
 
@@ -56,6 +70,25 @@ public class TeleportBehindAbility extends Ability {
                 return true;
             }
         }
-        return false;
+        return false;*/
+    }
+
+    private void teleportToTarget(Player p, LivingEntity target) {
+        Location targetLoc = target.getLocation();
+        targetLoc.setPitch(0f);
+        Vector targetDirFront = targetLoc.getDirection();
+        targetLoc.setPitch(-25.0f);
+        Vector targetDirUp = targetLoc.getDirection();
+        targetLoc.setPitch(90.0f);
+        Vector targetDirDown = targetLoc.getDirection().normalize();
+        targetLoc.setPitch(0.0f);
+
+        p.teleport(targetLoc.subtract(targetDirFront.multiply(0.5)));
+        targetLoc.setY(targetLoc.getY() + 1.6);
+        p.getWorld().spawnParticle(Particle.REVERSE_PORTAL, targetLoc, 20, 0.5, 0.5, 0.5, 0.05);
+        p.getWorld().playSound(p.getEyeLocation(), Sound.ENTITY_PLAYER_TELEPORT, 1.0f, 1.0f);
+        //target.damage(0.5);
+        target.setVelocity(targetDirUp.multiply(0.25));
+        p.setVelocity(targetDirDown);
     }
 }
