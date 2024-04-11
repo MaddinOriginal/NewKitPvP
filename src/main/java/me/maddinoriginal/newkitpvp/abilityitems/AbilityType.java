@@ -26,7 +26,10 @@ public enum AbilityType {
     WOLF_HUNT (new WolfHuntAbility()),                  //Unused (previously Hunter Kit)
     EVOKER_FANGS (new EvokerFangAbility()),             //Hunter Kit
     PLANT_BUSH (new PlantBushAbility()),                //Ranger Kit
-    DEMON_CIRCLE (new DemonCircleAbility()),            //Demon Kit (?)
+
+    //Legendary Kit Abilities
+    DRAGON (new DragonAbility()),                       //Black Dragon Kit
+    DEMON_CIRCLE (new DemonCircleAbility()),            //Demon King Kit
 
     //Other (Shop Items and Powerups)
     //SMASHER,

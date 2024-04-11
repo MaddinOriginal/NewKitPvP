@@ -1,14 +1,30 @@
 package me.maddinoriginal.newkitpvp.kits.legendarykits;
 
+import me.maddinoriginal.newkitpvp.NewKitPvP;
+import me.maddinoriginal.newkitpvp.abilityitems.items.DragonAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
 import me.maddinoriginal.newkitpvp.utils.PlayStyle;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EnderCrystal;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class BlackDragon extends Kit {
 
@@ -34,7 +50,7 @@ public class BlackDragon extends Kit {
 
     @Override
     public PlayStyle[] getPlayStyles() {
-        return new PlayStyle[]{PlayStyle.KNOCKBACK, PlayStyle.TANK};
+        return new PlayStyle[]{PlayStyle.KNOCKBACK, PlayStyle.HEAL};
     }
 
     @Override
@@ -94,7 +110,7 @@ public class BlackDragon extends Kit {
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
-        items[1] = null; //TODO
+        items[1] = new DragonAbilityItem().getItem();
 
         items[2] = null;
         items[3] = null;
@@ -105,5 +121,56 @@ public class BlackDragon extends Kit {
         items[8] = null;
 
         return items;
+    }
+
+    public void summonCrystal(Player player) {
+        EnderCrystal crystal = player.getWorld().spawn(player.getEyeLocation(), EnderCrystal.class, ent -> {
+            ent.setShowingBottom(true);
+            ent.setBeamTarget(player.getLocation());
+        });
+
+        List<LivingEntity> nearby = crystal.getNearbyEntities(4, 3, 4).stream().filter(entity -> entity instanceof LivingEntity)
+                .filter(Predicate.not(entity -> entity instanceof ArmorStand)).filter(Predicate.not(entity -> entity.equals(player)))
+                .map(entity -> (LivingEntity) entity).collect(Collectors.toList());
+
+        Vector addV = new Vector(0, 1, 0);
+        for (LivingEntity ent : nearby) {
+            ent.setVelocity(ent.getLocation().toVector().subtract(crystal.getLocation().toVector()).normalize().add(addV).multiply(1.5));
+        }
+
+        new BukkitRunnable() {
+            int timer = 100;
+
+            @Override
+            public void run() {
+                if (crystal.isDead()) {
+                    cancel();
+                    return;
+                }
+
+                if (timer > 0) {
+                    crystal.setBeamTarget(player.getLocation());
+                    if (timer % 10 == 0) {
+                        try {
+                            player.setHealth(player.getHealth() + 4);
+                            player.getWorld().spawnParticle(Particle.HEART, player.getLocation().add(new Vector(0, 2, 0)), 7, 0.25, 0, 0.25);
+                            player.playSound(player, Sound.ENTITY_WARDEN_HEARTBEAT, 1.0f, 1.0f);
+                        } catch (Exception ex) {
+                            if (player.getHealth() < 20) {
+                                player.setHealth(20);
+                                player.getWorld().spawnParticle(Particle.HEART, player.getLocation().add(new Vector(0, 2, 0)), 7, 0.25, 0, 0.25);
+                                player.playSound(player, Sound.ENTITY_WARDEN_HEARTBEAT, 1.0f, 1.0f);
+                            }
+                            crystal.remove();
+                        }
+                    }
+                    timer--;
+                } else {
+                    crystal.getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, crystal.getLocation(), 8, 0.5, 0.5, 0.5, 0);
+                    crystal.remove();
+                    cancel();
+                }
+            }
+        }.runTaskTimer(NewKitPvP.getInstance(), 3, 3);
     }
 }

@@ -6,6 +6,7 @@ import me.maddinoriginal.newkitpvp.data.KitPlayer;
 import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
 import me.maddinoriginal.newkitpvp.kits.KitType;
 import me.maddinoriginal.newkitpvp.utils.Helper;
+import net.minecraft.world.entity.boss.EntityComplexPart;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
@@ -52,7 +53,7 @@ public class MiscellaneousListener implements Listener {
             }
         }
 
-        else if (entity instanceof Creeper) {
+        else if (entity instanceof Creeper || entity instanceof EnderDragon) {
             e.setCancelled(true);
         }
     }
@@ -198,8 +199,25 @@ public class MiscellaneousListener implements Listener {
         }
     }
 
+    //Prevent EnderDragon break blocks
+    @EventHandler
+    public void stopDragonDamage(EntityExplodeEvent e) {
+        Entity ent = e.getEntity();
+        if(ent instanceof EnderDragon) {
+            for (Block b : e.blockList()) {
+                Helper.resetBlockAfter(b, 30);
+            }
+            //e.blockList().clear();
+        }
+    }
+
+    //Entity Explosions except ender dragon
     @EventHandler
     public void onExplosion(EntityExplodeEvent e) {
+        if (e.getEntity() instanceof EnderDragon) {
+            return;
+        }
+
         List<Block> newBlockList = new ArrayList<>();
 
         //allow passable blocks to explode
@@ -210,7 +228,7 @@ public class MiscellaneousListener implements Listener {
             }
         }
         e.blockList().clear();
-        for (Block b: newBlockList) {
+        for (Block b : newBlockList) {
             e.blockList().add(b);
         }
     }

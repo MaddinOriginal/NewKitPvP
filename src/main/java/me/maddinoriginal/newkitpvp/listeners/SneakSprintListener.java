@@ -5,6 +5,7 @@ import me.maddinoriginal.newkitpvp.data.KitPlayer;
 import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
 import me.maddinoriginal.newkitpvp.kits.ArrowKit;
 import me.maddinoriginal.newkitpvp.kits.KitType;
+import me.maddinoriginal.newkitpvp.kits.legendarykits.BlackDragon;
 import me.maddinoriginal.newkitpvp.kits.standardkits.Marksman;
 import me.maddinoriginal.newkitpvp.utils.Helper;
 import net.md_5.bungee.api.ChatMessageType;
@@ -50,6 +51,7 @@ public class SneakSprintListener implements Listener {
 
     private final double BLASTER_SNEAK_RADIUS_WIDTH = 3.1;
     private final double BLASTER_SNEAK_RADIUS_HEIGHT = 2.6;
+
     private final int BLASTER_SNEAK_COOLDOWN_TICKS = 30;
     private boolean blasterSneakOnCooldown = false;
 
@@ -136,7 +138,6 @@ public class SneakSprintListener implements Listener {
             }
 
             new BukkitRunnable() {
-
                 @Override
                 public void run() {
                     blasterSneakOnCooldown = false;

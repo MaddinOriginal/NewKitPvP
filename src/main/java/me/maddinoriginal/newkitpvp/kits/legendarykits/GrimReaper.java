@@ -33,7 +33,7 @@ public class GrimReaper extends Kit {
 
     @Override
     public PlayStyle[] getPlayStyles() {
-        return new PlayStyle[]{PlayStyle.MOBILITY, PlayStyle.DAMAGE};
+        return new PlayStyle[]{PlayStyle.HEAL, PlayStyle.DAMAGE};
     }
 
     @Override

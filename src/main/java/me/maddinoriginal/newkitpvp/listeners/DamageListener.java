@@ -5,6 +5,7 @@ import me.maddinoriginal.newkitpvp.data.KitPlayer;
 import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
 import me.maddinoriginal.newkitpvp.kits.KitType;
 import me.maddinoriginal.newkitpvp.kits.advancedkits.Hunter;
+import me.maddinoriginal.newkitpvp.kits.legendarykits.BlackDragon;
 import me.maddinoriginal.newkitpvp.utils.Helper;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -26,6 +27,9 @@ import java.util.Random;
 public class DamageListener implements Listener {
 
     private final Random RANDOM = new Random();
+
+    private final int CRYSTAL_COOLDOWN_TICKS = 200;
+    private boolean crystalOnCooldown = false;
 
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent e) {
@@ -65,6 +69,22 @@ public class DamageListener implements Listener {
         else if (kp.getKitType().equals(KitType.GHOST)) {
             p.addPotionEffect(PotionEffectType.INVISIBILITY.createEffect(3, 0));
         }
+
+        else if (kp.getKitType().equals(KitType.BLACK_DRAGON)) {
+            if ((p.getHealth() >= 10) || crystalOnCooldown) {
+                return;
+            }
+
+            crystalOnCooldown = true;
+            ((BlackDragon) KitType.BLACK_DRAGON.getKit()).summonCrystal(p);
+
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    crystalOnCooldown = false;
+                }
+            }.runTaskLater(NewKitPvP.getInstance(), CRYSTAL_COOLDOWN_TICKS);
+        }
     }
 
     private final double EVOKER_MULTIPLIER = 0.5; //multiplier for the damage taken by evoker fangs to its owner
@@ -84,6 +104,12 @@ public class DamageListener implements Listener {
         Player p = (Player) e.getEntity();
         KitPlayer kp = KitPlayerManager.getInstance().getKitPlayer(p);
         Entity ent = e.getDamager();
+
+        //No damage if summoned by player
+        if (ent.hasMetadata("SummonedBy") && ent.getMetadata("SummonedBy").get(0).asString().equals(p.getUniqueId().toString())) {
+            e.setCancelled(true);
+            return;
+        }
 
         //Less damage from evoker fangs to the player who summoned them (owner)
         if (ent instanceof EvokerFangs && Objects.equals(((EvokerFangs) ent).getOwner(), p)) {
@@ -186,6 +212,7 @@ public class DamageListener implements Listener {
             //instantkill under 2.5 hearts (5.0 health points)
             if (ent.getHealth() <= 5) {
                 //e.setCancelled(true);
+                e.setDamage(0);
                 ent.setHealth(0);
             }
 
