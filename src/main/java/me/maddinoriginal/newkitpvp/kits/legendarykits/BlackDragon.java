@@ -4,12 +4,11 @@ import me.maddinoriginal.newkitpvp.NewKitPvP;
 import me.maddinoriginal.newkitpvp.abilityitems.items.DragonAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
+import me.maddinoriginal.newkitpvp.utils.Helper;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
 import me.maddinoriginal.newkitpvp.utils.PlayStyle;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
+import org.bukkit.*;
+import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EnderCrystal;
@@ -35,7 +34,7 @@ public class BlackDragon extends Kit {
 
     @Override
     public String getTag() {
-        return "[BLDR]";
+        return "[DRAG]";
     }
 
     @Override
@@ -50,7 +49,7 @@ public class BlackDragon extends Kit {
 
     @Override
     public PlayStyle[] getPlayStyles() {
-        return new PlayStyle[]{PlayStyle.KNOCKBACK, PlayStyle.HEAL};
+        return new PlayStyle[]{PlayStyle.KNOCKBACK, PlayStyle.HEAL, PlayStyle.MOBILITY, PlayStyle.DAMAGE};
     }
 
     @Override
@@ -64,7 +63,7 @@ public class BlackDragon extends Kit {
 
         //Create boots and add them to the returning (armor contents) ItemStack
         armor[0] = new ItemBuilder(Material.NETHERITE_BOOTS)
-                .setDisplayName(ChatColor.YELLOW + getName() + " Boots")
+                .setDisplayName(ChatColor.YELLOW + getName() + " Feet")
 
                 .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_UNBREAKABLE)
@@ -72,15 +71,17 @@ public class BlackDragon extends Kit {
 
         //Create leggings and add them to the returning (armor contents) ItemStack
         armor[1] = new ItemBuilder(Material.NETHERITE_LEGGINGS)
-                .setDisplayName(ChatColor.YELLOW + getName() + " Leggings")
+                .setDisplayName(ChatColor.YELLOW + getName() + " Legs")
+
+                .addEnchantment(Enchantment.PROTECTION_FIRE, 8, true)
 
                 .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_UNBREAKABLE)
                 .build();
 
         //Create chest plate and add them to the returning (armor contents) ItemStack
-        armor[2] = new ItemBuilder(Material.NETHERITE_CHESTPLATE)
-                .setDisplayName(ChatColor.YELLOW + getName() + " Chestplate")
+        armor[2] = new ItemBuilder(Material.ELYTRA)
+                .setDisplayName(ChatColor.YELLOW + getName() + " Wings")
 
                 .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_UNBREAKABLE)
@@ -88,7 +89,7 @@ public class BlackDragon extends Kit {
 
         //Create helmet and add them to the returning (armor contents) ItemStack
         armor[3] = new ItemBuilder(Material.DRAGON_HEAD)
-                .setDisplayName(ChatColor.YELLOW + getName() + " Helmet")
+                .setDisplayName(ChatColor.YELLOW + getName() + " Head")
 
                 .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_UNBREAKABLE)
@@ -104,15 +105,17 @@ public class BlackDragon extends Kit {
         items[0] = new ItemBuilder(Material.NETHERITE_AXE)
                 .setDisplayName(ChatColor.YELLOW + getName() + " Claw")
 
-                .addEnchantment(Enchantment.DAMAGE_ALL, 1, false)
-
                 .setUnbreakable(true, true)
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
         items[1] = new DragonAbilityItem().getItem();
 
-        items[2] = null;
+        items[2] = new ItemBuilder(Material.FIREWORK_ROCKET)
+                .setAmount(1)
+                .setDisplayName(ChatColor.YELLOW + "Flight boost")
+                .build();
+
         items[3] = null;
         items[4] = null;
         items[5] = null;
@@ -124,7 +127,15 @@ public class BlackDragon extends Kit {
     }
 
     public void summonCrystal(Player player) {
-        EnderCrystal crystal = player.getWorld().spawn(player.getEyeLocation(), EnderCrystal.class, ent -> {
+        Location loc = player.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation();
+
+        if (!loc.getBlock().isPassable()) {
+            Helper.resetBlockAfter(loc.getBlock(), 100);
+            loc.getBlock().setType(Material.OBSIDIAN);
+        }
+
+        Location crystalLoc = loc.getBlock().getRelative(BlockFace.UP).getRelative(BlockFace.UP).getLocation().add(new Vector(0.5, 0, 0.5));
+        EnderCrystal crystal = player.getWorld().spawn(crystalLoc, EnderCrystal.class, ent -> {
             ent.setShowingBottom(true);
             ent.setBeamTarget(player.getLocation());
         });

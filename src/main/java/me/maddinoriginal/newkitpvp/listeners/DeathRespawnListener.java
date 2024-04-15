@@ -72,6 +72,12 @@ public class DeathRespawnListener implements Listener {
                             .build());
                 }
             }
+
+            //give one rocket, remove other rockets if player had any
+            else if (killer_kp.getKitType().equals(KitType.BLACK_DRAGON)) {
+                killer.getInventory().remove(Material.FIREWORK_ROCKET);
+                killer.getInventory().addItem(new ItemBuilder(Material.FIREWORK_ROCKET).setAmount(1).setDisplayName(ChatColor.YELLOW + "Flight boost").build());
+            }
         }
     }
 

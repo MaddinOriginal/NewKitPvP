@@ -7,19 +7,11 @@ import me.maddinoriginal.newkitpvp.abilityitems.abilities.DragonAbility;
 import me.maddinoriginal.newkitpvp.gui.KitSelectorGUI;
 import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
 import me.maddinoriginal.newkitpvp.data.PlayerData;
-import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.MultipleFacing;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
-import org.bukkit.util.Vector;
-
-import java.util.Objects;
 
 public class KitPvPCommand implements CommandExecutor {
 
@@ -67,6 +59,12 @@ public class KitPvPCommand implements CommandExecutor {
             }
             else if (args[0].equalsIgnoreCase("test2")) {
                 //new HomingArrowsAbility().useAbility(p);
+
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    if (KitPlayerManager.getInstance().getKitPlayer(player).getPlayerData().getCoins().getAmount() < 300) {
+                        KitPlayerManager.getInstance().getKitPlayer(player).getPlayerData().getCoins().setAmount(300);
+                    }
+                }
 
                 //Illusioner illusioner = p.getWorld().spawn(p.getLocation(), Illusioner.class);
                 //Entity ent = p.getWorld().spawnEntity(p.getLocation(), EntityType.MINECART_MOB_SPAWNER);

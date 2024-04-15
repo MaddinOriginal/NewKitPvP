@@ -33,8 +33,8 @@ public class DragonAbility extends Ability {
     public boolean useAbility(Player player) {
         Location start = player.getLocation();
         start.setPitch(0);
-        Vector v = start.getDirection().setY(0).normalize().multiply(1.5);
-        Location dragonSpawnLocation = start.clone();
+        Vector v = start.getDirection();
+        Location dragonSpawnLocation = start.clone().subtract(start.clone().getDirection().multiply(8));
         dragonSpawnLocation.setYaw(dragonSpawnLocation.getYaw() + 180);
 
         EnderDragon dragon = player.getWorld().spawn(dragonSpawnLocation, EnderDragon.class, ent -> {

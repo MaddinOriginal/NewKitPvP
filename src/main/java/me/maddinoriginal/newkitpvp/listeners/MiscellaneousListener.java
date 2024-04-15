@@ -58,6 +58,23 @@ public class MiscellaneousListener implements Listener {
         }
     }
 
+    //Firework Rocket flight with Elytra
+    @EventHandler
+    public void onEntitySpawn(EntitySpawnEvent e) {
+        Entity ent = e.getEntity();
+
+        if (ent instanceof Firework) {
+            Firework fw = (Firework) ent;
+
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    fw.detonate();
+                }
+            }.runTaskLater(NewKitPvP.getInstance(), 2);
+        }
+    }
+
     private Set<PotionEffectType> negativePotionEffects = Sets.newHashSet(PotionEffectType.BAD_OMEN,
             PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, PotionEffectType.DARKNESS, PotionEffectType.HARM,
             PotionEffectType.HUNGER, PotionEffectType.POISON, PotionEffectType.SLOW, PotionEffectType.SLOW_DIGGING,
