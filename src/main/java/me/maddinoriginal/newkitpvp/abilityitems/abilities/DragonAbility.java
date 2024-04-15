@@ -57,7 +57,7 @@ public class DragonAbility extends Ability {
         dragon.setRotation(dragonSpawnLocation.getYaw(), dragonSpawnLocation.getPitch());
 
         new BukkitRunnable() {
-            int timer = 9;
+            int timer = 12;
 
             @Override
             public void run() {

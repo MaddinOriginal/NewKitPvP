@@ -71,7 +71,7 @@ public class MiscellaneousListener implements Listener {
                 public void run() {
                     fw.detonate();
                 }
-            }.runTaskLater(NewKitPvP.getInstance(), 2);
+            }.runTaskLater(NewKitPvP.getInstance(), 3);
         }
     }
 

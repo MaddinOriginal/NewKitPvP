@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -48,6 +49,14 @@ public class DeathRespawnListener implements Listener {
                 //damaged.teleport(new Location(damaged.getWorld(), 0.5, -14, 0.5)); //TODO
             }
         }
+    }
+
+    @EventHandler
+    public void onPlayerRespawn(PlayerRespawnEvent e) {
+        Player p = e.getPlayer();
+        KitPlayer kp = KitPlayerManager.getInstance().getKitPlayer(p);
+
+        kp.getKitType().getKit().setPlayerKit(p);
     }
 
     @EventHandler
