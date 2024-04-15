@@ -3,7 +3,9 @@ package me.maddinoriginal.newkitpvp.commands;
 import me.kodysimpson.simpapi.exceptions.MenuManagerException;
 import me.kodysimpson.simpapi.exceptions.MenuManagerNotSetupException;
 import me.kodysimpson.simpapi.menu.MenuManager;
+import me.maddinoriginal.newkitpvp.NewKitPvP;
 import me.maddinoriginal.newkitpvp.abilityitems.abilities.DragonAbility;
+import me.maddinoriginal.newkitpvp.abilityitems.abilities.HorseRideAbility;
 import me.maddinoriginal.newkitpvp.gui.KitSelectorGUI;
 import me.maddinoriginal.newkitpvp.data.KitPlayerManager;
 import me.maddinoriginal.newkitpvp.data.PlayerData;
@@ -12,6 +14,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class KitPvPCommand implements CommandExecutor {
 
@@ -51,7 +54,13 @@ public class KitPvPCommand implements CommandExecutor {
                 }
             }
             else if (args[0].equalsIgnoreCase("test")) {
-                new DragonAbility().useAbility(p);
+                new BukkitRunnable() {
+
+                    @Override
+                    public void run() {
+                        p.sendMessage(p.getFallDistance() + "");
+                    }
+                }.runTaskTimer(NewKitPvP.getInstance(), 0, 8);
 
                 /*org.bukkit.inventory.ItemStack stack = p.getInventory().getItemInMainHand();
                 net.minecraft.world.item.ItemStack nmsItemStack = CraftItemStack.asNMSCopy(stack);

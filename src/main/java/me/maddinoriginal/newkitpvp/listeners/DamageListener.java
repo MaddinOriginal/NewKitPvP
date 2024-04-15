@@ -32,6 +32,13 @@ public class DamageListener implements Listener {
     private boolean crystalOnCooldown = false;
 
     @EventHandler
+    public void onFallDamage(EntityDamageEvent e) {
+        if (e.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
+            e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
     public void onPlayerDamage(EntityDamageEvent e) {
         if (!(e.getEntity() instanceof Player)) {
             return;

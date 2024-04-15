@@ -9,11 +9,11 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class DragonAbilityItem extends AbilityItem {
+public class HorseRideAbilityItem extends AbilityItem {
 
     @Override
     public String getName() {
-        return "Dragon Ability";
+        return "Horse Ride Ability";
     }
 
     @Override
@@ -23,21 +23,21 @@ public class DragonAbilityItem extends AbilityItem {
 
     @Override
     public List<String> getLore() {
-        return List.of("Summon your inner dragon");
+        return List.of("Summon and ride a dark horse");
     }
 
     @Override
     public AbilityType getAbilityType() {
-        return AbilityType.DRAGON_SUMMON;
+        return AbilityType.HORSE_RIDE;
     }
 
     @Override
     public void handleLeftClick(Player player, ItemStack item, PlayerInteractEvent event) {
-        //AbilityType.DRAGON.getAbility().useAbility(player);
+        //AbilityType.HORSE_RIDE.getAbility().useAbility(player);
     }
 
     @Override
     public void handleRightClick(Player player, ItemStack item, PlayerInteractEvent event) {
-        AbilityType.DRAGON_SUMMON.getAbility().useAbility(player);
+        AbilityType.HORSE_RIDE.getAbility().useAbility(player);
     }
 }

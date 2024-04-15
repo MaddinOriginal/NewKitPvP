@@ -1,5 +1,6 @@
 package me.maddinoriginal.newkitpvp.kits.legendarykits;
 
+import me.maddinoriginal.newkitpvp.abilityitems.items.HorseRideAbilityItem;
 import me.maddinoriginal.newkitpvp.kits.Kit;
 import me.maddinoriginal.newkitpvp.kits.KitCategory;
 import me.maddinoriginal.newkitpvp.utils.ItemBuilder;
@@ -33,7 +34,7 @@ public class DarkKnight extends Kit {
 
     @Override
     public PlayStyle[] getPlayStyles() {
-        return new PlayStyle[]{PlayStyle.TANK, PlayStyle.FIGHTER};
+        return new PlayStyle[]{PlayStyle.TANK, PlayStyle.FIGHTER, PlayStyle.MOBILITY};
     }
 
     @Override
@@ -91,7 +92,7 @@ public class DarkKnight extends Kit {
                 .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
 
-        items[1] = null; //TODO
+        items[1] = new HorseRideAbilityItem().getItem();
 
         items[2] = null;
         items[3] = null;

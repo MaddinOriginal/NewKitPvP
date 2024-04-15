@@ -12,8 +12,8 @@ public class KitSelectEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS_LIST = new HandlerList();
     private boolean isCancelled;
 
-    private Player player;
-    private KitType kitType;
+    private final Player player;
+    private final KitType kitType;
 
     public KitSelectEvent(Player player, KitType kitType) {
         this.player = player;

@@ -15,6 +15,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -55,6 +56,14 @@ public class MiscellaneousListener implements Listener {
 
         else if (entity instanceof Creeper || entity instanceof EnderDragon) {
             e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onLeaveVehicle(VehicleExitEvent e) {
+        if (e.getVehicle() instanceof Horse) {
+            e.getVehicle().getWorld().playSound(e.getVehicle().getLocation(), Sound.ITEM_ARMOR_EQUIP_LEATHER, 1.0f, 1.0f);
+            e.getVehicle().remove();
         }
     }
 

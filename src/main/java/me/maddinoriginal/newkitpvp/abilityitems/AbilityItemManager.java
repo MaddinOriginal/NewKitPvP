@@ -34,9 +34,11 @@ public class AbilityItemManager {
     public Map<String, AbilityItem> abilityItems = new HashMap<>();
 
     private void setup() {
-        registerItems(new AirStreamAbilityItem(), new AxeThrowAbilityItem(), new DashAbilityItem(), new DemonCircleAbilityItem(), new EvokerFangsAbilityItem(),
-                new DetonationAbilityItem(), new DragonAbilityItem(), new HomingArrowsAbilityItem(), new MagmaLauncherAbilityItem(), new MinigunAbilityItem(),
-                new PlantBushAbilityItem(), new ScareOffAbilityItem(), new SnowstormAbilityItem(), new SurroundingShieldsAbilityItem(),
+        registerItems(new AirStreamAbilityItem(), new AxeThrowAbilityItem(), new DashAbilityItem(),
+                new DemonCircleAbilityItem(), new EvokerFangsAbilityItem(), new DetonationAbilityItem(),
+                new DragonAbilityItem(), new HomingArrowsAbilityItem(), new HorseRideAbilityItem(),
+                new MagmaLauncherAbilityItem(), new MinigunAbilityItem(), new PlantBushAbilityItem(),
+                new ScareOffAbilityItem(), new SnowstormAbilityItem(), new SurroundingShieldsAbilityItem(),
                 new TeleportBehindAbilityItem(), new TeleportForwardAbilityItem(), new ThrowNegativePotionAbilityItem(),
                 new WolfHuntAbilityItem(), new EvokerFangsAbilityItem());
     }

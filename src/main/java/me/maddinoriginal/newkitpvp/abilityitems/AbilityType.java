@@ -2,8 +2,6 @@ package me.maddinoriginal.newkitpvp.abilityitems;
 
 import me.maddinoriginal.newkitpvp.abilityitems.abilities.*;
 
-import java.util.UUID;
-
 public enum AbilityType {
 
     //Standard Kit Abilities
@@ -28,7 +26,8 @@ public enum AbilityType {
     PLANT_BUSH (new PlantBushAbility()),                //Ranger Kit
 
     //Legendary Kit Abilities
-    DRAGON (new DragonAbility()),                       //Black Dragon Kit
+    HORSE_RIDE (new HorseRideAbility()),                //Dark Knight Kit
+    DRAGON_SUMMON (new DragonAbility()),                //Black Dragon Kit
     DEMON_CIRCLE (new DemonCircleAbility()),            //Demon King Kit
 
     //Other (Shop Items and Powerups)
